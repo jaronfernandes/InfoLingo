@@ -17,18 +17,18 @@ multilingual perspectives have greater reach. We will use an API to auto-generat
 will be able to go through more content more easily. In this regard, we will also have the benefits of
 of traditional centralised news sources' consistency without as much of their bias.
 
-
-
 ## a link to the documentation for an API your team can use related to the domain. []
 https://currentsapi.services/en 
 
 https://libretranslate.com/
-
 
 ## a screenshot of using a tool to try out the API (like https://www.postman.com/Links to an external site. or https://hoppscotch.io/Links to an external site.Links to an external site.) []
 
 ## example output of running your Java code (see below). []
 
 ## a list of any technical problems blocking progress (if any) []
-
+- Discord mic issues
+- Teammates not cooperating
+- lack of funding
+- I want Jonathan Calver on my team
 ## please don't hesitate to ask such questions on Piazza too of course. []
