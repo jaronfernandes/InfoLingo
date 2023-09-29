@@ -15,7 +15,7 @@ public class SampleAPICall {
         System.out.println(getSampleNews("roblox"));
     }
 
-    private Article[] getSampleNews(String searchTerm) {
+    private static Article[] getSampleNews(String searchTerm) {
         try {
             URI uri = new URI(BASE_URL + "everything/?q=bitcoin&apiKey=" + API_TOKEN);
             HttpClient client = HttpClient.newHttpClient();
@@ -23,6 +23,8 @@ public class SampleAPICall {
                     uri(uri).
                     GET().
                     build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
