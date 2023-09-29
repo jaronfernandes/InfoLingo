@@ -3,7 +3,10 @@ Csc207 project InfoLingo 📰 📰 📰
 
 A readme.md file which must include:
 ## a description of the problem domain your team is tentatively wanting to focus on in the project. (e.g., trivia, finance, real estate, etc…) []
-
+The current roaster of mainstream news sources from websites can be overwhelming in its content and presentation. 
+The New York Times, Fox, CNN have also been plagued with concerns of biased reporting and bombarding their viewers with advertisements. 
+Most readers will be smart to fill their digest with diverse news sources, which can pose readers accessibility challenges as
+each site will have different fonts, layouts, that would require too much time spent on adjustment and not on reading the news!
 
 ##  a brief, high-level description of what kind of application your team is thinking of developing.
 ###  This is mostly just so we can give you some initial feedback on whether your team might want to reconsider your project direction. []
