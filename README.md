@@ -8,10 +8,12 @@ A readme.md file which must include:
 ##  a brief, high-level description of what kind of application your team is thinking of developing.
 ###  This is mostly just so we can give you some initial feedback on whether your team might want to reconsider your project direction. []
 
-Our team is thinking of focusing on a centralised news app. It will organise news from a variety of sources into one 
-location. It will also provide a translation tool, so you can get you're news from even more sources, despite language
-barriers. We also want to provide auto-generated summaries of articles, so you don't have to read each article in their 
-entirety.
+Our team is thinking of focusing on a centralised news app. The app will organise news from a variety of sources into one 
+location. It will also have a translation tool, so that multiple languages will be accessible to readers and more 
+multilingual perspectives have greater reach. We will use an API to auto-generate summaries of articles, so readers 
+will be able to go through more content more easily. In this regard, we will also have the benefits of
+of traditional centralised news sources' consistency without as much of their bias.
+
 
 
 ## a link to the documentation for an API your team can use related to the domain. []
