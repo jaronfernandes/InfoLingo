@@ -12,7 +12,7 @@ public class SampleAPICall {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static void main(String[] args) {
-
+        System.out.println(getSampleNews("roblox"));
     }
 
     private Article[] getSampleNews(String searchTerm) {
