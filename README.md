@@ -25,10 +25,12 @@ https://libretranslate.com/
 ## a screenshot of using a tool to try out the API (like https://www.postman.com/Links to an external site. or https://hoppscotch.io/Links to an external site.Links to an external site.) []
 ![Screenshot](API_Call_Screenshot.png)
 ## example output of running your Java code (see below). []
+![Screenshot](JavaOutput.png)
 
 ## a list of any technical problems blocking progress (if any) []
 - Discord mic issues
 - Teammates not cooperating
 - lack of funding
 - I want Jonathan Calver on my team
+- what's Java?
 ## please don't hesitate to ask such questions on Piazza too of course. []
