@@ -24,7 +24,6 @@ https://libretranslate.com/
 
 ## a screenshot of using a tool to try out the API (like https://www.postman.com/Links to an external site. or https://hoppscotch.io/Links to an external site.Links to an external site.) []
 ![Screenshot](API_Call_Screenshot.png)
-![april-fools-day.jpg](april-fools-day.jpg)
 ## example output of running your Java code (see below). []
 
 ## a list of any technical problems blocking progress (if any) []
