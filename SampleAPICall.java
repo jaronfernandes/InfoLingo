@@ -3,6 +3,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,6 +47,7 @@ public class SampleAPICall {
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
+        JSONObject responseBody = new JSONObject(response.body().string());
 
         // Return all articles here.
         return new Article[0];
