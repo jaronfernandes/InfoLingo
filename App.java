@@ -1,4 +1,3 @@
-import org.stjs.javascript.dom.Article;
 
 public class App {
     public static void main(String[] args) {

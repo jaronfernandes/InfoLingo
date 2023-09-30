@@ -38,10 +38,12 @@ public class SampleAPICall {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String body = response.body();
             JSONObject data = new JSONObject(body);
+//            System.out.println(data);
 
             // Retrieve first article.
             JSONArray articles = data.getJSONArray("articles");
             JSONObject firstArticle = articles.getJSONObject(0);
+//            System.out.println(firstArticle);
 
             // Retrieve details of first article.
             String author = firstArticle.getString("author");
@@ -49,17 +51,14 @@ public class SampleAPICall {
             String title = firstArticle.getString("title");
             String url = firstArticle.getString("url");
             // Not sure how to get the sources from the nested dict
-//            String source = firstArticle.getJSONArray("source").getString("id");
+            String source = firstArticle.getJSONObject("source").getString("name");
+//            System.out.println(source);
 
-            Article article = new Article(description, author, title, url, "temp-source");
-//            System.out.println("hi");
-//            System.out.println(description);
-//            System.out.println(article.getContent());
-//            System.out.println("test");
+            Article article = new Article(description, author, title, url, source);
             first_article[0] = article;
         } catch (Exception e) {
             System.out.println("Request for search \""
-                    + rawSearchTerm + "\" UNSUCCESSFUL - caught EXCEPTION");
+                    + rawSearchTerm + "\" unsuccessful - caught " + e);
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
