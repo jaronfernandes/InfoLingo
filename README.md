@@ -5,9 +5,9 @@ The current roaster of mainstream news sources from websites can be overwhelming
 Our team will build a centralised news app. By this, we mean to build an app that will organise news from a variety of sources into one location. It will also have a translation tool to increase the cross-cultural accessibility and reach of news, providing an array of multilingual perspectives. We will use an API to auto-generate summaries of articles so that readers will be able to parse content more easily. In this regard, we hope to retain the benefits of a traditional centralised news source's consistency without as much of its bias.
 
 ## Link to APIs
-NewsAPI - https://newsapi.org 
-LibreTranslate - https://libretranslate.com/
-HuggingFace - https://huggingface.co
+- NewsAPI - https://newsapi.org 
+- LibreTranslate - https://libretranslate.com/
+- HuggingFace - https://huggingface.co
 
 ## API Call via GUI 
 ![Screenshot](API_Call_Screenshot.png)
