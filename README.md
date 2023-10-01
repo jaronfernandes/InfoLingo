@@ -1,36 +1,23 @@
-# InfoLingo
-Csc207 project InfoLingo 📰 📰 📰
+## Description of Problem Domain
+The current roaster of mainstream news sources from websites can be overwhelming in its content and presentation. The New York Times, Fox and CNN have also been plagued with concerns of biased reporting and bombarding their viewers with advertisements. Most readers will be so smart as to fill their digest with diverse news sources, which can pose threats to reader accessibility, including variations in layouts and fonts. Such issues would require too much time spent on adjustment and not enough on reading the news!
 
-A readme.md file which must include:
-## a description of the problem domain your team is tentatively wanting to focus on in the project. (e.g., trivia, finance, real estate, etc…) []
-The current roaster of mainstream news sources from websites can be overwhelming in its content and presentation. 
-The New York Times, Fox, CNN have also been plagued with concerns of biased reporting and bombarding their viewers with advertisements. 
-Most readers will be smart to fill their digest with diverse news sources, which can pose readers accessibility challenges as
-each site will have different fonts, layouts, that would require too much time spent on adjustment and not on reading the news!
-
-##  a brief, high-level description of what kind of application your team is thinking of developing.
-###  This is mostly just so we can give you some initial feedback on whether your team might want to reconsider your project direction. []
-
-Our team is thinking of focusing on a centralised news app. The app will organise news from a variety of sources into one 
-location. It will also have a translation tool, so that multiple languages will be accessible to readers and more 
-multilingual perspectives have greater reach. We will use an API to auto-generate summaries of articles, so readers 
-will be able to go through more content more easily. In this regard, we will also have the benefits of
-of traditional centralised news sources' consistency without as much of their bias.
+## InfoLingo
+Our team will build a centralised news app. By this, we mean to build an app that will organise news from a variety of sources into one location. It will also have a translation tool to increase the cross-cultural accessibility and reach of news, providing an array of multilingual perspectives. We will use an API to auto-generate summaries of articles so that readers will be able to parse content more easily. In this regard, we hope to retain the benefits of a traditional centralised news source's consistency without as much of its bias.
 
 ## a link to the documentation for an API your team can use related to the domain. []
-https://currentsapi.services/en 
+NewsAPI - https://newsapi.org 
+LibreTranslate - https://libretranslate.com/
+HuggingFace - https://huggingface.co
 
-https://libretranslate.com/
-
-## a screenshot of using a tool to try out the API (like https://www.postman.com/Links to an external site. or https://hoppscotch.io/Links to an external site.Links to an external site.) []
+## API Call via GUI 
 ![Screenshot](API_Call_Screenshot.png)
-## example output of running your Java code (see below). []
+
+## API Call via Java
 ![Screenshot](JavaOutput.png)
 
-## a list of any technical problems blocking progress (if any) []
-- Discord mic issues
-- Teammates not cooperating
-- lack of funding
-- I want Jonathan Calver on my team
-- what's Java?
-## please don't hesitate to ask such questions on Piazza too of course. []
+## Technical Problems
+- Request limits for API calls
+- Parsing API call return format, particularly when it does not conform to what's listed in the documentation
+- Lack of cooperation between teammates
+- Lack of funds to use better APIs / improve rates on currently used APIs
+- Unfamiliarity with Java as compared to Python
