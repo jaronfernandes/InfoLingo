@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Article implements Media {
+public class Article implements Media, ArticleInterface {
     private String headline;
     private String originalContent;
     private Source source;
