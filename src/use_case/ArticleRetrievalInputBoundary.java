@@ -1,6 +1,6 @@
 package use_case;
 
-import use_case.ArticleRetrievalInputData.java
+import use_case.ArticleRetrievalInputData;
 import java.util.List;
 
 public interface ArticleRetrievalInputBoundary {

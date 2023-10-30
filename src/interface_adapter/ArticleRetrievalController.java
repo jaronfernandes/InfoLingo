@@ -1,6 +1,6 @@
 package interface_adapter;
-import use_case.ArticleRetrievalInputData.java
-import use_case.ArticleRetrievalInputBoundary.java
+import use_case.ArticleRetrievalInputData;
+import use_case.ArticleRetrievalInputBoundary;
 
 public class ArticleRetrievalController {
     final ArticleRetrievalInputBoundary articleRetrievalInteractor;
