@@ -21,7 +21,7 @@ public class HomeState {
         this.articles = articles;
     }
 
-    private List<String> getHeadlines() {
+    public List<String> getHeadlines() {
         return headlines;
     }
 
