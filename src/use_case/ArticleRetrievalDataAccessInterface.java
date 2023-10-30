@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ArticleRetrievalDataAccessInterface {
     List<Article> getArticles();
-    Article[] getSampleNews();
+    Article[] getSampleNews(String rawSearchTerm);
 }

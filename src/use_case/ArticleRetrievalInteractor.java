@@ -20,7 +20,7 @@ public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary
     @Override
     public void execute(ArticleRetrievalInputData inputData) {
         try {
-            Article[] articles = articleRetrievalDataAccessObject.getSampleNews();
+            Article[] articles = articleRetrievalDataAccessObject.getSampleNews(inputData.getQuery());
 
             ArticleRetrievalOutputData outputData = new ArticleRetrievalOutputData(articles);
             presenter.prepareSuccessView(outputData);
