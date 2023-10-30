@@ -5,6 +5,7 @@ import java.util.List;
 
 public class HomeState {
     List<Article> articles;
+    List<String> headlines;
     String articleRetrievalError;
 
     public HomeState(List<Article> articles) {
@@ -12,15 +13,23 @@ public class HomeState {
         this.articleRetrievalError = "";
     }
 
-    public Article[] getArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(Article[] articles) {
+    public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
 
-    public String getArticleRetrievalError() {
+    private List<String> getHeadlines() {
+        return headlines;
+    }
+
+    public void setHeadlines(List<String> headlines) {
+        this.headlines = headlines;
+    }
+
+    private String getArticleRetrievalError() {
         return articleRetrievalError;
     }
 
