@@ -11,6 +11,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.json.*;
 
@@ -22,19 +24,13 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
 
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
-
     @Override
-    public List<Article> getArticles() {
-        return null;
-    }
-
-    public Article[] getSampleNews(String rawSearchTerm) {
-        Article[] first_article = new Article[1];
-
+    public List<Article> getArticles(String rawSearchTerm) {
         // Replace any spaces with '-' for a valid link.
         String searchTerm = rawSearchTerm.replace(' ', '-');
 
-        Article[] formattedArticles = new Article[0];
+
+        List<Article> formattedArticles = new ArrayList<>();
 
         try {
             URI uri = new URI(BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN);
@@ -50,10 +46,15 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
 
             // Retrieve first article.
             JSONArray articles = data.getJSONArray("articles");
-            formattedArticles = new Article[articles.length()];
+
+            JSONObject firstArticle = articles.getJSONObject(0);
+
             for(int i = 0; i < articles.length(); i++) {
                 JSONObject article = articles.getJSONObject(i);
-                formattedArticles[i] = formatArticle(article);
+                formattedArticles.add(formatArticle(article));
+
+
+
 //            System.out.println(firstArticle);
             }
 
@@ -62,8 +63,6 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
             System.out.println("Request for search \""
                     + rawSearchTerm + "\" unsuccessful - caught " + e);
             System.out.println(Arrays.toString(e.getStackTrace()));
-            Article[] nothingArr = {};
-            return nothingArr;
         }
 
         // Return all articles here.
