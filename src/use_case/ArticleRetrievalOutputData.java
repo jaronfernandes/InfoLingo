@@ -2,18 +2,20 @@ package use_case;
 
 import entity.Article;
 
-public class ArticleRetrievalOutputData {
-    Article[] articles;
+import java.util.List;
 
-    public ArticleRetrievalOutputData(Article[] articles) {
+public class ArticleRetrievalOutputData {
+    List<Article> articles;
+
+    public ArticleRetrievalOutputData(List<Article> articles) {
         this.articles = articles;
     }
 
-    public Article[] getArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(Article[] articles) {
+    public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
 }
