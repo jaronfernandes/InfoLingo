@@ -19,15 +19,14 @@ public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary
 
     @Override
     public void execute(ArticleRetrievalInputData inputData) {
-        try {
-            Article[] articles = articleRetrievalDataAccessObject.getSampleNews(inputData.getQuery());
+        Article[] articles = articleRetrievalDataAccessObject.getSampleNews(inputData.getQuery());
 
+        if (articles.length == 0) {
+            presenter.prepareFailView("Failed to retrieve any articles!");
+        }
+        else {
             ArticleRetrievalOutputData outputData = new ArticleRetrievalOutputData(articles);
             presenter.prepareSuccessView(outputData);
-        }
-        catch (Exception e) {
-            presenter.prepareFailView(e.toString());
-            System.out.println("what a failure.");
         }
     }
 }

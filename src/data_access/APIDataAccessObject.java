@@ -4,6 +4,7 @@ import entity.Article;
 import entity.Source;
 import use_case.ArticleRetrievalDataAccessInterface;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import org.json.*;
 
+import javax.print.URIException;
 import java.util.List;
 
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface {
@@ -61,13 +63,16 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
 
             Article article = new Article(title, description, sourceObj);
             first_article[0] = article;
+
+            System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         } catch (Exception e) {
             System.out.println("Request for search \""
                     + rawSearchTerm + "\" unsuccessful - caught " + e);
             System.out.println(Arrays.toString(e.getStackTrace()));
+            Article[] nothingArr = {};
+            return nothingArr;
         }
 
-        System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         // Return all articles here.
         return first_article;
     }
