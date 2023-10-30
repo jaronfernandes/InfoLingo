@@ -72,7 +72,6 @@ public class HomeView extends JPanel{
         Refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(Refresh);
 
-
         Refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
