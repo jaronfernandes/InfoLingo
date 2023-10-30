@@ -17,7 +17,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeView extends JPanel{
+public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
     private final JTextField searchField = new JTextField(20);
     HomeViewModel homeViewModel;
@@ -38,7 +38,7 @@ public class HomeView extends JPanel{
     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
         this.articleRetrievalController = controller;
         this.homeViewModel = homeViewModel;
-        homeViewModel.addPropertyChangeListener((PropertyChangeListener) this);
+        homeViewModel.addPropertyChangeListener(this);
 
 
 
@@ -70,20 +70,17 @@ public class HomeView extends JPanel{
         PrefMenu.add(IceButton);
 
 
-            //Refresh Button
-        Refresh = new JMenu("Refresh");
+            //Refresh/Search Button
+        Refresh = new JMenu("Refresh/Search");
         Refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(Refresh);
-
-           //Search Bar
-
-        Search =  new JMenu("Search");
-        Refresh.setMnemonic(KeyEvent.VK_S);
-        menuBar.add(Search);
 
         //Page
 
         //Headlines
+
+        JTextField searchField = new JTextField("Search!");
+        frame.add(searchField);
 
         for (String headline: homeViewModel.getHomeState().getHeadlines()) {
             JLabel Headline = new JLabel(headline);
@@ -103,14 +100,11 @@ public class HomeView extends JPanel{
             }
         });
 
-        searchField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText();
-                articleRetrievalController.execute(searchText);
-            }
-        });
 
+    }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        HomeState state = (HomeState) evt.getNewValue();
     }
 }
