@@ -21,7 +21,7 @@ public class HomeState {
         this.articles = articles;
     }
 
-    private List<String> getHeadlines() {
+    public List<String> getHeadlines() {
         return headlines;
     }
 
@@ -29,7 +29,7 @@ public class HomeState {
         this.headlines = headlines;
     }
 
-    private String getArticleRetrievalError() {
+    public String getArticleRetrievalError() {
         return articleRetrievalError;
     }
 
