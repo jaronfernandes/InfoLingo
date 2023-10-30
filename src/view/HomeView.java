@@ -72,8 +72,6 @@ public class HomeView extends JPanel{
         Refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(Refresh);
 
-
-
         Refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,14 +85,8 @@ public class HomeView extends JPanel{
         frame.setVisible(true);
 
         //Headlines
-
         List headlines = new ArrayList<String>();
         for
 
-
-
     }
-
-
-
 }
