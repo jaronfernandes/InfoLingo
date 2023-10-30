@@ -8,12 +8,17 @@ public class Article implements Media, ArticleInterface {
     private String headline;
     private String originalContent;
     private Source source;
+    private String author;
+
+    private String url;
     private List<TranslatedArticle> translatedArticles;
 
-    public Article(String headline, String originalContent, Source source) {
+    public Article(String headline, String originalContent, Source source, String author, String url) {
         this.headline = headline;
         this.originalContent = originalContent;
         this.source = source;
+        this.author = author;
+        this.url = url;
         this.translatedArticles = new ArrayList<>();
     }
 
@@ -35,5 +40,12 @@ public class Article implements Media, ArticleInterface {
 
     public void addTranslatedArticle(TranslatedArticle article) {
         translatedArticles.add(article);
+    }
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

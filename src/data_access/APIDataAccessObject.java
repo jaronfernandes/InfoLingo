@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.Article;
+import entity.ArticleFactory;
 import entity.Source;
 import use_case.ArticleRetrievalDataAccessInterface;
 import java.net.URI;
@@ -33,6 +34,8 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
         // Replace any spaces with '-' for a valid link.
         String searchTerm = rawSearchTerm.replace(' ', '-');
 
+        Article[] formattedArticles = new Article[0];
+
         try {
             URI uri = new URI(BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN);
             HttpClient client = HttpClient.newHttpClient();
@@ -47,22 +50,12 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
 
             // Retrieve first article.
             JSONArray articles = data.getJSONArray("articles");
-            JSONObject firstArticle = articles.getJSONObject(0);
+            formattedArticles = new Article[articles.length()];
+            for(int i = 0; i < articles.length(); i++) {
+                JSONObject article = articles.getJSONObject(i);
+                formattedArticles[i] = formatArticle(article);
 //            System.out.println(firstArticle);
-
-            // Retrieve details of first article.
-            String author = firstArticle.getString("author");
-            String description = firstArticle.getString("description");
-            String title = firstArticle.getString("title");
-            String url = firstArticle.getString("url");
-            // Not sure how to get the sources from the nested dict
-            String source = firstArticle.getJSONObject("source").getString("name");
-//            System.out.println(source);
-
-            Source sourceObj = new Source(source, "English");
-
-            Article article = new Article(title, description, sourceObj);
-            first_article[0] = article;
+            }
 
             System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         } catch (Exception e) {
@@ -74,6 +67,21 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
         }
 
         // Return all articles here.
-        return first_article;
+        return formattedArticles;
+    }
+
+    private Article formatArticle(JSONObject unformattedArticle){
+        // Retrieve details of first article.
+        String author = unformattedArticle.getString("author");
+        String description = unformattedArticle.getString("description");
+        String title = unformattedArticle.getString("title");
+        String url = unformattedArticle.getString("url");
+        // Not sure how to get the sources from the nested dict
+        String source = unformattedArticle.getJSONObject("source").getString("name");
+//            System.out.println(source);
+        Source sourceObj = new Source(source, "English");
+
+        ArticleFactory articleFactory = new ArticleFactory();
+        return articleFactory.create(title, description, sourceObj, author, url);
     }
 }
