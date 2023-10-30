@@ -3,17 +3,21 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TranslatedArticle implements Media {
+public class TranslatedArticle implements Media, ArticleInterface {
     private String headline;
     private String content;
     private String translatedLanguage;
+    private final String author;
+    private final String URL;
     private Source source;
 
-    public TranslatedArticle(String headline, String content, Source source, String translatedLanguage) {
+    public TranslatedArticle(String headline, String content, Source source, String translatedLanguage, String author, String URL) {
         this.headline = headline;
         this.content = content;
         this.translatedLanguage = translatedLanguage;
         this.source = source;
+        this.author = author;
+        this.URL = URL;
     }
 
     @Override
@@ -25,11 +29,19 @@ public class TranslatedArticle implements Media {
         return content;
     }
 
+    public Source getSource() {
+        return source;
+    }
+
     public String getLanguage() {
         return translatedLanguage;
     }
 
-    public Source getSource() {
-        return source;
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getURL() {
+        return URL;
     }
 }
