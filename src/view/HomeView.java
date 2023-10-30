@@ -3,6 +3,7 @@ package view;
 import interface_adapter.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
+import interface_adapter.ArticleRetrievalPresenter;
 
 
 import javax.swing.*;
@@ -18,15 +19,17 @@ import java.util.List;
 
 public class HomeView extends JPanel{
     public final String viewName = "Home";
-
+    private final JTextField searchField = new JTextField(20);
     HomeViewModel homeViewModel;
     ArticleRetrievalController articleRetrievalController;
+    ArticleRetrievalPresenter articleRetrievalPresenter;
+
 
 
 
     //Where the GUI is created:
     JMenuBar menuBar;
-    JMenu PrefMenu, Refresh;
+    JMenu PrefMenu, Refresh, Search;
     JMenuItem LangMenu;
     JRadioButtonMenuItem EngButton, IceButton;
     JFrame frame;
@@ -67,34 +70,47 @@ public class HomeView extends JPanel{
         PrefMenu.add(IceButton);
 
 
-            //Refresh button
+            //Refresh Button
         Refresh = new JMenu("Refresh");
         Refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(Refresh);
 
+           //Search Bar
 
+        Search =  new JMenu("Search");
+        Refresh.setMnemonic(KeyEvent.VK_S);
+        menuBar.add(Search);
 
-        Refresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                articleRetrievalController.execute();
-            }
-        });
+        //Page
+
+        //Headlines
+
+        for (String headline: homeViewModel.getHomeState().getHeadline()) {
+            JLabel Headline = new JLabel(headline);
+            frame.add(Headline);
+        }
 
         frame.setJMenuBar(menuBar);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 200);
+        frame.pack();
         frame.setVisible(true);
+        Refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText();
+                articleRetrievalController.execute(searchText);
+            }
+        });
 
-        //Headlines
-
-        List headlines = new ArrayList<String>();
-        for
-
+        searchField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText();
+                articleRetrievalController.execute(searchText);
+            }
+        });
 
 
     }
-
-
-
 }
