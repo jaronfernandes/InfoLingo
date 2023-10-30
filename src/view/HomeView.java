@@ -85,7 +85,7 @@ public class HomeView extends JPanel{
 
         //Headlines
 
-        for (String headline: homeViewModel.getHomeState().getHeadline()) {
+        for (String headline: homeViewModel.getHomeState().getHeadlines()) {
             JLabel Headline = new JLabel(headline);
             frame.add(Headline);
         }
