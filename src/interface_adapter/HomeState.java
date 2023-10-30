@@ -1,11 +1,13 @@
 package interface_adapter;
 import entity.Article;
 
+import java.util.List;
+
 public class HomeState {
-    Article[] articles;
+    List<Article> articles;
     String articleRetrievalError;
 
-    public HomeState(Article[] articles) {
+    public HomeState(List<Article> articles) {
         this.articles = articles;
         this.articleRetrievalError = "";
     }
