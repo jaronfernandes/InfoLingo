@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary {
-    private ArticleRetrievalInputData inputData;
     private ArticleRetrievalOutputBoundary presenter;
-    private APIDataAccessObject articleRetrievalDataAccessObject;
+    private ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject;
 
-    public ArticleRetrievalInteractor(ArticleRetrievalInputData inputData, ArticleRetrievalOutputBoundary outputBoundary,
-                                      APIDataAccessObject articleRetrievalDataAccessObject) {
+    public ArticleRetrievalInteractor(ArticleRetrievalOutputBoundary outputBoundary,
+                                      ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject) {
         this.articleRetrievalDataAccessObject = articleRetrievalDataAccessObject;
-        this.inputData = inputData;
         this.presenter = outputBoundary;
     }
 
