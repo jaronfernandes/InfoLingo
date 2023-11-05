@@ -1,6 +1,7 @@
 package interface_adapter;
 import entity.Article;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeState {
@@ -11,6 +12,10 @@ public class HomeState {
     public HomeState(List<Article> articles) {
         this.articles = articles;
         this.articleRetrievalError = "";
+        this.headlines = new ArrayList<>();
+        for(int i = 0; i < articles.size(); i++){
+            this.headlines.add(articles.get(i).getHeadline());
+        }
     }
 
     public List<Article> getArticles() {
