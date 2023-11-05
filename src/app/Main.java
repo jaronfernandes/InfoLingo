@@ -21,48 +21,7 @@ public class Main {
         JFrame application = new JFrame("InfoLingo");
 
         // Menu
-            JTextField searchField = new JTextField("Search!",20);
-            searchField.setHorizontalAlignment(JTextField.CENTER);
-
-            final JMenuBar menuBar;
-            final JMenu PrefMenu;
-            final JButton refresh = new JButton("Refresh/Search");;
-            final JMenuItem LangMenu;
-            final JRadioButtonMenuItem EngButton, IceButton;
-            menuBar = new JMenuBar();
-
-
-            //Preferences
-            PrefMenu = new JMenu("Preferences");
-            PrefMenu.setMnemonic(KeyEvent.VK_P);
-            menuBar.add(PrefMenu);
-
-            //Languages submenu
-            LangMenu = new JMenu("Language");
-            LangMenu.setMnemonic(KeyEvent.VK_L);
-
-            ButtonGroup languages = new ButtonGroup();
-            EngButton = new JRadioButtonMenuItem("English");
-            EngButton.setMnemonic(KeyEvent.VK_E);
-            EngButton.setSelected(true);
-            languages.add(EngButton);
-            LangMenu.add(EngButton);
-
-            IceButton = new JRadioButtonMenuItem("Icelandic");
-            IceButton.setMnemonic(KeyEvent.VK_I);
-            languages.add(IceButton);
-            LangMenu.add(IceButton);
-
-            PrefMenu.add(LangMenu);
-
-            //Search Field
-            menuBar.add(searchField);
-
-            //Refresh/Search Button
-            refresh.setMnemonic(KeyEvent.VK_R);
-            menuBar.add(refresh);
-
-
+        final JMenuBar menuBar = getBar();
         application.setJMenuBar(menuBar);
 
         // menu end
@@ -90,5 +49,50 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+    }
+
+    private static JMenuBar getBar() {
+        JTextField searchField = new JTextField("Search!",20);
+        searchField.setHorizontalAlignment(JTextField.CENTER);
+
+        final JMenuBar menuBar;
+        final JMenu PrefMenu;
+        final JButton refresh = new JButton("Refresh/Search");
+        ;
+        final JMenuItem LangMenu;
+        final JRadioButtonMenuItem EngButton, IceButton;
+        menuBar = new JMenuBar();
+
+
+        //Preferences
+        PrefMenu = new JMenu("Preferences");
+        PrefMenu.setMnemonic(KeyEvent.VK_P);
+        menuBar.add(PrefMenu);
+
+        //Languages submenu
+        LangMenu = new JMenu("Language");
+        LangMenu.setMnemonic(KeyEvent.VK_L);
+
+        ButtonGroup languages = new ButtonGroup();
+        EngButton = new JRadioButtonMenuItem("English");
+        EngButton.setMnemonic(KeyEvent.VK_E);
+        EngButton.setSelected(true);
+        languages.add(EngButton);
+        LangMenu.add(EngButton);
+
+        IceButton = new JRadioButtonMenuItem("Icelandic");
+        IceButton.setMnemonic(KeyEvent.VK_I);
+        languages.add(IceButton);
+        LangMenu.add(IceButton);
+
+        PrefMenu.add(LangMenu);
+
+        //Search Field
+        menuBar.add(searchField);
+
+        //Refresh/Search Button
+        refresh.setMnemonic(KeyEvent.VK_R);
+        menuBar.add(refresh);
+        return menuBar;
     }
 }
