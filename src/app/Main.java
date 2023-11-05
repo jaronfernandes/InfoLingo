@@ -22,8 +22,11 @@ public class Main {
 
         // Menu
             JTextField searchField = new JTextField("Search!",20);
+            searchField.setHorizontalAlignment(JTextField.CENTER);
+
             final JMenuBar menuBar;
-            final JMenu PrefMenu, Refresh;
+            final JMenu PrefMenu;
+            final JButton refresh = new JButton("Refresh/Search");;
             final JMenuItem LangMenu;
             final JRadioButtonMenuItem EngButton, IceButton;
             menuBar = new JMenuBar();
@@ -52,15 +55,15 @@ public class Main {
 
             PrefMenu.add(LangMenu);
 
+            //Search Field
+            menuBar.add(searchField);
 
             //Refresh/Search Button
-            Refresh = new JMenu("Refresh/Search");
-            Refresh.setMnemonic(KeyEvent.VK_R);
-            menuBar.add(Refresh);
+            refresh.setMnemonic(KeyEvent.VK_R);
+            menuBar.add(refresh);
 
-            // this.add(searchField);
-            menuBar.add(searchField);
-            application.setJMenuBar(menuBar);
+
+        application.setJMenuBar(menuBar);
 
         // menu end
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
