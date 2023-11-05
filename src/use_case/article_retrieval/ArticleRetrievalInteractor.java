@@ -18,7 +18,7 @@ public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary
     public void execute(ArticleRetrievalInputData inputData) {
         List<Article> articles = articleRetrievalDataAccessObject.getArticles(inputData.getQuery());
 
-        if (articles.size() == 0) {
+        if (articles.isEmpty()) {
             presenter.prepareFailView("Failed to retrieve any articles!");
         }
         else {
