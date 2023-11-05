@@ -11,6 +11,7 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +19,50 @@ public class Main {
     public static void main(String[] args) {
         // Application window.
         JFrame application = new JFrame("InfoLingo");
+
+        // Menu
+            JTextField searchField = new JTextField("Search!",20);
+            final JMenuBar menuBar;
+            final JMenu PrefMenu, Refresh;
+            final JMenuItem LangMenu;
+            final JRadioButtonMenuItem EngButton, IceButton;
+            menuBar = new JMenuBar();
+
+
+            //Preferences
+            PrefMenu = new JMenu("Preferences");
+            PrefMenu.setMnemonic(KeyEvent.VK_P);
+            menuBar.add(PrefMenu);
+
+            //Languages submenu
+            LangMenu = new JMenu("Language");
+            LangMenu.setMnemonic(KeyEvent.VK_L);
+
+            ButtonGroup languages = new ButtonGroup();
+            EngButton = new JRadioButtonMenuItem("English");
+            EngButton.setMnemonic(KeyEvent.VK_E);
+            EngButton.setSelected(true);
+            languages.add(EngButton);
+            LangMenu.add(EngButton);
+
+            IceButton = new JRadioButtonMenuItem("Icelandic");
+            IceButton.setMnemonic(KeyEvent.VK_I);
+            languages.add(IceButton);
+            LangMenu.add(IceButton);
+
+            PrefMenu.add(LangMenu);
+
+
+            //Refresh/Search Button
+            Refresh = new JMenu("Refresh/Search");
+            Refresh.setMnemonic(KeyEvent.VK_R);
+            menuBar.add(Refresh);
+
+            // this.add(searchField);
+            menuBar.add(searchField);
+            application.setJMenuBar(menuBar);
+
+        // menu end
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -35,6 +80,8 @@ public class Main {
 
         // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
+        views.add(homeView, homeView.viewName);
+
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
