@@ -1,18 +1,20 @@
 package app;
 
 import data_access.APIDataAccessObject;
-import interface_adapter.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.ArticleRetrievalDataAccessInterface;
+import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import view.HomeView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+//<<<<<<< Updated upstream
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+//=======
+//>>>>>>> Stashed changes
 import java.util.ArrayList;
 
 public class Main {

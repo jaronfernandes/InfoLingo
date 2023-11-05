@@ -3,9 +3,8 @@ package data_access;
 import entity.Article;
 import entity.ArticleFactory;
 import entity.Source;
-import use_case.ArticleRetrievalDataAccessInterface;
+import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.json.*;
 
-import javax.print.URIException;
 import java.util.List;
 
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface {

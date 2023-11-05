@@ -1,9 +1,7 @@
-package use_case;
+package use_case.article_retrieval;
 
-import data_access.APIDataAccessObject;
 import entity.Article;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary {
