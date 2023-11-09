@@ -1,7 +1,4 @@
-package use_case;
-
-import use_case.ArticleRetrievalInputData;
-import java.util.List;
+package use_case.article_retrieval;
 
 public interface ArticleRetrievalInputBoundary {
     void execute(ArticleRetrievalInputData inputData);
