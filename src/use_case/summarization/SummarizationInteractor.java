@@ -18,8 +18,7 @@ public class SummarizationInteractor implements SummarizationInputBoundary {
 
     @Override
     public void execute(SummarizationInputData inputData) {
-        String summarizedText = summarizationDataAccessObject.summarizeArticle(inputData.getContent());
-
+        String summarizedText = summarizationDataAccessObject.summarizeArticle(inputData.getContent(), 1);
 
         if (summarizedText.equals(this.FAIL_TEXT)) {
             summarizationPresenter.prepareFailView("Could not summarise the article.");
