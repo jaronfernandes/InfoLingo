@@ -1,59 +1,78 @@
 package view;
 
-import interface_adapter.ArticleRetrievalController;
+import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
-import interface_adapter.ArticleRetrievalPresenter;
+import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
-public class HomeView extends JPanel{
+public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
-    private final JTextField searchField = new JTextField(20);
     HomeViewModel homeViewModel;
-    ArticleRetrievalController articleRetrievalController;
+    private ArticleRetrievalController articleRetrievalController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
 
 
 
 
     //Where the GUI is created:
-    JMenuBar menuBar;
-    JMenu PrefMenu, Refresh, Search;
-    JMenuItem LangMenu;
-    JRadioButtonMenuItem EngButton, IceButton;
-    JFrame frame;
-    JPanel news;
+
 
     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
         this.articleRetrievalController = controller;
         this.homeViewModel = homeViewModel;
-        homeViewModel.addPropertyChangeListener((PropertyChangeListener) this);
+        homeViewModel.addPropertyChangeListener(this);
+
+        //Page
+
+        //Headlines
+        // Menu
+        final JMenuBar menuBar = getBar();
+        this.add(menuBar);
 
 
+        for (String headline: homeViewModel.getHomeState().getHeadlines()) {
+            JLabel Headline = new JLabel(headline);
+            this.add(Headline);
+        }
+        //this.add(news);
 
-        // Menu section
-            //Create the menu bar.
+    }
+
+    private JMenuBar getBar() {
+        JTextField searchField = new JTextField("Search!",20);
+        searchField.setHorizontalAlignment(JTextField.CENTER);
+
+        final JMenuBar menuBar;
+        final JMenu PrefMenu;
+        final JButton refresh = new JButton("Refresh/Search");
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(refresh)) {
+                    articleRetrievalController.execute(searchField.getText());
+                }
+            }
+        });
+
+        final JMenuItem LangMenu;
+        final JRadioButtonMenuItem EngButton, IceButton;
         menuBar = new JMenuBar();
-        frame = new JFrame();
 
 
-            //Preferences
+        //Preferences
         PrefMenu = new JMenu("Preferences");
         PrefMenu.setMnemonic(KeyEvent.VK_P);
         menuBar.add(PrefMenu);
 
-            //Languages submenu
+        //Languages submenu
         LangMenu = new JMenu("Language");
         LangMenu.setMnemonic(KeyEvent.VK_L);
 
@@ -67,50 +86,21 @@ public class HomeView extends JPanel{
         IceButton = new JRadioButtonMenuItem("Icelandic");
         IceButton.setMnemonic(KeyEvent.VK_I);
         languages.add(IceButton);
-        PrefMenu.add(IceButton);
+        LangMenu.add(IceButton);
 
+        PrefMenu.add(LangMenu);
 
-            //Refresh Button
-        Refresh = new JMenu("Refresh");
-        Refresh.setMnemonic(KeyEvent.VK_R);
-        menuBar.add(Refresh);
+        //Search Field
+        menuBar.add(searchField);
 
-           //Search Bar
+        //Refresh/Search Button
+        refresh.setMnemonic(KeyEvent.VK_R);
+        menuBar.add(refresh);
+        return menuBar;
+    }
 
-        Search =  new JMenu("Search");
-        Refresh.setMnemonic(KeyEvent.VK_S);
-        menuBar.add(Search);
-
-        //Page
-
-        //Headlines
-
-        for (String headline: homeViewModel.getHomeState().getHeadlines()) {
-            JLabel Headline = new JLabel(headline);
-            frame.add(Headline);
-        }
-
-        frame.setJMenuBar(menuBar);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-        frame.pack();
-        frame.setVisible(true);
-        Refresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText();
-                articleRetrievalController.execute(searchText);
-            }
-        });
-
-        searchField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText();
-                articleRetrievalController.execute(searchText);
-            }
-        });
-
-
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        HomeState state = (HomeState) evt.getNewValue();
     }
 }

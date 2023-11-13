@@ -1,9 +1,7 @@
-package use_case;
+package use_case.article_retrieval;
 
-import data_access.APIDataAccessObject;
 import entity.Article;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary {
@@ -20,7 +18,7 @@ public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary
     public void execute(ArticleRetrievalInputData inputData) {
         List<Article> articles = articleRetrievalDataAccessObject.getArticles(inputData.getQuery());
 
-        if (articles.size() == 0) {
+        if (articles.isEmpty()) {
             presenter.prepareFailView("Failed to retrieve any articles!");
         }
         else {

@@ -1,6 +1,6 @@
-package interface_adapter;
-import use_case.ArticleRetrievalInputData;
-import use_case.ArticleRetrievalInputBoundary;
+package interface_adapter.article_retrieval;
+import use_case.article_retrieval.ArticleRetrievalInputData;
+import use_case.article_retrieval.ArticleRetrievalInputBoundary;
 
 public class ArticleRetrievalController {
     final ArticleRetrievalInputBoundary articleRetrievalInteractor;

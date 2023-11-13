@@ -1,7 +1,9 @@
-package interface_adapter;
+package interface_adapter.article_retrieval;
 
-import use_case.ArticleRetrievalOutputBoundary;
-import use_case.ArticleRetrievalOutputData;
+import interface_adapter.HomeState;
+import interface_adapter.HomeViewModel;
+import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
+import use_case.article_retrieval.ArticleRetrievalOutputData;
 import entity.Article;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
 
     @Override
     public void prepareSuccessView(ArticleRetrievalOutputData outputData) {
+        System.out.println("success");
         HomeState currentHomeState = homeViewModel.getHomeState();
         currentHomeState.setArticles(outputData.getArticles());
 
@@ -33,6 +36,7 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
 
     @Override
     public void prepareFailView(String error) {
+        System.out.println("failed");
         HomeState currentHomeState = homeViewModel.getHomeState();
         currentHomeState.setArticleRetrievalError(error);
         homeViewModel.firePropertyChanged();
