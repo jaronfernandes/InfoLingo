@@ -12,8 +12,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ArticleView extends JPanel implements PropertyChangeListener {
-    private SummarizationController summarizationController;
-    private ArticleViewModel articleViewModel;
+    private final SummarizationController summarizationController;
+    private final ArticleViewModel articleViewModel;
     public ArticleView(SummarizationController summarizationController, ArticleViewModel articleViewModel) {
         this.articleViewModel = articleViewModel;
         this.summarizationController = summarizationController;
@@ -27,16 +27,6 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     private JMenuBar getBar() {
         final JMenuBar menuBar;
         final JMenu preferencesMenu;
-
-        final JButton summarise = new JButton("Summarise");
-        summarise.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(summarise)) {
-                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(),);
-                }
-            }
-        });
 
         final JMenuItem languagesDropdown;
         final JRadioButtonMenuItem english, icelandic;
@@ -69,10 +59,26 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         preferencesMenu.add(languagesDropdown);
 
+        final JButton summarise = getSummariseButton(menuBar);
         // Add summarisation button.
         menuBar.add(summarise);
 
         return menuBar;
+    }
+
+    private JButton getSummariseButton(JMenuBar menuBar) {
+        final JButton summarise = new JButton("Summarise");
+        summarise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(summarise)) {
+                    JMenu preferencesMenu = menuBar.getMenu(0);
+                    JTextField numSentences = (JTextField) preferencesMenu.getMenuComponent(0);
+                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), Integer.parseInt(numSentences.getText()));
+                }
+            }
+        });
+        return summarise;
     }
 
     /**
