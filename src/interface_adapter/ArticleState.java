@@ -1,13 +1,13 @@
 package interface_adapter;
 
 public class ArticleState {
-    private String summarisedContent = "";
+    private String summarisedContent;
     private String summarisationError;
 
     private String headline = "";
     private String originalContent = "";
 
-    public void setSummarisedContent(String summarisedContent) {
+    public void setSummarisedContent(String originalContent) {
         this.summarisedContent = summarisedContent;
     }
 
