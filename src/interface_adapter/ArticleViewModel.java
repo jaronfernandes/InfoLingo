@@ -7,8 +7,9 @@ import java.beans.PropertyChangeSupport;
 public class ArticleViewModel extends ViewModel {
     private ArticleState articleState = new ArticleState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    public ArticleViewModel() {
+    public ArticleViewModel(ArticleState articleState) {
         super("article");
+        this.articleState = articleState;
     }
 
     public ArticleState getArticleState() {
