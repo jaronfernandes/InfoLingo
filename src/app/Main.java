@@ -1,11 +1,16 @@
 package app;
 
 import data_access.APIDataAccessObject;
+import entity.Article;
+import interface_adapter.ArticleViewModel;
+import interface_adapter.ArticleState;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
+import use_case.translation.TranslateAPIDataAccessInterface;
 import view.HomeView;
+import view.ArticleView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -38,13 +43,22 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
-        ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
+        ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());
+
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
 
         // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        viewManagerModel.setActiveView(homeView.viewName);
+        ArticleView articleView = TranslationUseCaseFactory.create(viewManagerModel, articleViewModel, articleRetrievalDataAccessObject);
+        views.add(articleView, articleView.viewName);
+
+        // TODO: FOR TESTING PURPOSES, COMMENT THIS WHEN DONE!
+        viewManagerModel.setActiveView(articleView.viewName);
+
+
+         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

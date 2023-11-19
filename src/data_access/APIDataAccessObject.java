@@ -119,13 +119,15 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
     public TranslatedArticle translateArticle(Article article, String language) {
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
         String translatedText = null;
+        String formattedText = String.join("%20", article.getContent().split(" "));
+        System.out.println(formattedText);
 
         // sample: https://api-free.deepl.com/v2/translate?auth_key=
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
         // &text=This%20is%20a%20Test.&target_lang=JA
         try {
             URI uri = new URI("https://api-free.deepl.com/v2/translate?auth_key=" + DEEPL_TRANSLATE_API_KEY +
-                    "&text=" + article.getContent() + "&target_lang=" + language);
+                    "&text=" + formattedText + "&target_lang=" + language);
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder().
                     uri(uri).

@@ -4,6 +4,8 @@ import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
+import interface_adapter.translation.TranslationController;
+import use_case.translation.TranslationInputBoundary;
 
 
 import javax.swing.*;
@@ -58,6 +60,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(refresh)) {
                     articleRetrievalController.execute(searchField.getText());
+
                 }
             }
         });
