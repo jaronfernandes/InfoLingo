@@ -1,13 +1,20 @@
 package use_case.translation;
 
 public class TranslationOutputData {
-    String translatedText;
+    String translatedHeadline;
+    String translatedContent;
 
-    public TranslationOutputData(String translatedText) {
-        this.translatedText = translatedText;
+    public TranslationOutputData(String translatedHeadline, String translatedContent) {
+
+        this.translatedHeadline = translatedHeadline;
+        this.translatedContent = translatedContent;
     }
 
-    public String getTranslatedText() {
-        return translatedText;
+    public String getTranslatedHeadline() {
+        return translatedHeadline;
+    }
+
+    public String getTranslatedContent() {
+        return translatedContent;
     }
 }
