@@ -133,13 +133,21 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
                     uri(uri).
                     GET().
                     build();
+            System.out.println("fail 1");
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("fail 2");
             String body = response.body();
+            System.out.println("fail 3");
             JSONObject data = new JSONObject(body);
 
+            System.out.println("fail 4");
+            System.out.println(data);
             JSONArray articles = data.getJSONArray("translations");
+            System.out.println("fail 5");
             JSONObject translation = articles.getJSONObject(0);
+            System.out.println("fail 6");
             String source_language = translation.getString("detected_source_language");
+            System.out.println("fail 7");
             translatedText = translation.getString("text");
         }
         catch (Exception e) {

@@ -58,7 +58,7 @@ public class Main {
         viewManagerModel.setActiveView(articleView.viewName);
 
 
-         viewManagerModel.setActiveView(homeView.viewName);
+//        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

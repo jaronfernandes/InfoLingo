@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class ArticleView extends JPanel implements PropertyChangeListener {
     public final String viewName = "Article";
@@ -47,27 +50,22 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     }
 
     private JMenuBar getBar() {
-        JTextField searchField = new JTextField("Search!",20);
-        searchField.setHorizontalAlignment(JTextField.CENTER);
+        final HashMap<String, String> languageMap = new HashMap<>();
 
-        final JMenuBar menuBar = new JMenuBar();
+        // ISO 639-2 Language Codes:
+        languageMap.put("English", "EN");
+        languageMap.put("Icelandic", "IS");
+        languageMap.put("Japanese", "JP");
+
+        final JMenuBar translateBar = new JMenuBar();
         final JMenu LangMenu = new JMenu("Languages");
         final JButton translate = new JButton("Translate Article");
 
-        menuBar.add(translate);
+        translateBar.add(LangMenu);
+        translateBar.add(translate);
 
-        translate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(translate)) {
-                    translationController.execute(article, "English");
-
-                }
-            }
-        });
         //Preferences
         LangMenu.setMnemonic(KeyEvent.VK_L);
-        menuBar.add(LangMenu);
         final JRadioButtonMenuItem EngButton, IceButton, JapButton;
 
         //Languages submenu
@@ -88,10 +86,34 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         languages.add(JapButton);
         LangMenu.add(JapButton);
 
-        //Search Field
-        menuBar.add(searchField);
+        translate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(translate)) {
+                    String langSelected = getLanguage(languages, languageMap);
+                    translationController.execute(article, langSelected);
 
-        return menuBar;
+                }
+            }
+        });
+
+        return translateBar;
+    }
+
+    private String getLanguage(ButtonGroup languages, HashMap<String, String> languageMap) {
+        Enumeration headerValues = languages.getElements();
+        Iterator<AbstractButton> values = headerValues.asIterator();
+
+        while (values.hasNext()) {
+            AbstractButton currentButton = (JRadioButtonMenuItem) values.next();
+
+            if (currentButton.isSelected()) {
+                String language = currentButton.getText();
+                return languageMap.get(language); // This is the language selected in ISO 639-2!
+            }
+        }
+
+        return "EN";  // English by default.
     }
 
     @Override
