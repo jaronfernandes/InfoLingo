@@ -1,6 +1,7 @@
 package interface_adapter.translation;
 
 import entity.Article;
+import interface_adapter.ArticleState;
 import interface_adapter.ArticleViewModel;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
@@ -23,6 +24,10 @@ public class TranslationPresenter implements TranslationOutputBoundary {
     public void prepareSuccessView(TranslationOutputData outputData) {
         // TODO: - TRANSLATION - Hook up success view!
         System.out.println("HIII");
+
+        ArticleState currentArticleState = articleViewModel.getArticleState();
+        currentArticleState.setHeadline(outputData.getTranslatedText());
+        currentArticleState.setOriginalContent(outputData.getTranslatedText());
 //        System.out.println("success");
 //        HomeState currentHomeState = homeViewModel.getHomeState();
 //        currentHomeState.setArticles(outputData.getArticles());

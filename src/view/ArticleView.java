@@ -38,7 +38,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         // TODO: CHANGE ARTICLE TO ACTUAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
         article = new Article(
-                "TEST Article - roblox gaming 123",
+                "Test Article - roblox gaming 123",
                 "some awesome roblox news amirite?",
                 new Source("Roblox", "EN"),
                 "keanu reeves",

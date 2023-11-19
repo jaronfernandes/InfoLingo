@@ -12,7 +12,10 @@ import entity.Source;
 
 import entity.TranslatedArticle;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
+
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -124,27 +127,29 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
         // &text=This%20is%20a%20Test.&target_lang=JA
         try {
-            String formattedText = String.join("%20", article.getContent().split(" "));
-            System.out.println(formattedText);
-
-            URI uri = new URI("https://api-free.deepl.com/v2/translate?auth_key=" + DEEPL_TRANSLATE_API_KEY +
-                    "&text=" + formattedText + "&target_lang=" + language);
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder().
-                    uri(uri).
-                    GET().
-                    build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String body = response.body();
-            JSONObject data = new JSONObject(body);
-
-            System.out.println(data);
-            System.out.println(language);
-            JSONArray articles = data.getJSONArray("translations");
-            JSONObject translation = articles.getJSONObject(0);
-            String source_language = translation.getString("detected_source_language");
-            translatedHeadline = translation.getString("text");
-            translatedContent = translation.getString("text");
+//            String formattedText = String.join("%20", article.getContent().split(" "));
+//            System.out.println(formattedText);
+//
+//            URI uri = new URI("https://api-free.deepl.com/v2/translate?auth_key=" + DEEPL_TRANSLATE_API_KEY +
+//                    "&text=" + formattedText + "&target_lang=" + language);
+//            HttpClient client = HttpClient.newHttpClient();
+//            HttpRequest request = HttpRequest.newBuilder().
+//                    uri(uri).
+//                    GET().
+//                    build();
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//            String body = response.body();
+//            JSONObject data = new JSONObject(body);
+//
+//            System.out.println(data);
+//            System.out.println(language);
+//            JSONArray articles = data.getJSONArray("translations");
+//            JSONObject translation = articles.getJSONObject(0);
+//            String source_language = translation.getString("detected_source_language");
+//            translatedHeadline = translation.getString("text");
+//            translatedContent = translation.getString("text");
+            translatedHeadline = translateText(article.getHeadline(), language)[0];
+            translatedContent = translateText(article.getContent(), language)[0];
         }
         catch (Exception e) {
             // try using Google's instead as a backup! (due to char limit on DeepL)
@@ -161,5 +166,29 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         }
         return translatedArticleFactory.create(translatedHeadline, translatedContent, article.getSource(), language,
                 article.getAuthor(), article.getURL());
+    }
+
+    private String[] translateText(String text, String language) throws URISyntaxException, IOException, InterruptedException {
+        String formattedText = String.join("%20", text.split(" "));
+        System.out.println(formattedText);
+
+        URI uri = new URI("https://api-free.deepl.com/v2/translate?auth_key=" + DEEPL_TRANSLATE_API_KEY +
+                "&text=" + formattedText + "&target_lang=" + language);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().
+                uri(uri).
+                GET().
+                build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String body = response.body();
+        JSONObject data = new JSONObject(body);
+
+        System.out.println(data);
+        System.out.println(language);
+        JSONArray articles = data.getJSONArray("translations");
+        JSONObject translation = articles.getJSONObject(0);
+        String source_language = translation.getString("detected_source_language");
+
+        return new String[]{translation.getString("text"), source_language};
     }
 }
