@@ -16,6 +16,8 @@ public class TranslationInteractor implements TranslationInputBoundary {
     public void execute(TranslationInputData inputData) {
         TranslatedArticle article = translationDataAccessObject.translateArticle(inputData.getArticle(), inputData.getLanguage());
 
+        System.out.println(article.getHeadline());
+        System.out.println(article.getContent());
         // TODO: figure out what the fail view would be
         // TODO: remove this 1 == 0 nonsense (i dont want to activate fail view yet)
         if (1 == 0) {

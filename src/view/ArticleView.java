@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.security.Key;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,7 +56,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         // ISO 639-2 Language Codes:
         languageMap.put("English", "EN");
         languageMap.put("Icelandic", "IS");
-        languageMap.put("Japanese", "JP");
+        languageMap.put("Japanese", "JA");
 
         final JMenuBar translateBar = new JMenuBar();
         final JMenu LangMenu = new JMenu("Languages");
@@ -66,25 +67,44 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         //Preferences
         LangMenu.setMnemonic(KeyEvent.VK_L);
-        final JRadioButtonMenuItem EngButton, IceButton, JapButton;
 
         //Languages submenu
         ButtonGroup languages = new ButtonGroup();
-        EngButton = new JRadioButtonMenuItem("English");
-        EngButton.setMnemonic(KeyEvent.VK_E);
-        EngButton.setSelected(true);
-        languages.add(EngButton);
-        LangMenu.add(EngButton);
 
-        IceButton = new JRadioButtonMenuItem("Icelandic");
-        IceButton.setMnemonic(KeyEvent.VK_I);
-        languages.add(IceButton);
-        LangMenu.add(IceButton);
+        for (String key : languageMap.keySet()) {
+            JRadioButtonMenuItem tempLanguageButton = new JRadioButtonMenuItem(key);
+            switch (key.charAt(0)) {
+                case 'E' -> {
+                    tempLanguageButton.setMnemonic(KeyEvent.VK_E);
+                    tempLanguageButton.setSelected(true);
+                }
+                case 'I' -> // ICELANDIC NOT IN API
+                        tempLanguageButton.setMnemonic(KeyEvent.VK_I);
+                case 'J' -> // ICELANDIC NOT IN API
+                        tempLanguageButton.setMnemonic(KeyEvent.VK_J);
+                default -> {
+                    tempLanguageButton.setMnemonic(KeyEvent.VK_0);
+                }
+            }
 
-        JapButton = new JRadioButtonMenuItem("Japanese");
-        JapButton.setMnemonic(KeyEvent.VK_J);
-        languages.add(JapButton);
-        LangMenu.add(JapButton);
+            languages.add(tempLanguageButton);
+            LangMenu.add(tempLanguageButton);
+        }
+//        EngButton = new JRadioButtonMenuItem("English");
+//        EngButton.setMnemonic(KeyEvent.VK_E);
+//        EngButton.setSelected(true);
+//        languages.add(EngButton);
+//        LangMenu.add(EngButton);
+//
+//        IceButton = new JRadioButtonMenuItem("Icelandic");
+//        IceButton.setMnemonic(KeyEvent.VK_I);
+//        languages.add(IceButton);
+//        LangMenu.add(IceButton);
+//
+//        JapButton = new JRadioButtonMenuItem("Japanese");
+//        JapButton.setMnemonic(KeyEvent.VK_J);
+//        languages.add(JapButton);
+//        LangMenu.add(JapButton);
 
         translate.addActionListener(new ActionListener() {
             @Override
@@ -92,7 +112,6 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 if (e.getSource().equals(translate)) {
                     String langSelected = getLanguage(languages, languageMap);
                     translationController.execute(article, langSelected);
-
                 }
             }
         });
