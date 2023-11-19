@@ -17,10 +17,17 @@ public class TranslationInteractor implements TranslationInputBoundary {
         try {
             TranslatedArticle article = translationDataAccessObject.translateArticle(inputData.getArticle(), inputData.getLanguage());
 
-            System.out.println(article.getHeadline());
-            System.out.println(article.getContent());
+//            System.out.println(article.getHeadline());
+//            System.out.println(article.getContent());
+//            System.out.println(article.getLanguage());
 
-            TranslationOutputData outputData = new TranslationOutputData(article.getHeadline(), article.getContent());
+            TranslationOutputData outputData =
+                    new TranslationOutputData(
+                            article.getHeadline(),
+                            article.getContent(),
+                            article.getLanguage()
+                    );
+
             presenter.prepareSuccessView(outputData);
         }
         // NullPointerException is thrown if something went wrong with the translation!

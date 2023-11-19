@@ -13,6 +13,7 @@ import interface_adapter.translation.TranslationPresenter;
 
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,8 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     ArticleViewModel articleViewModel;
     private TranslationController translationController;
     TranslationPresenter articleRetrievalPresenter;
+    private JTextPane headlineUI;
+    private JTextPane contentUI;
 
     public ArticleView(TranslationController controller, ArticleViewModel articleViewModel) {
         // TODO: - TRANSLATION - only created the file so intellij stops complaining (for now)
@@ -37,7 +40,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         this.articleViewModel = articleViewModel;
         articleViewModel.addPropertyChangeListener(this);
 
-        // TODO: CHANGE ARTICLE TO ACTUAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
+        // TODO: CHANGE ARTICLE TO ACTUAL ORIGINAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
         article = new Article(
                 "Test Article - roblox gaming 123",
                 "some awesome roblox news amirite?",
@@ -48,7 +51,23 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
 
         final JMenuBar menuBar = getBar();
-        this.add(menuBar);
+
+        final JTextPane headline = new JTextPane();
+        headline.setEditable(false);
+        headline.setText(article.getHeadline());
+        headlineUI = headline;
+
+        final JTextPane content = new JTextPane();
+        content.setEditable(false);
+        content.setText(article.getContent());
+        contentUI = content;
+
+        this.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+        this.setLayout(new GridLayout(0, 1));
+
+        this.add(menuBar, BorderLayout.CENTER);
+        this.add(headline, BorderLayout.CENTER);
+        this.add(content, BorderLayout.CENTER);
     }
 
     private JMenuBar getBar() {
@@ -57,6 +76,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         // ISO 639-2 Language Codes:
         languageMap.put("English", "EN");
         languageMap.put("Icelandic", "IS");
+        languageMap.put("Chinese", "ZH");
         languageMap.put("Japanese", "JA");
 
         final JMenuBar translateBar = new JMenuBar();
@@ -91,21 +111,6 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             languages.add(tempLanguageButton);
             LangMenu.add(tempLanguageButton);
         }
-//        EngButton = new JRadioButtonMenuItem("English");
-//        EngButton.setMnemonic(KeyEvent.VK_E);
-//        EngButton.setSelected(true);
-//        languages.add(EngButton);
-//        LangMenu.add(EngButton);
-//
-//        IceButton = new JRadioButtonMenuItem("Icelandic");
-//        IceButton.setMnemonic(KeyEvent.VK_I);
-//        languages.add(IceButton);
-//        LangMenu.add(IceButton);
-//
-//        JapButton = new JRadioButtonMenuItem("Japanese");
-//        JapButton.setMnemonic(KeyEvent.VK_J);
-//        languages.add(JapButton);
-//        LangMenu.add(JapButton);
 
         translate.addActionListener(new ActionListener() {
             @Override
@@ -138,12 +143,31 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        final HashMap<String, String> translationSuccessful = new HashMap<>();
+
+        // ISO 639-2 Language Codes:
+        translationSuccessful.put("EN", "");
+        translationSuccessful.put("IS", " | Þýðing tókst!");
+        translationSuccessful.put("IS", " | 翻译成功！");
+        translationSuccessful.put("JA", " | 翻訳が成功しました!");
+
         ArticleState state = (ArticleState) evt.getNewValue();
-        System.out.println("hi property change!!");
-        System.out.println(evt.getPropertyName());
+
+//        System.out.println("hi property change!!");
+//        System.out.println(evt.getPropertyName());
+
         if (evt.getPropertyName().equals("translationArticleUpdate")) {
 //            JOptionPane.showMessageDialog(this, state.getUsernameError());
-            JOptionPane.showMessageDialog(this, "yay it worked!");
+            JOptionPane.showMessageDialog(this,
+                    "Translation Successful!" + translationSuccessful.get(state.getTranslatedLanguage())
+                    + "\n"
+                    + state.getTranslatedHeadline()
+                    + "\n\n"
+                    + state.getTranslatedContent()
+            );
+
+            headlineUI.setText(state.getTranslatedHeadline());
+            contentUI.setText(state.getTranslatedContent());
         }
 //        if (evt.getPropertyName().equals("clear")) {
 //            System.out.println("hiii");

@@ -54,9 +54,8 @@ public class Main {
         ArticleView articleView = TranslationUseCaseFactory.create(viewManagerModel, articleViewModel, articleRetrievalDataAccessObject);
         views.add(articleView, articleView.viewName);
 
-        // TODO: FOR TESTING PURPOSES, COMMENT THIS WHEN DONE!
+        // TODO: FOR ARTICLEVIEW TESTING PURPOSES ONLY, COMMENT THIS PART OUT WHEN DONE!
         viewManagerModel.setActiveView(articleView.viewName);
-
 
 //        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
