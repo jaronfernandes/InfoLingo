@@ -22,7 +22,7 @@ public class ArticleViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.articleState);
+        support.firePropertyChange("translationArticleUpdate", null, this.articleState);
     }
 
     @Override

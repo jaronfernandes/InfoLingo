@@ -2,6 +2,7 @@ package view;
 
 import entity.Article;
 import entity.Source;
+import interface_adapter.ArticleState;
 import interface_adapter.ArticleViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
@@ -137,6 +138,16 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        ArticleState state = (ArticleState) evt.getNewValue();
+        System.out.println("hi property change!!");
+        System.out.println(evt.getPropertyName());
+        if (evt.getPropertyName().equals("translationArticleUpdate")) {
+//            JOptionPane.showMessageDialog(this, state.getUsernameError());
+            JOptionPane.showMessageDialog(this, "yay it worked!");
+        }
+//        if (evt.getPropertyName().equals("clear")) {
+//            System.out.println("hiii");
+//            JOptionPane.showMessageDialog(this, "Cleared users:\n"+state.getUsername());
+//        }
     }
 }

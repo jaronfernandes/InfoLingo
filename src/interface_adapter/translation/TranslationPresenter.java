@@ -23,11 +23,13 @@ public class TranslationPresenter implements TranslationOutputBoundary {
     @Override
     public void prepareSuccessView(TranslationOutputData outputData) {
         // TODO: - TRANSLATION - Hook up success view!
-        System.out.println("HIII");
+        System.out.println("HIII YAYYY");
 
         ArticleState currentArticleState = articleViewModel.getArticleState();
-        currentArticleState.setHeadline(outputData.getTranslatedText());
-        currentArticleState.setOriginalContent(outputData.getTranslatedText());
+        currentArticleState.setHeadline(outputData.getTranslatedHeadline());
+        currentArticleState.setOriginalContent(outputData.getTranslatedContent());
+
+        articleViewModel.firePropertyChanged();
 //        System.out.println("success");
 //        HomeState currentHomeState = homeViewModel.getHomeState();
 //        currentHomeState.setArticles(outputData.getArticles());
@@ -46,6 +48,7 @@ public class TranslationPresenter implements TranslationOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        System.out.println("you are such a failure");
         // TODO: - TRANSLATION - Hook up fail view!
 //        System.out.println("failed");
 //        HomeState currentHomeState = homeViewModel.getHomeState();
