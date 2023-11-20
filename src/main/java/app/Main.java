@@ -1,10 +1,10 @@
 package app;
 
 import data_access.APIDataAccessObject;
-import interface_adapter.HomeState;
-import interface_adapter.HomeViewModel;
-import interface_adapter.ViewManagerModel;
+import data_access.SummarisationDataAccessObject;
+import interface_adapter.*;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
+import view.ArticleView;
 import view.HomeView;
 import view.ViewManager;
 
@@ -50,6 +50,4 @@ public class Main {
         application.pack();
         application.setVisible(true);
     }
-
-
 }
