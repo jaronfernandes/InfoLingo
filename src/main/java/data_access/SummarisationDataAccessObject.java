@@ -1,6 +1,10 @@
 package data_access;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 import org.json.JSONObject;
+import com.google.gson.JsonParser;
 import use_case.summarization.SummarizationDataAccessInterface;
 
 import java.io.BufferedReader;
@@ -26,32 +30,6 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
     public String summarizeArticle(String content, Integer length) {
         String summarisedContent = "";
 
-        String processedContent = String.join("%20", content.split(" "));
-//        System.out.println(processedContent);
-
-        try {
-            URI uri = new URI(baseUrl + "&key=" + API_TOKEN + "&txt=" + processedContent + "&sentences=" + length + "&of=json");
-            HttpClient httpClient = HttpClient.newHttpClient();
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(uri).GET().build();
-            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            String body = httpResponse.body();
-            JSONObject data = new JSONObject(body);
-            summarisedContent = data.getString("summary");
-        } catch (Exception e) {
-            System.out.println("Couldn't summarise content because of the following error - " + e.getMessage() + ".");
-        }
-
-        return summarisedContent;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(summarizeArticleTest("One of the biggest philosophical traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much.", 1));
-    }
-
-    public static String summarizeArticleTest(String content, Integer length) {
-        String summarisedContent = "";
-
         try {
             URL url = new URL(baseUrl);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -66,7 +44,7 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
 //            System.out.println(httpURLConnection.getResponseCode());
             httpURLConnection.setDoOutput(true);
 
-            String body = "{\"language\": \"auto\", \"text\": \"string\", \"min_length\": 5, \"max_length\": 100}";
+            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": 5, \"max_length\": 100}";
 
             try {
                 OutputStream os = httpURLConnection.getOutputStream();
@@ -92,6 +70,12 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
                 while ((currentLine = bufferedReader.readLine()) != null) {
                     response.append(currentLine.trim());
                 }
+//                System.out.println(response);
+
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject = jsonParser.parse(response.toString()).getAsJsonObject();
+                summarisedContent = jsonObject.get("result").getAsString();
+                System.out.println(summarisedContent);
 
                 httpURLConnection.disconnect();
             } catch (Exception e) {
