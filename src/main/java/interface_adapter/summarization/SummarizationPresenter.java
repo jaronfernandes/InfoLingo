@@ -19,7 +19,11 @@ public class SummarizationPresenter implements SummarizationOutputBoundary {
     @Override
     public void prepareSuccessView(SummarizationOutputData outputData) {
         ArticleState currentArticleState = articleViewModel.getArticleState();
+
+        System.out.println("Presenter: " + outputData.getSummarizedText());
+
         currentArticleState.setSummarisedContent(outputData.getSummarizedText());
+
         articleViewModel.firePropertyChanged();
     }
 
