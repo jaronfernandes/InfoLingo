@@ -31,6 +31,7 @@ import use_case.translation.TranslateAPIDataAccessInterface;
 import javax.print.URIException;
 import java.lang.Math;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, SummarizationDataAccessInterface, TranslateAPIDataAccessInterface {
@@ -38,6 +39,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
     private final Integer numArticles = 10;
     private static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
     private static String DEEPL_TRANSLATE_API_KEY = "8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx";
+    private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
     @Override
     public List<Article> getArticles(String rawSearchTerm) {
@@ -126,6 +128,12 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         // sample: https://api-free.deepl.com/v2/translate?auth_key=
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
         // &text=This%20is%20a%20Test.&target_lang=JA
+        if (storedTranslatedArticles.containsKey(language)) {
+            if (storedTranslatedArticles.get(language).containsKey(article)) {
+                return storedTranslatedArticles.get(language).get(article);
+            }
+        }
+
         try {
             translatedHeadline = translateText(article.getHeadline(), language);
             translatedContent = translateText(article.getContent(), language);
@@ -143,8 +151,25 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             // Throw a null pointer exception if unable to retrieve any translated text.
             throw new NullPointerException();
         }
-        return translatedArticleFactory.create(translatedHeadline, translatedContent, article.getSource(), language,
-                article.getAuthor(), article.getURL());
+        TranslatedArticle finishedTranslatedArticle = translatedArticleFactory.create(
+                translatedHeadline,
+                translatedContent,
+                article.getSource(),
+                language,
+                article.getAuthor(),
+                article.getURL()
+        );
+
+        if (storedTranslatedArticles.containsKey(language)) {
+            storedTranslatedArticles.get(language).put(article, finishedTranslatedArticle);
+        }
+        else {
+            HashMap<Article, TranslatedArticle> newTranslatedArticles = new HashMap<>();
+            newTranslatedArticles.put(article, finishedTranslatedArticle);
+            storedTranslatedArticles.put(language, newTranslatedArticles);
+        }
+
+        return finishedTranslatedArticle;
     }
 
     private String translateText(String text, String language) throws URISyntaxException, IOException, InterruptedException {
