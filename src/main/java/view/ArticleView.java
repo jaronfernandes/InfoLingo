@@ -94,6 +94,8 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             ArticleState articleState = (ArticleState) state;
             if (articleState.getSummarisationError() != null) {
                 JOptionPane.showMessageDialog(this, articleState.getSummarisationError());
+            } else {
+                JOptionPane.showMessageDialog(this, articleState.getSummarisedContent());
             }
         } catch (ClassCastException e) {
 
