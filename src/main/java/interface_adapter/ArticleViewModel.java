@@ -22,6 +22,7 @@ public class ArticleViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
+        System.out.println("View Model: " + articleState.getSummarisedContent());
         support.firePropertyChange("state", null, this.articleState);
     }
 

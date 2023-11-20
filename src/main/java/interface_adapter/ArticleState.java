@@ -7,7 +7,7 @@ public class ArticleState {
     private String headline = "";
     private String originalContent = "";
 
-    public void setSummarisedContent(String originalContent) {
+    public void setSummarisedContent(String summarisedContent) {
         this.summarisedContent = summarisedContent;
     }
 
