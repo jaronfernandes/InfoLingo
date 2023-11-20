@@ -1,20 +1,20 @@
 package use_case.grouping;
 
 import entity.*;
-import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
-import use_case.article_retrieval.ArticleRetrievalOutputData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GroupingInteractor implements GroupingInputBoundary{
 
-    private GroupingOutputBoundary presenter;
+    private final GroupingOutputBoundary presenter;
+
 
     public GroupingInteractor(GroupingOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
+    @Override
     public void execute(GroupingInputData inputData) {
         GroupingFactory groupingFactory = new GroupingFactory();
         HeadlineMapFactory headlineMapFactory = new HeadlineMapFactory();
