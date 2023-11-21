@@ -19,11 +19,11 @@ public class GroupingState {
         }
     }
 
-    public List<Grouping> getArticles() {
+    public List<Grouping> getGroupings() {
         return groupings;
     }
 
-    public void setArticles(List<Grouping> groupings) {
+    public void setGroupings(List<Grouping> groupings) {
         this.groupings = groupings;
     }
 
