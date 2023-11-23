@@ -6,7 +6,6 @@ public class ArticleState {
 
     private String headline = "";
     private String originalContent = "";
-
     private String translatedHeadline;
     private String translatedContent;
     private String translatedLanguage;
@@ -27,7 +26,7 @@ public class ArticleState {
         return translatedContent;
     }
 
-    public void setSummarisedContent(String originalContent) {
+    public void setSummarisedContent(String summarisedContent) {
         this.summarisedContent = summarisedContent;
     }
 

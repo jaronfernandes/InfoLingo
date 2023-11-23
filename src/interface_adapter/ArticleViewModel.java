@@ -21,8 +21,13 @@ public class ArticleViewModel extends ViewModel {
     }
 
     @Override
-    public void firePropertyChanged() {
-        support.firePropertyChange("translationArticleUpdate", null, this.articleState);
+    public void firePropertyChanged(String eventName) {
+        /*
+        translationArticleUpdate
+        summarizationUpdate
+         */
+        support.firePropertyChange(eventName, null, this.articleState);
+        System.out.println("View Model: " + articleState.getSummarisedContent());
     }
 
     @Override

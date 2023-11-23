@@ -21,11 +21,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     private ArticleRetrievalController articleRetrievalController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
 
-
-
-
     //Where the GUI is created:
-
 
     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
         this.articleRetrievalController = controller;

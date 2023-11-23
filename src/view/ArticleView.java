@@ -15,6 +15,11 @@ import interface_adapter.translation.TranslationPresenter;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import interface_adapter.ArticleState;
+import interface_adapter.ArticleViewModel;
+import interface_adapter.summarization.SummarizationController;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,14 +35,18 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     private Article article;
     ArticleViewModel articleViewModel;
     private TranslationController translationController;
+    private SummarizationController summarizationController;
     TranslationPresenter articleRetrievalPresenter;
     private JTextPane headlineUI;
     private JTextPane contentUI;
 
-    public ArticleView(TranslationController controller, ArticleViewModel articleViewModel) {
+    public ArticleView(TranslationController controller,
+                       ArticleViewModel articleViewModel,
+                       SummarizationController summarizationController) {
         // TODO: - TRANSLATION - only created the file so intellij stops complaining (for now)
         this.translationController = controller;
         this.articleViewModel = articleViewModel;
+        this.summarizationController = summarizationController;
         articleViewModel.addPropertyChangeListener(this);
 
         // TODO: CHANGE ARTICLE TO ACTUAL ORIGINAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
@@ -85,6 +94,14 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         translateBar.add(LangMenu);
         translateBar.add(translate);
+
+        // Number of sentences
+        JTextField numSentences = new JTextField("Number of Sentences");
+        translateBar.add(numSentences);
+
+        final JButton summarise = getSummariseButton(translateBar);
+        // Add summarisation button.
+        translateBar.add(summarise);
 
         //Preferences
         LangMenu.setMnemonic(KeyEvent.VK_L);
@@ -141,6 +158,21 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         return "EN";  // English by default.
     }
 
+    private JButton getSummariseButton(JMenuBar menuBar) {
+        final JButton summarise = new JButton("Summarise");
+        summarise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(summarise)) {
+                    JMenu preferencesMenu = menuBar.getMenu(0);
+                    JTextField numSentences = (JTextField) preferencesMenu.getMenuComponent(0);
+                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), Integer.parseInt(numSentences.getText()));
+                }
+            }
+        });
+        return summarise;
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final HashMap<String, String> translationSuccessful = new HashMap<>();
@@ -151,27 +183,31 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         translationSuccessful.put("IS", " | 翻译成功！");
         translationSuccessful.put("JA", " | 翻訳が成功しました!");
 
-        ArticleState state = (ArticleState) evt.getNewValue();
 
-//        System.out.println("hi property change!!");
-//        System.out.println(evt.getPropertyName());
+        try {
+            ArticleState state = (ArticleState) evt.getNewValue();
 
-        if (evt.getPropertyName().equals("translationArticleUpdate")) {
-//            JOptionPane.showMessageDialog(this, state.getUsernameError());
-            JOptionPane.showMessageDialog(this,
-                    "Translation Successful!" + translationSuccessful.get(state.getTranslatedLanguage())
-                    + "\n"
-                    + state.getTranslatedHeadline()
-                    + "\n\n"
-                    + state.getTranslatedContent()
-            );
+            if (evt.getPropertyName().equals("translationArticleUpdate")) {
+                JOptionPane.showMessageDialog(this,
+                        "Translation Successful!" + translationSuccessful.get(state.getTranslatedLanguage())
+                                + "\n"
+                                + state.getTranslatedHeadline()
+                                + "\n\n"
+                                + state.getTranslatedContent()
+                );
 
-            headlineUI.setText(state.getTranslatedHeadline());
-            contentUI.setText(state.getTranslatedContent());
+                headlineUI.setText(state.getTranslatedHeadline());
+                contentUI.setText(state.getTranslatedContent());
+            }
+            else if (evt.getPropertyName().equals("summarizationUpdate")) {
+                if (state.getSummarisationError() != null) {
+                    JOptionPane.showMessageDialog(this, state.getSummarisationError());
+                } else {
+                    JOptionPane.showMessageDialog(this, state.getSummarisedContent());
+                }
+            }
+        } catch (ClassCastException e) {
+
         }
-//        if (evt.getPropertyName().equals("clear")) {
-//            System.out.println("hiii");
-//            JOptionPane.showMessageDialog(this, "Cleared users:\n"+state.getUsername());
-//        }
     }
 }

@@ -7,25 +7,25 @@ import java.util.List;
 public class SummarizationInteractor implements SummarizationInputBoundary {
     private SummarizationOutputBoundary presenter;
     private SummarizationDataAccessInterface summarizationDataAccessObject;
+    private SummarizationOutputBoundary summarizationPresenter;
+    private String FAIL_TEXT = "";
 
     public SummarizationInteractor(SummarizationOutputBoundary outputBoundary,
                                    SummarizationDataAccessInterface articleRetrievalDataAccessObject) {
         this.summarizationDataAccessObject = articleRetrievalDataAccessObject;
-        this.presenter = outputBoundary;
+        this.summarizationPresenter = outputBoundary;
     }
 
     @Override
     public void execute(SummarizationInputData inputData) {
-        String summarizedText = summarizationDataAccessObject.summarizeArticle(inputData.getContent());
+        String summarizedText = summarizationDataAccessObject.summarizeArticle(inputData.getContent(), 1);
 
-        // TODO: figure out what the fail view would be
-        // TODO: remove this 1 == 0 nonsense (i dont want to activate fail view yet)
-        if (1 == 0) {
-            presenter.prepareFailView("Failed to retrieve any articles!");
+        if (summarizedText.equals(this.FAIL_TEXT)) {
+            summarizationPresenter.prepareFailView("Could not summarise the article.");
         }
         else {
             SummarizationOutputData outputData = new SummarizationOutputData(summarizedText);
-            presenter.prepareSuccessView(outputData);
+            summarizationPresenter.prepareSuccessView(outputData);
         }
     }
 }

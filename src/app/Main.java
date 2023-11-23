@@ -9,19 +9,20 @@ import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import use_case.translation.TranslateAPIDataAccessInterface;
+import data_access.SummarisationDataAccessObject;
+import interface_adapter.*;
+import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
+import view.ArticleView;
 import view.HomeView;
 import view.ArticleView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-//<<<<<<< Updated upstream
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-//=======
-//>>>>>>> Stashed changes
 import java.util.ArrayList;
 
 public class Main {
@@ -63,6 +64,4 @@ public class Main {
         application.pack();
         application.setVisible(true);
     }
-
-
 }
