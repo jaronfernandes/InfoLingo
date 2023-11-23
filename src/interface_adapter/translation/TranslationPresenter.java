@@ -30,7 +30,7 @@ public class TranslationPresenter implements TranslationOutputBoundary {
         currentArticleState.setTranslatedContent(outputData.getTranslatedContent());
         currentArticleState.setTranslatedLanguage(outputData.getLanguage());
 
-        articleViewModel.firePropertyChanged();
+        articleViewModel.firePropertyChanged("translationArticleUpdate");
 //        System.out.println("success");
 //        HomeState currentHomeState = homeViewModel.getHomeState();
 //        currentHomeState.setArticles(outputData.getArticles());
@@ -51,9 +51,6 @@ public class TranslationPresenter implements TranslationOutputBoundary {
     public void prepareFailView(String error) {
         System.out.println("you are such a failure");
         // TODO: - TRANSLATION - Hook up fail view!
-//        System.out.println("failed");
-//        HomeState currentHomeState = homeViewModel.getHomeState();
-//        currentHomeState.setArticleRetrievalError(error);
-//        homeViewModel.firePropertyChanged();
+        articleViewModel.firePropertyChanged("failedTranslationArticleUpdate");
     }
 }
