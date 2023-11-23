@@ -164,8 +164,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(summarise)) {
-                    JMenu preferencesMenu = menuBar.getMenu(0);
-                    JTextField numSentences = (JTextField) preferencesMenu.getMenuComponent(0);
+                    JTextField numSentences = (JTextField) menuBar.getComponent(2);
                     summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), Integer.parseInt(numSentences.getText()));
                 }
             }

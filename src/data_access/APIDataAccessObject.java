@@ -34,7 +34,7 @@ import java.lang.Math;
 import java.util.HashMap;
 import java.util.List;
 
-public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, SummarizationDataAccessInterface, TranslateAPIDataAccessInterface {
+public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, TranslateAPIDataAccessInterface {
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private final Integer numArticles = 10;
     private static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
@@ -109,15 +109,6 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             System.out.println(e.getMessage());
             return "N.A.";
         }
-    }
-
-    @Override
-    public String summarizeArticle(String content) {
-        String summarizedContent = "";
-
-        // TODO: API call for summarizing content
-
-        return summarizedContent;
     }
 
     @Override
