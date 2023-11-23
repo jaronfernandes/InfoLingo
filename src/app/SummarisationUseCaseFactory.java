@@ -14,7 +14,11 @@ import use_case.summarization.SummarizationOutputBoundary;
 import view.ArticleView;
 
 public class SummarisationUseCaseFactory {
-    public static ArticleView create(ViewManagerModel viewManagerModel, ArticleViewModel articleViewModel, SummarizationDataAccessInterface summarizationDataAccessObject) {
+    public static ArticleView create(ViewManagerModel viewManagerModel,
+                                     ArticleViewModel articleViewModel,
+                                     SummarizationDataAccessInterface summarizationDataAccessObject,
+
+                                     ) {
         SummarizationController summarizationController = createSummarisationUseCase(viewManagerModel, articleViewModel, summarizationDataAccessObject);
         return new ArticleView(summarizationController, articleViewModel);
     }
