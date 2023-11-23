@@ -31,7 +31,7 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
 
         // Set headlines.
         currentHomeState.setHeadlines(headlines);
-        homeViewModel.firePropertyChanged();
+        homeViewModel.firePropertyChanged("ArticleRetrieval");
     }
 
     @Override
@@ -39,6 +39,6 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
         System.out.println("failed");
         HomeState currentHomeState = homeViewModel.getHomeState();
         currentHomeState.setArticleRetrievalError(error);
-        homeViewModel.firePropertyChanged();
+        homeViewModel.firePropertyChanged("failedArticleRetrieval");
     }
 }

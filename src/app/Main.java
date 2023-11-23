@@ -1,22 +1,29 @@
 package app;
 
 import data_access.APIDataAccessObject;
+import entity.Article;
+import interface_adapter.ArticleViewModel;
+import interface_adapter.ArticleState;
+import interface_adapter.HomeState;
+import interface_adapter.HomeViewModel;
+import interface_adapter.ViewManagerModel;
+import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
+import use_case.summarization.SummarizationDataAccessInterface;
+import use_case.translation.TranslateAPIDataAccessInterface;
 import data_access.SummarisationDataAccessObject;
 import interface_adapter.*;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import view.ArticleView;
 import view.HomeView;
+import view.ArticleView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-//<<<<<<< Updated upstream
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-//=======
-//>>>>>>> Stashed changes
 import java.util.ArrayList;
 
 public class Main {
@@ -38,13 +45,28 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
-        ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
+        ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());
+
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        SummarizationDataAccessInterface summarisationDataAccessObject = new SummarisationDataAccessObject();
 
         // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
         views.add(homeView, homeView.viewName);
 
-        viewManagerModel.setActiveView(homeView.viewName);
+        ArticleView articleView = TranslationUseCaseFactory.create(
+                viewManagerModel,
+                articleViewModel,
+                articleRetrievalDataAccessObject,
+                summarisationDataAccessObject
+        );
+
+        views.add(articleView, articleView.viewName);
+
+//        // TODO: FOR ARTICLEVIEW TESTING PURPOSES ONLY, COMMENT THIS PART OUT WHEN DONE!
+        viewManagerModel.setActiveView(articleView.viewName);
+
+//        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
