@@ -24,13 +24,13 @@ public class SummarizationPresenter implements SummarizationOutputBoundary {
 
         currentArticleState.setSummarisedContent(outputData.getSummarizedText());
 
-        articleViewModel.firePropertyChanged();
+        articleViewModel.firePropertyChanged("summarizationUpdate");
     }
 
     @Override
     public void prepareFailView(String error) {
         ArticleState currentArticleState = articleViewModel.getArticleState();
         currentArticleState.setSummarisationError(error);
-        articleViewModel.firePropertyChanged();
+        articleViewModel.firePropertyChanged("summarizationUpdate");
     }
 }
