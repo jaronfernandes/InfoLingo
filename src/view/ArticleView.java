@@ -39,6 +39,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     TranslationPresenter articleRetrievalPresenter;
     private JTextPane headlineUI;
     private JTextPane contentUI;
+    private String sampleArticleContent = "One of the biggest philosophical traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much. A lot of people that subscribe to minimalism fall into the same but opposite category of obsessives as materialistic people. Materialistic people gather resources for the sake of it and to feel they are moving up in the world. They get dopamine from acquiring the latest new thing. Minimalists throw out everything they have regardless of its sentimental value and they get dopamine from it because they believe they are moving forward in the world by having absolutely nothing to their name except the essentials. Having things with sentimental value is incredibly important for growth and happiness, regardless of what it is.";
 
     public ArticleView(TranslationController controller,
                        ArticleViewModel articleViewModel,
@@ -52,7 +53,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         // TODO: CHANGE ARTICLE TO ACTUAL ORIGINAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
         article = new Article(
                 "Test Article - roblox gaming 123",
-                "some awesome roblox news amirite?",
+                sampleArticleContent,
                 new Source("Roblox", "EN"),
                 "keanu reeves",
                 "https://www.youtube.com/@WarfighterXK/videos"
@@ -165,9 +166,18 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(summarise)) {
                     JTextField numSentences = (JTextField) menuBar.getComponent(2);
-                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), Integer.parseInt(numSentences.getText()));
+
+                    Integer length;
+                    try {
+                        length = Integer.parseInt(numSentences.getText());
+                    }
+                    catch (ClassCastException exception) {
+                        length = null;
+                    }
+//                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), length);
+                    summarizationController.execute(article.getContent(), length);
                 }
-            }
+                }
         });
         return summarise;
     }
