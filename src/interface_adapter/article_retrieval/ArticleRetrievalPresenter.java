@@ -6,6 +6,7 @@ import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
 import use_case.article_retrieval.ArticleRetrievalOutputData;
 import entity.Article;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +25,20 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
 
         // Extract headlines.
         List<String> headlines = new ArrayList<>();
+
+        // Ensure that you MUTATE headlinesModel!
+        DefaultListModel<String> headlinesModel = currentHomeState.getHeadlinesModel();
+        headlinesModel.clear();
         for (Article article:
              currentHomeState.getArticles()) {
-            headlines.add(article.getHeadline());
+            String headline = article.getHeadline();
+            headlines.add(headline);
+            headlinesModel.addElement(headline);
         }
 
         // Set headlines.
         currentHomeState.setHeadlines(headlines);
-        homeViewModel.firePropertyChanged("ArticleRetrieval");
+        homeViewModel.firePropertyChanged("articleRetrieval");
     }
 
     @Override
@@ -39,6 +46,6 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
         System.out.println("failed");
         HomeState currentHomeState = homeViewModel.getHomeState();
         currentHomeState.setArticleRetrievalError(error);
-        homeViewModel.firePropertyChanged("failedArticleRetrieval");
+        homeViewModel.firePropertyChanged("articleRetrieval");
     }
 }

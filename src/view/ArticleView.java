@@ -13,6 +13,7 @@ import interface_adapter.translation.TranslationPresenter;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import interface_adapter.ArticleState;
@@ -37,8 +38,11 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     private TranslationController translationController;
     private SummarizationController summarizationController;
     TranslationPresenter articleRetrievalPresenter;
-    private JTextPane headlineUI;
+    private JLabel headlineUI;
     private JTextPane contentUI;
+    private JTextArea summaryUI;
+    private JTextArea translationUI;
+    private String sampleArticleContent = "One of the biggest philosophical traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much. A lot of people that subscribe to minimalism fall into the same but opposite category of obsessives as materialistic people. Materialistic people gather resources for the sake of it and to feel they are moving up in the world. They get dopamine from acquiring the latest new thing. Minimalists throw out everything they have regardless of its sentimental value and they get dopamine from it because they believe they are moving forward in the world by having absolutely nothing to their name except the essentials. Having things with sentimental value is incredibly important for growth and happiness, regardless of what it is.";
 
     public ArticleView(TranslationController controller,
                        ArticleViewModel articleViewModel,
@@ -51,10 +55,10 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         // TODO: CHANGE ARTICLE TO ACTUAL ORIGINAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
         article = new Article(
-                "Test Article - roblox gaming 123",
-                "some awesome roblox news amirite?",
+                "Philosophical BS",
+                sampleArticleContent,
                 new Source("Roblox", "EN"),
-                "keanu reeves",
+                "Your Mother",
                 "https://www.youtube.com/@WarfighterXK/videos",
                 "canada",
                 "publishedAtDate"
@@ -63,22 +67,99 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         final JMenuBar menuBar = getBar();
 
-        final JTextPane headline = new JTextPane();
-        headline.setEditable(false);
+        // Where the headline is displayed.
+        final JLabel headline = new JLabel();
         headline.setText(article.getHeadline());
+        headline.setFont(headline.getFont().deriveFont(Font.BOLD, 14f));
         headlineUI = headline;
 
+        // Where the article is displayed.
         final JTextPane content = new JTextPane();
         content.setEditable(false);
         content.setText(article.getContent());
         contentUI = content;
 
-        this.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        this.setLayout(new GridLayout(0, 1));
+        // Put the pane in a scroll pane.
+        JScrollPane contentScrollPane = new JScrollPane(content);
+        contentScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        contentScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        contentScrollPane.setPreferredSize(new Dimension(250, 145));
+        contentScrollPane.setMinimumSize(new Dimension(10, 10));
 
-        this.add(menuBar, BorderLayout.CENTER);
-        this.add(headline, BorderLayout.CENTER);
-        this.add(content, BorderLayout.CENTER);
+        // Where the summary is displayed.
+        JTextArea summaryArea = new JTextArea();
+        summaryArea.setEditable(false);
+        summaryArea.setText("Click Summarise!");
+        summaryArea.setLineWrap(true);
+        summaryArea.setWrapStyleWord(true);
+        summaryUI = summaryArea;
+
+        // Put the area in a scroll pane.
+        JScrollPane summaryScrollPane = new JScrollPane(summaryArea);
+        summaryScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        summaryScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        summaryScrollPane.setPreferredSize(new Dimension(250, 145));
+        summaryScrollPane.setMinimumSize(new Dimension(10, 10));
+
+        // Where the summary is displayed.
+        JTextArea translatedContent = new JTextArea();
+        translatedContent.setEditable(false);
+        translatedContent.setText("Click Translate!");
+        translatedContent.setLineWrap(true);
+        translatedContent.setWrapStyleWord(true);
+        translationUI = translatedContent;
+
+        // Put the area in a scroll pane.
+        JScrollPane translationScrollPane = new JScrollPane(translatedContent);
+        translationScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        translationScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        translationScrollPane.setPreferredSize(new Dimension(250, 145));
+        translationScrollPane.setMinimumSize(new Dimension(10, 10));
+
+        this.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+
+        GridBagLayout layout = new GridBagLayout();
+        this.setLayout(layout);
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        this.add(menuBar, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        this.add(headline, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        this.add(contentScrollPane, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        this.add(summaryScrollPane, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        this.add(translationScrollPane, gridBagConstraints);
+
+
     }
 
     private JMenuBar getBar() {
@@ -167,9 +248,18 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(summarise)) {
                     JTextField numSentences = (JTextField) menuBar.getComponent(2);
-                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), Integer.parseInt(numSentences.getText()));
+
+                    Integer length;
+                    try {
+                        length = Integer.parseInt(numSentences.getText());
+                    }
+                    catch (ClassCastException exception) {
+                        length = null;
+                    }
+//                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), length);
+                    summarizationController.execute(article.getContent(), length);
                 }
-            }
+                }
         });
         return summarise;
     }
@@ -189,22 +279,24 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             ArticleState state = (ArticleState) evt.getNewValue();
 
             if (evt.getPropertyName().equals("translationArticleUpdate")) {
-                JOptionPane.showMessageDialog(this,
-                        "Translation Successful!" + translationSuccessful.get(state.getTranslatedLanguage())
-                                + "\n"
-                                + state.getTranslatedHeadline()
-                                + "\n\n"
-                                + state.getTranslatedContent()
-                );
+//                JOptionPane.showMessageDialog(this,
+//                        "Translation Successful!" + translationSuccessful.get(state.getTranslatedLanguage())
+//                                + "\n"
+//                                + state.getTranslatedHeadline()
+//                                + "\n\n"
+//                                + state.getTranslatedContent()
+//                );
 
-                headlineUI.setText(state.getTranslatedHeadline());
-                contentUI.setText(state.getTranslatedContent());
+//                headlineUI.setText(state.getTranslatedHeadline());
+                translationUI.setText(state.getTranslatedContent());
             }
             else if (evt.getPropertyName().equals("summarizationUpdate")) {
                 if (state.getSummarisationError() != null) {
                     JOptionPane.showMessageDialog(this, state.getSummarisationError());
                 } else {
-                    JOptionPane.showMessageDialog(this, state.getSummarisedContent());
+                    System.out.println(state.getSummarisedContent());
+                    summaryUI.setText(state.getSummarisedContent());
+//                    JOptionPane.showMessageDialog(this, state.getSummarisedContent());
                 }
             }
         } catch (ClassCastException e) {

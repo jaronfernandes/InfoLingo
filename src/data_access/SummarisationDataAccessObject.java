@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SummarisationDataAccessObject implements SummarizationDataAccessInterface {
-    private static final String API_TOKEN = "mTgxSjbhFuCmnubxPEiaUbIADVfUoKMnwKdDHUgHCQecAvpXKB";
+    private static final String API_TOKEN = "QwYkbpsOKMdgMxLnKJFjsKTcFiHCjAXtCMQPcXPwQrubCnjNOc";
     private static final String baseUrl= "https://portal.ayfie.com/api/summarize";
 
     @Override
@@ -44,7 +44,10 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
 //            System.out.println(httpURLConnection.getResponseCode());
             httpURLConnection.setDoOutput(true);
 
-            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": 5, \"max_length\": 100}";
+            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": " + (20 * length) + ", \"max_length\": " + (20 * length) + "}";
+//            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": 5, \"max_length\": 100}";
+
+            System.out.println(body);
 
             try {
                 OutputStream os = httpURLConnection.getOutputStream();
