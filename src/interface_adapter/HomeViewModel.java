@@ -21,7 +21,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     @Override
-    public void firePropertyChanged() {
+    public void firePropertyChanged(String eventName) {
         support.firePropertyChange("state", null, this.homeState);
     }
 

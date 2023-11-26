@@ -31,7 +31,7 @@ public class GroupingPresenter implements GroupingOutputBoundary {
 
         // Set headlines.
         currentGroupingState.setHeadlines(headlines);
-        groupingViewModel.firePropertyChanged();
+        groupingViewModel.firePropertyChanged("Grouping");
     }
 
     @Override
@@ -39,6 +39,6 @@ public class GroupingPresenter implements GroupingOutputBoundary {
         System.out.println("failed");
         GroupingState currentGroupingState = groupingViewModel.getGroupingState();
         currentGroupingState.setGroupingError(error);
-        groupingViewModel.firePropertyChanged();
+        groupingViewModel.firePropertyChanged("failedGrouping");
     }
 }

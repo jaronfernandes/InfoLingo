@@ -11,8 +11,8 @@ public class SummarizationController {
         this.summarizationInteractor = articleRetrievalInteractor;
     }
 
-    public void execute(String content) {
-        SummarizationInputData articleRetrievalInputData = new SummarizationInputData(content);
+    public void execute(String content, Integer length) {
+        SummarizationInputData articleRetrievalInputData = new SummarizationInputData(content, length);
         summarizationInteractor.execute(articleRetrievalInputData);
     }
 }

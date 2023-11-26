@@ -3,13 +3,13 @@ package entity;
 import java.util.List;
 
 public class Category {
-    private List<Media> articles;
+    private List<ArticleInterface> articles;
 
-    public Category(List<Media> articles) {
+    public Category(List<ArticleInterface> articles) {
         this.articles = articles;
     }
 
-    public List<Media> getArticles() {
+    public List<ArticleInterface> getArticles() {
         return articles;
     }
 }

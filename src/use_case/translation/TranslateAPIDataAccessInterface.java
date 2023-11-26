@@ -4,5 +4,5 @@ import entity.Article;
 import entity.TranslatedArticle;
 
 public interface TranslateAPIDataAccessInterface {
-    TranslatedArticle translateArticle(Article article);
+    TranslatedArticle translateArticle(Article article, String language);
 }

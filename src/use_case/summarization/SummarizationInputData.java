@@ -2,14 +2,18 @@ package use_case.summarization;
 
 public class SummarizationInputData {
 
-    private String content;
-
-    public SummarizationInputData(String query) {
-        this.content = query;
+    private final String content;
+    private Integer length;
+    public SummarizationInputData(String content, Integer length) {
+        this.content = content;
+        this.length = length;
     }
 
     public String getContent() {
         return content;
     }
 
+    public Integer getLength() {
+        return length;
+    }
 }
