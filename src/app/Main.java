@@ -1,6 +1,8 @@
 package app;
 
 import data_access.APIDataAccessObject;
+
+import interface_adapter.*;
 import entity.Article;
 import interface_adapter.ArticleViewModel;
 import interface_adapter.ArticleState;
@@ -11,11 +13,8 @@ import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import use_case.summarization.SummarizationDataAccessInterface;
 import use_case.translation.TranslateAPIDataAccessInterface;
 import data_access.SummarisationDataAccessObject;
-import interface_adapter.*;
-import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import view.ArticleView;
 import view.HomeView;
-import view.ArticleView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -46,8 +45,10 @@ public class Main {
         // Keeps track of views.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
+        GroupingViewModel groupingViewModel = new GroupingViewModel(new GroupingState(new ArrayList<>()));
 
-        HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
+        // Set initial view.
+        HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject, groupingViewModel);
         views.add(homeView, homeView.viewName);
 
         ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());
