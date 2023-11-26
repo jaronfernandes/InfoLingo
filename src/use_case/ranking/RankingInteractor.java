@@ -20,12 +20,12 @@ public class RankingInteractor implements RankingInputBoundary {
 
         ArrayList<Article> ranking = new ArrayList<>();
         for (Article article: articles){
-            if(matchPreferences(article, preferences){
+            if(matchPreferences(article, preferences)) {
                 ranking.add(article);
             }
         }
         if (ranking.isEmpty()) {
-            presenter.prepareFailView("Nothing matches your preferences. Try reducing filter!")
+            presenter.prepareFailView("Nothing matches your preferences. Try reducing filter!");
         }
         else {
             RankingOutputData outputData = new RankingOutputData(ranking);
@@ -34,10 +34,8 @@ public class RankingInteractor implements RankingInputBoundary {
     }
 
     boolean matchPreferences(Article article, Preferences preferences){
-        if (article.getDate == preferences.getDate() &&
-                article.getKeywords == preferences.getKeywords() &&
-                article.getDate() == preferences.getDate() &&
-                article.getCategories() == preferences.getCategories()) {
+        if (article.getPublishedAt() == preferences.getDate() &&
+                 preferences.getCountries().contains(article.getCountry())){
         return true;
         }
         return false;

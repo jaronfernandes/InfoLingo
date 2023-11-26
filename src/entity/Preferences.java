@@ -8,13 +8,11 @@ public class Preferences {
     private String language;
     private List<String> keywords;
     private List<String> countries;
-    private Date date;
+    private String date;
     private Source source;
     private List<Category> categories;
 
-    public Preferences(String language, List<String> keywords, List<String> countries, Date date, Source source) {
-        this.language = language;
-        this.keywords = keywords;
+    public Preferences(String language, List<String> keywords, List<String> countries, String date, Source source) {
         this.countries = countries;
         this.date = date;
         this.source = source;
@@ -37,7 +35,7 @@ public class Preferences {
         return countries;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
