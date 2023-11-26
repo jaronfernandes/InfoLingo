@@ -1,7 +1,7 @@
 package entity;
 import java.util.ArrayList;
 
-public class Grouping implements Media{
+public class Grouping {
 
     private final ArrayList<Article> articles;
 

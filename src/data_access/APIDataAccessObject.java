@@ -150,7 +150,9 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
                 article.getSource(),
                 language,
                 article.getAuthor(),
-                article.getURL()
+                article.getURL(),
+                article.getCountry(),
+                article.getPublishedAt()
         );
 
         if (storedTranslatedArticles.containsKey(language)) {
