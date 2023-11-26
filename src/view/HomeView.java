@@ -9,6 +9,10 @@ import use_case.translation.TranslationInputBoundary;
 
 
 import javax.swing.*;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,6 +24,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     HomeViewModel homeViewModel;
     private ArticleRetrievalController articleRetrievalController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
+    private JList<String> headlinesUI;
 
     //Where the GUI is created:
 
@@ -30,7 +35,29 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         //Page
 
-        //Headlines
+        // Headlines
+                JList<String> headlines = new JList<String>(homeViewModel.getHomeState().getHeadlinesModel()); //data has type Object[]
+                headlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+                headlines.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+                headlines.setVisibleRowCount(-1);
+                JScrollPane listScroller = new JScrollPane(headlines);
+                listScroller.setPreferredSize(new Dimension(250, 80));
+                this.add(headlines);
+                headlinesUI = headlines;
+                headlines.addListSelectionListener(
+                        new ListSelectionListener() {
+                            @Override
+                            public void valueChanged(ListSelectionEvent e) {
+                                if (!e.getValueIsAdjusting()) {
+                                    if (headlines.getSelectedIndex() == -1) {
+
+                                    } else {
+                                        // Selection, enable the fire button.
+                                    }
+                                }
+                            }
+                        }
+                );
         // Menu
         final JMenuBar menuBar = getBar();
         this.add(menuBar);
