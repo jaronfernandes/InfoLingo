@@ -1,9 +1,7 @@
 package app;
 
 import data_access.APIDataAccessObject;
-import interface_adapter.HomeState;
-import interface_adapter.HomeViewModel;
-import interface_adapter.ViewManagerModel;
+import interface_adapter.*;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import view.HomeView;
 import view.ViewManager;
@@ -38,10 +36,11 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
+        GroupingViewModel groupingViewModel = new GroupingViewModel(new GroupingState(new ArrayList<>()));
         ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
 
         // Set initial view.
-        HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
+        HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject, groupingViewModel);
         views.add(homeView, homeView.viewName);
 
         viewManagerModel.setActiveView(homeView.viewName);

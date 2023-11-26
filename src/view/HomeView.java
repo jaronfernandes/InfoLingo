@@ -1,9 +1,12 @@
 package view;
 
+import entity.Article;
+import interface_adapter.GroupingViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
+import interface_adapter.grouping.GroupingController;
 
 
 import javax.swing.*;
@@ -12,12 +15,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
     HomeViewModel homeViewModel;
+    GroupingViewModel groupingViewModel;
     private ArticleRetrievalController articleRetrievalController;
+    final GroupingController groupingController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
+
 
 
 
@@ -25,10 +32,15 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     //Where the GUI is created:
 
 
-    public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
+    public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel,
+                    GroupingViewModel groupingViewModel, GroupingController groupingController) {
         this.articleRetrievalController = controller;
+        this.groupingController = groupingController;
         this.homeViewModel = homeViewModel;
+        this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
+        groupingViewModel.addPropertyChangeListener(this);
+
 
         //Page
 
@@ -46,6 +58,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
     }
 
+
     private JMenuBar getBar() {
         JTextField searchField = new JTextField("Search!",20);
         searchField.setHorizontalAlignment(JTextField.CENTER);
@@ -53,6 +66,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         final JMenuBar menuBar;
         final JMenu PrefMenu;
         final JButton refresh = new JButton("Refresh/Search");
+        final JButton grouping = new JButton("Group");
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +75,16 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                 }
             }
         });
+
+        grouping.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(grouping)) {
+                    groupingController.execute((ArrayList<Article>) homeViewModel.getHomeState().getArticles());
+                }
+            }
+        });
+
 
         final JMenuItem LangMenu;
         final JRadioButtonMenuItem EngButton, IceButton;
@@ -96,6 +120,8 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(refresh);
+        grouping.setMnemonic(KeyEvent.VK_R);
+        menuBar.add(grouping);
         return menuBar;
     }
 
