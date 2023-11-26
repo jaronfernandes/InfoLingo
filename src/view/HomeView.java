@@ -9,22 +9,26 @@ import use_case.translation.TranslationInputBoundary;
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
-    HomeViewModel homeViewModel;
+    private HomeViewModel homeViewModel;
     private ArticleRetrievalController articleRetrievalController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
     private JList<String> headlinesUI;
-
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     //Where the GUI is created:
 
     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
@@ -34,15 +38,29 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         //Page
         // Headlines
-                JList<String> headlines = new JList<String>(homeViewModel.getHomeState().getHeadlinesModel()); //data has type Object[]
-                headlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-                headlines.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-                headlines.setVisibleRowCount(-1);
-                JScrollPane listScroller = new JScrollPane(headlines);
-                listScroller.setPreferredSize(new Dimension(250, 80));
-                this.add(headlines);
-                headlinesUI = headlines;
+        JList<String> headlines = new JList<String>(homeViewModel.getHomeState().getHeadlinesModel()); //data has type Object[]
+        headlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        headlines.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        headlines.setVisibleRowCount(-1);
+        JScrollPane listScroller = new JScrollPane(headlines);
+        listScroller.setPreferredSize(new Dimension(250, 80));
+        this.add(headlines);
 
+        headlines.addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (headlines.getSelectedIndex() == -1) {
+                            System.out.println("Didn't select article.");
+                        } else {
+                            // Selection made.
+                            System.out.println("Selected article.");
+                            support.firePropertyChange("switchView", null, "ArticleView");
+                        }
+                    }
+                }
+        );
+        headlinesUI = headlines;
 
         // Menu
         final JMenuBar menuBar = getBar();
@@ -80,7 +98,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(refresh)) {
                     articleRetrievalController.execute(searchField.getText());
-
                 }
             }
         });
@@ -132,5 +149,9 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             } else {
             }
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 }
