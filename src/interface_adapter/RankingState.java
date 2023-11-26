@@ -18,11 +18,11 @@ public class RankingState {
             this.headlines.add(articles.get(i).getHeadline());
         }
     }
-    public List<Article> getArticles() {
+    public List<Article> getRankings() {
         return rankings;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setRankings(List<Article> articles) {
         this.rankings = articles;
     }
 
