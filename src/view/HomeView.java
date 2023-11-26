@@ -171,6 +171,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             if (state.getArticleRetrievalError() != null) {
                 JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
             } else {
+
             }
         }
     }
