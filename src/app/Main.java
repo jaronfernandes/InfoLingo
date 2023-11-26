@@ -65,8 +65,7 @@ public class Main {
 
 //        // TODO: FOR ARTICLEVIEW TESTING PURPOSES ONLY, COMMENT THIS PART OUT WHEN DONE!
         viewManagerModel.setActiveView(articleView.viewName);
-
-//        viewManagerModel.setActiveView(homeView.viewName);
+        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
