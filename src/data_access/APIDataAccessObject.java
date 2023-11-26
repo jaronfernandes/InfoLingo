@@ -95,11 +95,13 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         // Not sure how to get the sources from the nested dict
         String source = getValue(unformattedArticle.getJSONObject("source"), "name");
         String author = getValue(unformattedArticle, "author");
+        String country = getValue(unformattedArticle, "country");
+        String publishedAt = getValue(unformattedArticle, "publishedAt");
 //            System.out.println(source);
         Source sourceObj = new Source(source, "English");
 
         ArticleFactory articleFactory = new ArticleFactory();
-        return articleFactory.create(title, description, sourceObj, author, url);
+        return articleFactory.create(title, description, sourceObj, author, url, country, publishedAt);
     }
 
     private String getValue(JSONObject jsonObject, String key) {
