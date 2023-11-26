@@ -8,7 +8,7 @@ import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.grouping.GroupingController;
 
-
+//
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

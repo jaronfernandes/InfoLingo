@@ -25,7 +25,7 @@ public class ArticleRetrievalUseCaseFactory {
         GroupingController groupingController = createGroupingUseCase(viewManagerModel, groupingViewModel);
         return new HomeView(articleRetrievalController, homeViewModel, groupingViewModel, groupingController);
     }
-
+//
     private static ArticleRetrievalController createArticleRetrievalUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject) {
         ArticleRetrievalOutputBoundary articleRetrievalOutputBoundary = new ArticleRetrievalPresenter(homeViewModel);
         ArticleRetrievalInputBoundary articleRetrievalInputBoundary = new ArticleRetrievalInteractor(articleRetrievalOutputBoundary, articleRetrievalDataAccessObject);
