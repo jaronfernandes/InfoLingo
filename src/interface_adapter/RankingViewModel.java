@@ -1,10 +1,14 @@
 package interface_adapter;
 
+import entity.Article;
+import entity.Ranking;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class RankingViewModel extends ViewModel{
-    private RankingState rankingState = new RankingState();
+    private RankingState rankingState;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public RankingViewModel(RankingState rankingState) {
         super("ranking");
