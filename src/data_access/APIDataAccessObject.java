@@ -14,6 +14,7 @@ import entity.TranslatedArticle;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -22,17 +23,14 @@ import java.net.http.HttpResponse;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+
 import org.json.*;
 import use_case.summarization.SummarizationDataAccessInterface;
 import use_case.translation.TranslateAPIDataAccessInterface;
 
 import javax.print.URIException;
 import java.lang.Math;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, TranslateAPIDataAccessInterface {
     private static final String BASE_URL = "https://newsapi.org/v2/";
@@ -70,11 +68,9 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
                 JSONObject article = articles.getJSONObject(i);
                 System.out.println(article);
                 formattedArticles.add(formatArticle(article));
-
-
-
 //            System.out.println(firstArticle);
             }
+            removeDuplicateArticles(formattedArticles);
 
             System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         } catch (Exception e) {
@@ -85,6 +81,29 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
         // Return all articles here.
         return formattedArticles;
+    }
+
+    /**
+     * <p> Removes duplicate articles from the given List of Article objects through mutation.
+     * </p>
+     * @param articles the List of Articles.
+     * @author Jaron Fernandes
+     */
+    private void removeDuplicateArticles(List<Article> articles) {
+        HashSet<String> existingHeadlines = new HashSet<>();
+        int i = 0;
+
+        while (i < articles.size()) {
+            Article article = articles.get(i);
+            if (!existingHeadlines.contains(article.getHeadline())) {
+                existingHeadlines.add(article.getHeadline());
+                i++;
+            }
+            else {
+                System.out.println("Removed duplicate Article!");
+                articles.remove(article);
+            }
+        }
     }
 
     private Article formatArticle(JSONObject unformattedArticle){
