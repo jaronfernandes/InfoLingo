@@ -40,19 +40,23 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        // Keeps track of views.
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
-
-        HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
-        ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());
-
         APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
         SummarizationDataAccessInterface summarisationDataAccessObject = new SummarisationDataAccessObject();
 
-        // Set initial view.
+        // Keeps track of views.
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
+
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
         views.add(homeView, homeView.viewName);
+
+        ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());
+
+        ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel, homeView);
+
+
+        // Set initial view.
+
 
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
