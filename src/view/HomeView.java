@@ -159,8 +159,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(refresh);
+
+        //Group Button
         grouping.setMnemonic(KeyEvent.VK_R);
         menuBar.add(grouping);
+
         return menuBar;
     }
 
