@@ -55,7 +55,9 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 "some awesome roblox news amirite?",
                 new Source("Roblox", "EN"),
                 "keanu reeves",
-                "https://www.youtube.com/@WarfighterXK/videos"
+                "https://www.youtube.com/@WarfighterXK/videos",
+                "canada",
+                "publishedAtDate"
         );
 
 
