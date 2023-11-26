@@ -9,6 +9,7 @@ import use_case.article_retrieval.ArticleRetrievalInputBoundary;
 import use_case.article_retrieval.ArticleRetrievalInteractor;
 import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
 import view.HomeView;
+import view.ViewManager;
 
 public class ArticleRetrievalUseCaseFactory {
 
