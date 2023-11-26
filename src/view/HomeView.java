@@ -9,17 +9,21 @@ import use_case.translation.TranslationInputBoundary;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
     HomeViewModel homeViewModel;
     private ArticleRetrievalController articleRetrievalController;
     ArticleRetrievalPresenter articleRetrievalPresenter;
+    private JList<String> headlinesUI;
 
     //Where the GUI is created:
 
@@ -29,19 +33,39 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         homeViewModel.addPropertyChangeListener(this);
 
         //Page
+        // Headlines
+                JList<String> headlines = new JList<String>(homeViewModel.getHomeState().getHeadlinesModel()); //data has type Object[]
+                headlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+                headlines.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+                headlines.setVisibleRowCount(-1);
+                JScrollPane listScroller = new JScrollPane(headlines);
+                listScroller.setPreferredSize(new Dimension(250, 80));
+                this.add(headlines);
+                headlinesUI = headlines;
 
-        //Headlines
+
         // Menu
         final JMenuBar menuBar = getBar();
-        this.add(menuBar);
 
+        // Adding stuff to UI.
+        GridBagLayout layout = new GridBagLayout();
+        this.setLayout(layout);
 
-        for (String headline: homeViewModel.getHomeState().getHeadlines()) {
-            JLabel Headline = new JLabel(headline);
-            this.add(Headline);
-        }
-        //this.add(news);
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        this.add(headlines, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        this.add(menuBar, gridBagConstraints);
     }
 
     private JMenuBar getBar() {
@@ -100,6 +124,13 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        HomeState state = (HomeState) evt.getNewValue();
+
+        if (evt.getPropertyName().equals("articleRetrieval")) {
+            HomeState state = (HomeState) evt.getNewValue();
+            if (state.getArticleRetrievalError() != null) {
+                JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
+            } else {
+            }
+        }
     }
 }
