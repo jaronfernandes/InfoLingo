@@ -1,9 +1,12 @@
 package view;
 
+import entity.Article;
+import interface_adapter.GroupingViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
+import interface_adapter.grouping.GroupingController;
 import interface_adapter.translation.TranslationController;
 import use_case.translation.TranslationInputBoundary;
 
@@ -12,6 +15,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.View;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,21 +24,31 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;    
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
+
     private HomeViewModel homeViewModel;
+    GroupingViewModel groupingViewModel;
+
     private ArticleRetrievalController articleRetrievalController;
-    ArticleRetrievalPresenter articleRetrievalPresenter;
+    final GroupingController groupingController;
+    private ArticleRetrievalPresenter articleRetrievalPresenter;
     private JList<String> headlinesUI;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    //Where the GUI is created:
 
-    public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
+
+    //Where the GUI is created:
+     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel,
+                    GroupingViewModel groupingViewModel, GroupingController groupingController) {
         this.articleRetrievalController = controller;
+        this.groupingController = groupingController;
         this.homeViewModel = homeViewModel;
+        this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
+        groupingViewModel.addPropertyChangeListener(this);
+
 
         //Page
         // Headlines
@@ -86,6 +100,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         this.add(menuBar, gridBagConstraints);
     }
 
+
     private JMenuBar getBar() {
         JTextField searchField = new JTextField("Search!",20);
         searchField.setHorizontalAlignment(JTextField.CENTER);
@@ -93,6 +108,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         final JMenuBar menuBar;
         final JMenu PrefMenu;
         final JButton refresh = new JButton("Refresh/Search");
+        final JButton grouping = new JButton("Group");
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,6 +117,16 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                 }
             }
         });
+
+        grouping.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(grouping)) {
+                    groupingController.execute((ArrayList<Article>) homeViewModel.getHomeState().getArticles());
+                }
+            }
+        });
+
 
         final JMenuItem LangMenu;
         final JRadioButtonMenuItem EngButton, IceButton;
@@ -136,17 +162,19 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(refresh);
+        grouping.setMnemonic(KeyEvent.VK_R);
+        menuBar.add(grouping);
         return menuBar;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
         if (evt.getPropertyName().equals("articleRetrieval")) {
             HomeState state = (HomeState) evt.getNewValue();
             if (state.getArticleRetrievalError() != null) {
                 JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
             } else {
+
             }
         }
     }

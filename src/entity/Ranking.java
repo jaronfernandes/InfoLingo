@@ -2,7 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
-public class Ranking implements Media{
+public class Ranking {
 
     private final ArrayList<Article> articles;
     private final Preferences preferences;
@@ -12,7 +12,6 @@ public class Ranking implements Media{
         this.preferences = preferences;
     }
 
-    @Override
     public String getHeadline() {
         return this.articles.get(0).getHeadline();
     }
