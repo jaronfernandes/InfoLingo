@@ -12,4 +12,8 @@ public class Grouping {
     public String getHeadline() {
         return this.articles.get(0).getHeadline();
     }
+
+    public ArrayList<Article> getArticles() {
+        return articles;
+    }
 }
