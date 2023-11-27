@@ -140,7 +140,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         this.add(contentScrollPane, gridBagConstraints);
@@ -176,9 +176,23 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         translateBar.add(LangMenu);
         translateBar.add(translate);
 
-        // Number of sentences
-        JTextField numSentences = new JTextField("Number of Sentences");
-        translateBar.add(numSentences);
+        // Label for number of words
+        JLabel numWordsLabel = new JLabel("Word Count: ");
+
+        // Number of words
+        int numWordsArticle = articleViewModel.
+                getArticleState().
+                getOriginalContent().
+                split(" ")
+                .length;
+        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), numWordsArticle);
+        numWords.setPaintTrack(true);
+        numWords.setMajorTickSpacing(10);
+        numWords.setPaintLabels(true);
+        numWords.setPaintTicks(true);
+
+        translateBar.add(numWordsLabel);
+        translateBar.add(numWords);
 
         final JButton summarise = getSummariseButton(translateBar);
         // Add summarisation button.
@@ -245,17 +259,20 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(summarise)) {
-                    JTextField numSentences = (JTextField) menuBar.getComponent(2);
+                    JSlider numWords = (JSlider) menuBar.getComponent(3);
+                    int numWordsArticle = articleViewModel.
+                            getArticleState().
+                            getOriginalContent().
+                            split(" ")
+                            .length;
 
-                    Integer length;
-                    try {
-                        length = Integer.parseInt(numSentences.getText());
-                    }
-                    catch (ClassCastException exception) {
-                        length = null;
-                    }
+                    // In this case, the article is too short to summarise - minimum is equal to maximum.
+                    if (numWords.getMinimum() == numWords.getMaximum()) {
+                        JOptionPane.showMessageDialog(ArticleView.this,"This article is too short to summarise.");
+                    } else {
+                    int length = numWords.getValue();
 //                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), length);
-                    summarizationController.execute(article.getContent(), length);
+                    summarizationController.execute(article.getContent(), length);}
                 }
                 }
         });
