@@ -45,10 +45,12 @@ public class Main {
         // Keeps track of views.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
+
         GroupingViewModel groupingViewModel = new GroupingViewModel(new GroupingState(new ArrayList<>()));
 
         // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject, groupingViewModel);
+
         views.add(homeView, homeView.viewName);
 
         ArticleViewModel articleViewModel = new ArticleViewModel(new ArticleState());

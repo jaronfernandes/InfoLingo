@@ -28,13 +28,16 @@ import java.util.List;
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
-    HomeViewModel homeViewModel;
+
+    private HomeViewModel homeViewModel;
     GroupingViewModel groupingViewModel;
+
     private ArticleRetrievalController articleRetrievalController;
     final GroupingController groupingController;
-    ArticleRetrievalPresenter articleRetrievalPresenter;
+    private ArticleRetrievalPresenter articleRetrievalPresenter;
     private JList<String> headlinesUI;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
 
     //Where the GUI is created:
      public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel,

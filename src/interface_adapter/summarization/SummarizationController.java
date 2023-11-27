@@ -12,7 +12,16 @@ public class SummarizationController {
     }
 
     public void execute(String content, Integer length) {
-        SummarizationInputData articleRetrievalInputData = new SummarizationInputData(content, length);
+        String cleanContent = cleanContent(content);
+        SummarizationInputData articleRetrievalInputData = new SummarizationInputData(cleanContent, length);
         summarizationInteractor.execute(articleRetrievalInputData);
+    }
+
+    private String cleanContent(String dirtyContent) {
+        // Replace all whitespace character except space with space.
+        String cleanContent = dirtyContent.replaceAll("[\\t\\n\\r\\f\\v]", " ");
+        cleanContent = cleanContent.strip();
+        System.out.println(cleanContent);
+        return cleanContent;
     }
 }
