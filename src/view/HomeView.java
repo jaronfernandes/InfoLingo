@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;    
 
@@ -158,8 +159,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(refresh);
+
+        //Group Button
         grouping.setMnemonic(KeyEvent.VK_R);
         menuBar.add(grouping);
+
         return menuBar;
     }
 
@@ -170,6 +174,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             if (state.getArticleRetrievalError() != null) {
                 JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
             } else {
+
             }
         }
     }

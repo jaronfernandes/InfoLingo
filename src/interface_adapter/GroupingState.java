@@ -2,6 +2,7 @@ package interface_adapter;
 
 import entity.Grouping;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class GroupingState {
     private List<Grouping> groupings;
     private List<String> headlines;
     private String groupingError;
+    DefaultListModel<String> headlinesModel;
 
     public GroupingState(List<Grouping> groupings) {
         this.groupings = groupings;
@@ -17,6 +19,7 @@ public class GroupingState {
         for (Grouping grouping : groupings) {
             this.headlines.add(grouping.getHeadline());
         }
+        this.headlinesModel = new DefaultListModel<String>();
     }
 
     public List<Grouping> getGroupings() {
@@ -41,5 +44,13 @@ public class GroupingState {
 
     public void setGroupingError(String groupingError) {
         this.groupingError = groupingError;
+    }
+
+    public DefaultListModel<String> getHeadlinesModel() {
+        return headlinesModel;
+    }
+
+    public void setHeadlinesModel(DefaultListModel<String> headlinesModel) {
+        this.headlinesModel = headlinesModel;
     }
 }
