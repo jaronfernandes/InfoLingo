@@ -22,7 +22,7 @@ public class GroupingViewModel extends ViewModel{
     }
 
     @Override
-    public void firePropertyChanged() {
+    public void firePropertyChanged(String eventName) {
         support.firePropertyChange("state", null, this.groupingState);
     }
 

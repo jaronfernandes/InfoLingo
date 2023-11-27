@@ -38,7 +38,7 @@ public class Main {
         HomeViewModel homeViewModel = new HomeViewModel(new HomeState(new ArrayList<>()));
         GroupingViewModel groupingViewModel = new GroupingViewModel(new GroupingState(new ArrayList<>()));
         ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
-//
+
         // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject, groupingViewModel);
         views.add(homeView, homeView.viewName);

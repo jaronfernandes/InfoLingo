@@ -3,7 +3,9 @@ package entity;
 public interface ArticleInterface {
     String getHeadline();
     String getContent();
-    Source getSource();
     String getAuthor();
+    String getCountry();
+    String getPublishedAt();
+    Source getSource();
     String getURL();
 }

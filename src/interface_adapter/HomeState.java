@@ -1,21 +1,24 @@
 package interface_adapter;
 import entity.Article;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeState {
     List<Article> articles;
     List<String> headlines;
+    DefaultListModel<String> headlinesModel;
     String articleRetrievalError;
 
     public HomeState(List<Article> articles) {
         this.articles = articles;
-        this.articleRetrievalError = "";
+        this.articleRetrievalError = null;
         this.headlines = new ArrayList<>();
         for(int i = 0; i < articles.size(); i++){
             this.headlines.add(articles.get(i).getHeadline());
         }
+        this.headlinesModel = new DefaultListModel<String>();
     }
 
     public List<Article> getArticles() {
@@ -40,5 +43,13 @@ public class HomeState {
 
     public void setArticleRetrievalError(String articleRetrievalError) {
         this.articleRetrievalError = articleRetrievalError;
+    }
+
+    public void setHeadlinesModel(DefaultListModel<String> headlinesModel) {
+        this.headlinesModel = headlinesModel;
+    }
+
+    public DefaultListModel<String> getHeadlinesModel() {
+        return headlinesModel;
     }
 }

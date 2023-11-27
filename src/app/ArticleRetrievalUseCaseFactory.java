@@ -15,6 +15,7 @@ import use_case.grouping.GroupingInputBoundary;
 import use_case.grouping.GroupingInteractor;
 import use_case.grouping.GroupingOutputBoundary;
 import view.HomeView;
+import view.ViewManager;
 
 public class ArticleRetrievalUseCaseFactory {
 

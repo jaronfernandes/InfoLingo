@@ -13,6 +13,6 @@ public abstract class ViewModel {
         return this.viewName;
     }
 
-    public abstract void firePropertyChanged();
+    public abstract void firePropertyChanged(String eventName);
     public abstract void addPropertyChangeListener(PropertyChangeListener listener);
 }

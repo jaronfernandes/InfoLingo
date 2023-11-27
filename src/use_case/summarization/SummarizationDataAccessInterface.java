@@ -5,5 +5,5 @@ import entity.Article;
 import java.util.List;
 
 public interface SummarizationDataAccessInterface {
-    String summarizeArticle(String content);
+    String summarizeArticle(String content, Integer length);
 }
