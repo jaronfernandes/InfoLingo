@@ -44,7 +44,7 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
 //            System.out.println(httpURLConnection.getResponseCode());
             httpURLConnection.setDoOutput(true);
 
-            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": " + (20 * length) + ", \"max_length\": " + (20 * length) + "}";
+            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": " + (length - 10) + ", \"max_length\": " + (length + 40) + "}";
 //            String body = "{\"language\": \"auto\", \"text\": \"" + content + "\", \"min_length\": 5, \"max_length\": 100}";
 
             System.out.println(body);
