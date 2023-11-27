@@ -42,7 +42,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
     private JTextPane contentUI;
     private JTextArea summaryUI;
     private JTextArea translationUI;
-    private String sampleArticleContent = "One of the biggest philosophical traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much. A lot of people that subscribe to minimalism fall into the same but opposite category of obsessives as materialistic people. Materialistic people gather resources for the sake of it and to feel they are moving up in the world. They get dopamine from acquiring the latest new thing. Minimalists throw out everything they have regardless of its sentimental value and they get dopamine from it because they believe they are moving forward in the world by having absolutely nothing to their name except the essentials. Having things with sentimental value is incredibly important for growth and happiness, regardless of what it is.";
+    private String sampleArticleContent = "\nOne $$$of the \n biggest philosophical @traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much. A lot of people that subscribe to minimalism fall into the same but opposite category of obsessives as materialistic people. Materialistic people gather resources for the sake of it and to feel they are moving up in the world. They get dopamine from acquiring the latest new thing. Minimalists throw out everything they have regardless of its sentimental value and they get dopamine from it because they believe they are moving forward in the world by having absolutely nothing to their name except the essentials. Having things with sentimental value is incredibly important for growth and happiness, regardless of what it is.\n";
 
     public ArticleView(TranslationController controller,
                        ArticleViewModel articleViewModel,
@@ -185,11 +185,12 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 getOriginalContent().
                 split(" ")
                 .length;
-        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), numWordsArticle);
+        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), 100);
         numWords.setPaintTrack(true);
         numWords.setMajorTickSpacing(10);
         numWords.setPaintLabels(true);
         numWords.setPaintTicks(true);
+        numWords.setValue(Math.min(numWordsArticle, 40));
 
         translateBar.add(numWordsLabel);
         translateBar.add(numWords);
