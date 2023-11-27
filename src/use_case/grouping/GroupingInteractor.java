@@ -28,7 +28,7 @@ public class GroupingInteractor implements GroupingInputBoundary{
             ArrayList<Article> grouping = new ArrayList<>();
             grouping.add(articles.get(0));
             for (int i = 1; i < articles.size(); i++){
-                if(articleMaps.get(articles.get(0)).compare(articleMaps.get(articles.get(i))) > 0){
+                if(articleMaps.get(articles.get(0)).compare(articleMaps.get(articles.get(i))) > 0.25){
                     grouping.add(articles.get(i));
                     articles.remove(i);
                     i -= 1;
