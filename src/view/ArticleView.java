@@ -69,14 +69,14 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         // Where the headline is displayed.
         final JLabel headline = new JLabel();
-        headline.setText(article.getHeadline());
+        headline.setText(articleViewModel.getArticleState().getHeadline());
         headline.setFont(headline.getFont().deriveFont(Font.BOLD, 14f));
         headlineUI = headline;
 
         // Where the article is displayed.
         final JTextPane content = new JTextPane();
         content.setEditable(false);
-        content.setText(article.getContent());
+        content.setText(articleViewModel.getArticleState().getOriginalContent());
         contentUI = content;
 
         // Put the pane in a scroll pane.
@@ -275,11 +275,15 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                     } else {
                     int length = numWords.getValue();
 //                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), length);
-                    summarizationController.execute(article.getContent(), length);}
+                    summarizationController.execute(articleViewModel.getArticleState().getOriginalContent(), length);}
                 }
                 }
         });
         return summarise;
+    }
+
+    public ArticleViewModel getArticleViewModel() {
+        return articleViewModel;
     }
 
     @Override
@@ -306,6 +310,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 //                );
 
 //                headlineUI.setText(state.getTranslatedHeadline());
+                System.out.println(state.getTranslatedContent());
                 translationUI.setText(state.getTranslatedContent());
             }
             else if (evt.getPropertyName().equals("summarizationUpdate")) {

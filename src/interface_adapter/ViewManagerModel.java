@@ -1,5 +1,7 @@
 package interface_adapter;
 
+import use_case.transfer_article.TransferArticleOutputData;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -22,8 +24,12 @@ public class ViewManagerModel {
     public void firePropertyChanged() {
         support.firePropertyChange("view", null, this.activeViewName);
     }
+    public void firePropertyChanged(String propertyName, TransferArticleOutputData outputData) {
+        support.firePropertyChange(propertyName, null, outputData);
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
 }

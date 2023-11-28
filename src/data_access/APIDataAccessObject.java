@@ -66,7 +66,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             // Limits number of articles retrieved to numArticles at most.
             for(int i = 0; i < Math.min(this.numArticles, articles.length()); i++) {
                 JSONObject article = articles.getJSONObject(i);
-                System.out.println(article);
+//                System.out.println(article);
                 formattedArticles.add(formatArticle(article));
 //            System.out.println(firstArticle);
             }
@@ -108,7 +108,10 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
     private Article formatArticle(JSONObject unformattedArticle){
         // Retrieve details of first article.
-        String description = getValue(unformattedArticle, "description");
+        String description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
+        System.out.println(description);
+        System.out.println("IT HAPPENED)");
+
         String title = getValue(unformattedArticle, "title");
         String url = getValue(unformattedArticle, "url");
         // Not sure how to get the sources from the nested dict
@@ -134,8 +137,14 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
     @Override
     public TranslatedArticle translateArticle(Article article, String language) {
+        System.out.println(language);
         String translatedHeadline = null, translatedContent = null;
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
+
+        // TEST
+        String modifiedContent = article.getContent().replaceAll("[\\t\\n\\r\\f\\v]", " ");
+//        translatedContent = article.getContent();
+        System.out.println(translatedContent);
 
         // sample: https://api-free.deepl.com/v2/translate?auth_key=
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
@@ -148,7 +157,9 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
         try {
             translatedHeadline = translateText(article.getHeadline(), language);
-            translatedContent = translateText(article.getContent(), language);
+            System.out.println(translatedHeadline);
+            translatedContent = translateText(modifiedContent, language);
+            System.out.println(translatedContent);
         }
         catch (Exception e) {
             // try using Google's instead as a backup! (due to char limit on DeepL)

@@ -1,6 +1,9 @@
 package view;
 
+import interface_adapter.ArticleState;
+import interface_adapter.ArticleViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.transfer_article.TransferArticleOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,11 +34,29 @@ public class ViewManager implements PropertyChangeListener {
 
             String viewModelName = (String) evt.getNewValue();
             cardLayout.show(views, viewModelName);
-        } else if (evt.getPropertyName().equals("switchView")) {
+        } else if (evt.getPropertyName().equals("switchArticleView")) {
             System.out.println("Recieved event to switch view.");
-            if (evt.getNewValue().equals("ArticleView")) {
-                cardLayout.show(views, "Article");
-            }
+
+                // FIRST COMPONENT IS HOMEVIEW
+//                System.out.println(views.getComponent(1).getName());
+//                System.out.println(views.getComponent(1));
+            TransferArticleOutputData outputData = (TransferArticleOutputData) evt.getNewValue();
+            ArticleView articleView = (ArticleView) views.getComponent(1);
+
+            ArticleViewModel articleViewModel = articleView.getArticleViewModel();
+            ArticleState state = articleViewModel.getArticleState();
+            state.setHeadline(outputData.getArticle().getHeadline());
+            state.setOriginalContent(outputData.getArticle().getContent());
+
+            JLabel headline = (JLabel) articleView.getComponent(1);
+            JScrollPane contentScrollPane = (JScrollPane) articleView.getComponent(2);
+            JTextPane content = (JTextPane) ((JViewport) contentScrollPane.getComponent(0)).getComponent(0);
+
+
+            headline.setText(state.getHeadline());
+            content.setText(state.getOriginalContent());
+
+            cardLayout.show(views, "Article");
         }
     }
 

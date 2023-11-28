@@ -7,6 +7,7 @@ import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.grouping.GroupingController;
+import interface_adapter.transfer_article.TransferArticleController;
 import interface_adapter.translation.TranslationController;
 import use_case.translation.TranslationInputBoundary;
 
@@ -33,17 +34,22 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     GroupingViewModel groupingViewModel;
 
     private ArticleRetrievalController articleRetrievalController;
-    final GroupingController groupingController;
+    private TransferArticleController transferArticleController;
+    final private GroupingController groupingController;
     private ArticleRetrievalPresenter articleRetrievalPresenter;
     private JList<String> headlinesUI;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
 
     //Where the GUI is created:
-     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel,
-                    GroupingViewModel groupingViewModel, GroupingController groupingController) {
+     public HomeView(ArticleRetrievalController controller,
+                     HomeViewModel homeViewModel,
+                     GroupingViewModel groupingViewModel,
+                     GroupingController groupingController,
+                     TransferArticleController transferArticleController) {
         this.articleRetrievalController = controller;
         this.groupingController = groupingController;
+        this.transferArticleController = transferArticleController;
         this.homeViewModel = homeViewModel;
         this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
@@ -77,7 +83,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                         } else {
                             // Selection made.
                             System.out.println("Selected article.");
-                            support.firePropertyChange("switchView", null, "ArticleView");
+                            Article article = homeViewModel
+                                    .getHomeState()
+                                    .getArticleByHeadline(headlines.getSelectedValue());
+                            transferArticleController.execute(article);
+//                            support.firePropertyChange("switchView", null, "ArticleView");
                         }
                     }
                 }
