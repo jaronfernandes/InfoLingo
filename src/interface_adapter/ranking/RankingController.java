@@ -6,6 +6,7 @@ import use_case.ranking.RankingInputBoundary;
 import use_case.ranking.RankingInputData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RankingController {
     final RankingInputBoundary rankingInteractor;
@@ -14,8 +15,8 @@ public class RankingController {
         this.rankingInteractor = rankingInteractor;
     }
 
-    public void execute(ArrayList<Article> articles, Preferences preferences){
-        RankingInputData rankingInputData = new RankingInputData(articles, preferences);
+    public void execute(List<String> countries, String date){
+        RankingInputData rankingInputData = new RankingInputData(countries, date);
         rankingInteractor.execute(rankingInputData);
     }
 }
