@@ -1,49 +1,22 @@
-package use_case.grouping;
+package use_case.transfer_article;
 
 import entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GroupingInteractor implements GroupingInputBoundary{
+public class TransferArticleInteractor implements TransferArticleInputBoundary {
 
-    private final GroupingOutputBoundary presenter;
+    private final TransferArticleOutputBoundary presenter;
 
 
-    public GroupingInteractor(GroupingOutputBoundary presenter) {
+    public TransferArticleInteractor(TransferArticleOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void execute(GroupingInputData inputData) {
-        GroupingFactory groupingFactory = new GroupingFactory();
-        HeadlineMapFactory headlineMapFactory = new HeadlineMapFactory();
-        ArrayList<Article> articles = inputData.getArticles();
-        HashMap<Article, HeadlineMap> articleMaps = new HashMap<>();
-        ArrayList<Grouping> groupings = new ArrayList<>();
-        for (Article article : articles) {
-            articleMaps.put(article, headlineMapFactory.create(article.getHeadline()));
-        }
-        while (!articles.isEmpty()){
-            ArrayList<Article> grouping = new ArrayList<>();
-            grouping.add(articles.get(0));
-            for (int i = 1; i < articles.size(); i++){
-                if(articleMaps.get(articles.get(0)).compare(articleMaps.get(articles.get(i))) > 0.5){
-                    grouping.add(articles.get(i));
-                    articles.remove(i);
-                    i -= 1;
-                }
-            }
-            articles.remove(0);
-            groupings.add(groupingFactory.create(grouping));
-        }
-        if (groupings.isEmpty()) {
-            presenter.prepareFailView("Failed to create groups!");
-        }
-        else {
-            GroupingOutputData outputData = new GroupingOutputData(groupings);
-            presenter.prepareSuccessView(outputData);
-        }
-
+    public void execute(TransferArticleInputData inputData) {
+        TransferArticleOutputData outputData = new TransferArticleOutputData(inputData.getArticle());
+        presenter.prepareSuccessView(outputData);
     }
 }

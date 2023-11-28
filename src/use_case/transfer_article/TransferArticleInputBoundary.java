@@ -1,6 +1,6 @@
-package use_case.grouping;
+package use_case.transfer_article;
 
-public interface GroupingInputBoundary {
+public interface TransferArticleInputBoundary {
 
-    void execute(GroupingInputData inputData);
+    void execute(TransferArticleInputData inputData);
 }

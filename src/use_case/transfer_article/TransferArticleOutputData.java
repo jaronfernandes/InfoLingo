@@ -1,22 +1,24 @@
-package use_case.grouping;
+package use_case.transfer_article;
 
+import entity.Article;
 import entity.Grouping;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GroupingOutputData {
+public class TransferArticleOutputData {
 
-    ArrayList<Grouping> groupings;
+    Article article;
 
-    public GroupingOutputData(ArrayList<Grouping> groupings) {
-        this.groupings = groupings;
+    public TransferArticleOutputData(Article article) {
+        this.article = article;
     }
 
-    public ArrayList<Grouping> getGroupings() {
-        return groupings;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setGroupings(ArrayList<Grouping> groupings) {
-        this.groupings = groupings;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

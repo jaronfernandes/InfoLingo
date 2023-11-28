@@ -1,19 +1,21 @@
-package use_case.grouping;
+package use_case.transfer_article;
+
 import entity.Article;
+
 import java.util.ArrayList;
 
-public class GroupingInputData {
+public class TransferArticleInputData {
 
 
 
-    private ArrayList<Article> articles;
+    private Article article;
 
 
-    public GroupingInputData(ArrayList<Article> articles) {
-        this.articles = articles;
+    public TransferArticleInputData(Article article) {
+        this.article = article;
     }
 
-    public ArrayList<Article> getArticles() {
-        return articles;
+    public Article getArticle() {
+        return article;
     }
 }

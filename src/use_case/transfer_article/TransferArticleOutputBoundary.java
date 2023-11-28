@@ -1,9 +1,7 @@
-package use_case.grouping;
+package use_case.transfer_article;
 
-import use_case.article_retrieval.ArticleRetrievalOutputData;
+public interface TransferArticleOutputBoundary {
 
-public interface GroupingOutputBoundary {
-
-    void prepareSuccessView(GroupingOutputData outputData);
+    void prepareSuccessView(TransferArticleOutputData outputData);
     void prepareFailView(String error);
 }
