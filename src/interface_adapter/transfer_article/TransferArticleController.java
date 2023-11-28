@@ -1,17 +1,20 @@
-package interface_adapter.article_retrieval;
-import use_case.article_retrieval.ArticleRetrievalInputData;
-import use_case.article_retrieval.ArticleRetrievalInputBoundary;
-
-public class ArticleRetrievalController {
-    final ArticleRetrievalInputBoundary articleRetrievalInteractor;
+package interface_adapter.transfer_article;
 
 
-    public ArticleRetrievalController(ArticleRetrievalInputBoundary articleRetrievalInteractor) {
-        this.articleRetrievalInteractor = articleRetrievalInteractor;
+import entity.Article;
+import use_case.transfer_article.TransferArticleInputBoundary;
+import use_case.transfer_article.TransferArticleInputData;
+
+public class TransferArticleController {
+    final TransferArticleInputBoundary transferArticleInteractor;
+
+
+    public TransferArticleController(TransferArticleInputBoundary transferArticleInteractor) {
+        this.transferArticleInteractor = transferArticleInteractor;
     }
 
-    public void execute(String query){
-        ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData(query);
-        articleRetrievalInteractor.execute(articleRetrievalInputData);
+    public void execute(Article article){
+        TransferArticleInputData articleRetrievalInputData = new TransferArticleInputData(article);
+        transferArticleInteractor.execute(articleRetrievalInputData);
     }
 }

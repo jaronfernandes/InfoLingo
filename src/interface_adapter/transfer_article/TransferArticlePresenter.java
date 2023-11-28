@@ -1,51 +1,29 @@
-package interface_adapter.article_retrieval;
+package interface_adapter.transfer_article;
 
+import entity.Article;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
-import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
-import use_case.article_retrieval.ArticleRetrievalOutputData;
-import entity.Article;
+import interface_adapter.ViewManagerModel;
+import use_case.transfer_article.TransferArticleOutputBoundary;
+import use_case.transfer_article.TransferArticleOutputData;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary {
-    private final HomeViewModel homeViewModel;
+public class TransferArticlePresenter implements TransferArticleOutputBoundary {
+    private final ViewManagerModel viewManagerModel;
 
-    public ArticleRetrievalPresenter(HomeViewModel homeViewModel) {
-        this.homeViewModel = homeViewModel;
+    public TransferArticlePresenter(ViewManagerModel homeViewModel) {
+        this.viewManagerModel = homeViewModel;
     }
 
     @Override
-    public void prepareSuccessView(ArticleRetrievalOutputData outputData) {
-        System.out.println("success");
-        HomeState currentHomeState = homeViewModel.getHomeState();
-        currentHomeState.setArticles(outputData.getArticles());
-
-        // Extract headlines.
-        List<String> headlines = new ArrayList<>();
-
-        // Ensure that you MUTATE headlinesModel!
-        DefaultListModel<String> headlinesModel = currentHomeState.getHeadlinesModel();
-        headlinesModel.clear();
-        for (Article article:
-             currentHomeState.getArticles()) {
-            String headline = article.getHeadline();
-            headlines.add(headline);
-            headlinesModel.addElement(headline);
-        }
-
-        // Set headlines.
-        currentHomeState.setHeadlines(headlines);
-        homeViewModel.firePropertyChanged("articleRetrieval");
+    public void prepareSuccessView(TransferArticleOutputData outputData) {
+        viewManagerModel.firePropertyChanged("switchArticleView", outputData);
     }
 
     @Override
     public void prepareFailView(String error) {
-        System.out.println("failed");
-        HomeState currentHomeState = homeViewModel.getHomeState();
-        currentHomeState.setArticleRetrievalError(error);
-        homeViewModel.firePropertyChanged("articleRetrieval");
     }
 }
