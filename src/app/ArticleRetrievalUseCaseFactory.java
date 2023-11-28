@@ -7,6 +7,8 @@ import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.grouping.GroupingController;
 import interface_adapter.grouping.GroupingPresenter;
+import interface_adapter.transfer_article.TransferArticleController;
+import interface_adapter.transfer_article.TransferArticlePresenter;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import use_case.article_retrieval.ArticleRetrievalInputBoundary;
 import use_case.article_retrieval.ArticleRetrievalInteractor;
@@ -14,6 +16,10 @@ import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
 import use_case.grouping.GroupingInputBoundary;
 import use_case.grouping.GroupingInteractor;
 import use_case.grouping.GroupingOutputBoundary;
+import use_case.transfer_article.TransferArticleInputBoundary;
+import use_case.transfer_article.TransferArticleInteractor;
+import use_case.transfer_article.TransferArticleOutputBoundary;
+import view.ArticleView;
 import view.HomeView;
 import view.ViewManager;
 
@@ -24,7 +30,8 @@ public class ArticleRetrievalUseCaseFactory {
                                   GroupingViewModel groupingViewModel) {
         ArticleRetrievalController articleRetrievalController = createArticleRetrievalUseCase(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
         GroupingController groupingController = createGroupingUseCase(viewManagerModel, groupingViewModel);
-        return new HomeView(articleRetrievalController, homeViewModel, groupingViewModel, groupingController);
+        TransferArticleController transferArticleController = createTransferArticleUseCase(viewManagerModel, homeViewModel);
+        return new HomeView(articleRetrievalController, homeViewModel, groupingViewModel, groupingController, transferArticleController);
     }
 
     private static ArticleRetrievalController createArticleRetrievalUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject) {
@@ -39,5 +46,12 @@ public class ArticleRetrievalUseCaseFactory {
         GroupingInputBoundary groupingInputBoundary = new GroupingInteractor(groupingOutputBoundary);
 
         return new GroupingController(groupingInputBoundary);
+    }
+
+    private static TransferArticleController createTransferArticleUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
+        TransferArticleOutputBoundary transferArticleOutputBoundary = new TransferArticlePresenter(viewManagerModel);
+        TransferArticleInputBoundary transferArticleInputBoundary = new TransferArticleInteractor(transferArticleOutputBoundary);
+
+        return new TransferArticleController(transferArticleInputBoundary);
     }
 }
