@@ -52,4 +52,18 @@ public class HomeState {
     public DefaultListModel<String> getHeadlinesModel() {
         return headlinesModel;
     }
+
+    public Article getArticleByHeadline(String headline) {
+        System.out.println(headline);
+        for (Article article:
+             articles) {
+            System.out.println(article.getHeadline());
+            if (article.getHeadline().equals(headline)) {
+                return article;
+            }
+        }
+
+
+        throw new RuntimeException("Unexpected error - couldn't find article with headline.");
+    }
 }
