@@ -12,8 +12,8 @@ import java.util.List;
 public class SummarizationPresenter implements SummarizationOutputBoundary {
     private final ArticleViewModel articleViewModel;
 
-    public SummarizationPresenter(ArticleViewModel homeViewModel) {
-        this.articleViewModel = homeViewModel;
+    public SummarizationPresenter(ArticleViewModel articleViewModel) {
+        this.articleViewModel = articleViewModel;
     }
 
     @Override
