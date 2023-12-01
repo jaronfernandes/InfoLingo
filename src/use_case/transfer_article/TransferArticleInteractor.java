@@ -16,7 +16,12 @@ public class TransferArticleInteractor implements TransferArticleInputBoundary {
 
     @Override
     public void execute(TransferArticleInputData inputData) {
-        TransferArticleOutputData outputData = new TransferArticleOutputData(inputData.getArticle());
-        presenter.prepareSuccessView(outputData);
+        if (inputData.getArticle() != null) {
+            TransferArticleOutputData outputData = new TransferArticleOutputData(inputData.getArticle());
+            presenter.prepareSuccessView(outputData);
+        }
+        else {
+            presenter.prepareFailView("Could not find article.");
+        }
     }
 }

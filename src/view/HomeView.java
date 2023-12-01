@@ -95,11 +95,18 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                         } else {
                             // Selection made.
                             System.out.println("Selected article.");
-                            Article article = homeViewModel
-                                    .getHomeState()
-                                    .getArticleByHeadline(headlines.getSelectedValue());
-                            transferArticleController.execute(article);
-//                            support.firePropertyChange("switchView", null, "ArticleView");
+
+
+                            try {
+                                Article chosenArticle = homeViewModel
+                                        .getHomeState()
+                                        .getArticleByHeadline(headlines.getSelectedValue());
+                                transferArticleController.execute(chosenArticle);
+                            } catch (Exception exception) {
+                                transferArticleController.execute("Could not find article.");
+                            }
+
+
                         }
                     }
                 }
@@ -337,6 +344,8 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             if (state.getArticleRetrievalError() != null) {
                 JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
             }
+        } else if (evt.getPropertyName().equals("transferArticleError")){
+            JOptionPane.showMessageDialog(this, evt.getNewValue());
         }
     }
 
