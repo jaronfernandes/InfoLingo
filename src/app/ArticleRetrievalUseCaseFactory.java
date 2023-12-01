@@ -19,9 +19,7 @@ import use_case.grouping.GroupingOutputBoundary;
 import use_case.transfer_article.TransferArticleInputBoundary;
 import use_case.transfer_article.TransferArticleInteractor;
 import use_case.transfer_article.TransferArticleOutputBoundary;
-import view.ArticleView;
 import view.HomeView;
-import view.ViewManager;
 
 public class ArticleRetrievalUseCaseFactory {
 
@@ -49,7 +47,7 @@ public class ArticleRetrievalUseCaseFactory {
     }
 
     private static TransferArticleController createTransferArticleUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
-        TransferArticleOutputBoundary transferArticleOutputBoundary = new TransferArticlePresenter(viewManagerModel);
+        TransferArticleOutputBoundary transferArticleOutputBoundary = new TransferArticlePresenter(viewManagerModel, homeViewModel);
         TransferArticleInputBoundary transferArticleInputBoundary = new TransferArticleInteractor(transferArticleOutputBoundary);
 
         return new TransferArticleController(transferArticleInputBoundary);
