@@ -186,9 +186,10 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
 
         // TEST
-        String modifiedContent = article.getContent().replaceAll("[\\t\\n\\r\\f\\v]", " ");
+        String modifiedHeadline = article.getHeadline().replaceAll("[^A-Za-z0-9_@./#&+\\-\\[\\]\\s]", "");
+        String modifiedContent = article.getContent().replaceAll("[^A-Za-z0-9_@./#&+\\-\\[\\]\\s]", "");
 //        translatedContent = article.getContent();
-        System.out.println(translatedContent);
+//        System.out.println(translatedContent);
 
         // sample: https://api-free.deepl.com/v2/translate?auth_key=
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
@@ -200,10 +201,8 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         }
 
         try {
-            translatedHeadline = translateText(article.getHeadline(), language);
-            System.out.println(translatedHeadline);
+            translatedHeadline = translateText(modifiedHeadline, language);
             translatedContent = translateText(modifiedContent, language);
-            System.out.println(translatedContent);
         }
         catch (Exception e) {
             // try using Google's instead as a backup! (due to char limit on DeepL)
