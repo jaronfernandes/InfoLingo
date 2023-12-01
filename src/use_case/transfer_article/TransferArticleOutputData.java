@@ -8,7 +8,8 @@ import java.util.List;
 
 public class TransferArticleOutputData {
 
-    Article article;
+    Article article = null;
+    String transferArticleError = null;
 
     public TransferArticleOutputData(Article article) {
         this.article = article;
@@ -20,5 +21,13 @@ public class TransferArticleOutputData {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public String getTransferArticleError() {
+        return transferArticleError;
+    }
+
+    public void setTransferArticleError(String transferArticleError) {
+        this.transferArticleError = transferArticleError;
     }
 }
