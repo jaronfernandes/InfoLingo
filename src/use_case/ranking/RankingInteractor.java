@@ -26,7 +26,6 @@ public class RankingInteractor implements RankingInputBoundary {
         Preferences preferences = preferencesFactory.create(inputData.getCountries(),inputData.getDate());
         List<String> countries = inputData.getCountries();
         String date = inputData.getDate();
-
         ArrayList<Article> ranking = new ArrayList<>();
         for (Article article: articles){
             if(matchPreferences(article, preferences, countries, date, inputData)) {
@@ -35,15 +34,17 @@ public class RankingInteractor implements RankingInputBoundary {
             }
         }
         if (ranking.isEmpty()) {
-            //System.out.println("nooo");
+            System.out.println("nooo");
             presenter.prepareFailView("Nothing matches your preferences. Try reducing filter!");
         }
         else {
             RankingOutputData outputData = new RankingOutputData(rankingFactory.create(ranking, preferences));
             presenter.prepareSuccessView(outputData);
-            for (Article article: ranking){
+            //testing
+            /*for (Article article: ranking){
+                System.out.println("YAY");
                 System.out.println(article.getHeadline());
-            }
+            }*/
         }
     }
 
@@ -57,29 +58,48 @@ public class RankingInteractor implements RankingInputBoundary {
             }
         }
         if (input.getDate().equals("YYYY-MM-DD")) {
-            System.out.println("wooh?");
-            System.out.println(article.getCountry());
-            System.out.println("preferences.countries:");
+            // System.out.println("wooh?");
+            // System.out.println(article.getCountry());
+            // System.out.println("preferences.countries:");
             for (String country: preferences.getCountries()){
-                System.out.println(country);
+                // System.out.println(country);
             }
             if (preferences.getCountries().contains(article.getCountry())) {
-                System.out.println("wooh1");
+                // System.out.println("wooh1");
                 return true;
             }
         }
         if (input.getCountries().isEmpty()) {
-            // System.out.println("wooh??");
-            // System.out.println(article.getPublishedAt());
-            // System.out.println("preferences.date:");
-            // System.out.println(preferences.getDate());
+
+            if (preferences.getDate().length() == 7) {
+                // System.out.println("7");
+                // System.out.println(article.getPublishedAt().substring(0,7));
+                if (preferences.getDate().equals(article.getPublishedAt().substring(0,7))){
+                    System.out.println("woo");
+                    return true;
+
+                }
+
+            }
+            if (preferences.getDate().length() == 4) {
+                if (preferences.getDate().equals(article.getPublishedAt().substring(0,4))) {
+                    // System.out.println("woooo");
+                    return true;
+                }
+            }
+            /*
+            System.out.println("wooh??");
+            System.out.println(article.getPublishedAt());
+            System.out.println("preferences.date:");
+            System.out.println(preferences.getDate());
+             */
             if (article.getPublishedAt().equals(preferences.getDate())) {
                 // System.out.println("wooh2");
                 // System.out.println((article.getPublishedAt()).equals(preferences.getDate()));
                 return true;
             }
         }
-        System.out.println("nooo1");
+        // System.out.println("nooo1");
         return false;
     }
 
