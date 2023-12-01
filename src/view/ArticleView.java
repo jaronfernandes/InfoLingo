@@ -320,6 +320,9 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 System.out.println(state.getTranslatedContent());
                 translationUI.setText(state.getTranslatedContent());
             }
+            else if (evt.getPropertyName().equals("failedTranslationArticleUpdate")) {
+                JOptionPane.showMessageDialog(this, "Failed to translate article!");
+            }
             else if (evt.getPropertyName().equals("summarizationUpdate")) {
                 if (state.getSummarisationError() != null) {
                     JOptionPane.showMessageDialog(this, state.getSummarisationError());
