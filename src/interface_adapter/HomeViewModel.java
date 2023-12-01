@@ -25,6 +25,10 @@ public class HomeViewModel extends ViewModel {
         support.firePropertyChange("state", null, this.homeState);
     }
 
+    public void firePropertyChanged(String propertyName, String error) {
+        support.firePropertyChange(propertyName, null, error);
+    }
+
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
