@@ -2,6 +2,8 @@ package use_case.translation;
 
 import entity.TranslatedArticle;
 
+import java.util.NoSuchElementException;
+
 public class TranslationInteractor implements TranslationInputBoundary {
     private TranslationOutputBoundary presenter;
     private TranslateAPIDataAccessInterface translationDataAccessObject;
@@ -15,11 +17,13 @@ public class TranslationInteractor implements TranslationInputBoundary {
     @Override
     public void execute(TranslationInputData inputData) {
         try {
-            TranslatedArticle article = translationDataAccessObject.translateArticle(inputData.getArticle(), inputData.getLanguage());
-
-//            System.out.println(article.getHeadline());
-//            System.out.println(article.getContent());
-//            System.out.println(article.getLanguage());
+            TranslatedArticle article;
+            if (!inputData.articleExists()) {
+                article = translationDataAccessObject.translateArticle(inputData.getHeadline(), inputData.getLanguage());
+            }
+            else {
+                article = translationDataAccessObject.translateArticle(inputData.getArticle(), inputData.getLanguage());
+            }
 
             TranslationOutputData outputData =
                     new TranslationOutputData(
@@ -31,6 +35,9 @@ public class TranslationInteractor implements TranslationInputBoundary {
             presenter.prepareSuccessView(outputData);
         }
         // NullPointerException is thrown if something went wrong with the translation!
+        catch (NoSuchElementException e) {
+            presenter.prepareFailView("Could not find article with the given headline!");
+        }
         catch (NullPointerException e) {
             presenter.prepareFailView("Failed to translate the article!");
         }
