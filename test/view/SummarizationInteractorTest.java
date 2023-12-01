@@ -31,4 +31,27 @@ public class SummarizationInteractorTest {
         summarizationInteractor.execute(summarizationInputData);
     }
 
+    @Test
+    public void failTestSentenceLength() {
+        SummarizationDataAccessInterface summarizationDataAccessObject = new SummarisationDataAccessObject();
+
+        SummarizationOutputBoundary summarizationPresenter = new SummarizationOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SummarizationOutputData outputData) {
+                fail("Use case should have failed. Unexpected success.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals(error, "Invalid sentence length.");
+            }
+        };
+
+        SummarizationInputData summarizationInputData = new SummarizationInputData("This is valid content for an article, but the length is too short.", null);
+
+        SummarizationInputBoundary summarizationInteractor = new SummarizationInteractor(summarizationPresenter, summarizationDataAccessObject);
+
+        summarizationInteractor.execute(summarizationInputData);
+    }
+
 }
