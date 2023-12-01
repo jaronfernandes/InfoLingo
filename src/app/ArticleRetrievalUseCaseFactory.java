@@ -5,6 +5,7 @@ import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.ranking.RankingController;
 import interface_adapter.grouping.GroupingController;
 import interface_adapter.grouping.GroupingPresenter;
 import interface_adapter.transfer_article.TransferArticleController;
