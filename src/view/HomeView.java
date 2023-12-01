@@ -7,13 +7,10 @@ import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.grouping.GroupingController;
-import interface_adapter.grouping.GroupingPresenter;
 import interface_adapter.ranking.RankingController;
 import interface_adapter.ranking.RankingPresenter;
 import interface_adapter.transfer_article.TransferArticleController;
-import interface_adapter.translation.TranslationController;
 import use_case.ranking.RankingInteractor;
-import use_case.translation.TranslationInputBoundary;
 
 //
 import javax.swing.*;
@@ -57,12 +54,12 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                      HomeViewModel homeViewModel,
                      GroupingViewModel groupingViewModel,
                      GroupingController groupingController,
-                     TransferArticleController transferArticleController) {
+                     TransferArticleController transferArticleController, RankingController rankingController) {
         this.articleRetrievalController = controller;
         this.groupingController = groupingController;
         this.transferArticleController = transferArticleController;
         this.homeViewModel = homeViewModel;
-        this.rankingController = new RankingController(new RankingInteractor(new RankingPresenter(homeViewModel)));
+        this.rankingController = rankingController;
         this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
         groupingViewModel.addPropertyChangeListener(this);
