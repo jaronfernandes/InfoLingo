@@ -53,7 +53,7 @@ public class HomeState {
         return headlinesModel;
     }
 
-    public Article getArticleByHeadline(String headline) {
+    public Article getArticleByHeadline(String headline) throws Exception {
         System.out.println(headline);
         for (Article article:
              articles) {
@@ -63,7 +63,6 @@ public class HomeState {
             }
         }
 
-
-        throw new RuntimeException("Unexpected error - couldn't find article with headline.");
+        throw new Exception("Unexpected error - couldn't find article with headline.");
     }
 }
