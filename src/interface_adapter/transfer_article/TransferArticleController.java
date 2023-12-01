@@ -17,4 +17,9 @@ public class TransferArticleController {
         TransferArticleInputData articleRetrievalInputData = new TransferArticleInputData(article);
         transferArticleInteractor.execute(articleRetrievalInputData);
     }
+
+    public void execute(String error){
+        TransferArticleInputData articleRetrievalInputData = new TransferArticleInputData();
+        transferArticleInteractor.execute(articleRetrievalInputData);
+    }
 }
