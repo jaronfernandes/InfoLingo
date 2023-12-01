@@ -1,6 +1,5 @@
 package data_access;
 
-// TODO: Need to add Gradle or Maven dependency for this to work!
 //import com.google.cloud.translate.Translate;
 //import com.google.cloud.translate.TranslateOptions;
 //import com.google.cloud.translate.Translation;
@@ -22,7 +21,6 @@ import org.json.JSONObject;
 import java.util.*;
 
 import org.json.*;
-import use_case.summarization.SummarizationDataAccessInterface;
 import use_case.translation.TranslateAPIDataAccessInterface;
 
 import javax.print.URIException;
@@ -31,8 +29,8 @@ import java.lang.Math;
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, TranslateAPIDataAccessInterface {
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private final Integer numArticles = 10;
-    private static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
-    private static String DEEPL_TRANSLATE_API_KEY = "8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx";
+    private final static String API_TOKEN = System.getenv("API_TOKEN");
+    private final static String DEEPL_TRANSLATE_API_KEY = System.getenv("DEEPL_TRANSLATE_API_KEY");
     private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
@@ -191,9 +189,6 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 //        translatedContent = article.getContent();
 //        System.out.println(translatedContent);
 
-        // sample: https://api-free.deepl.com/v2/translate?auth_key=
-        // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
-        // &text=This%20is%20a%20Test.&target_lang=JA
         if (storedTranslatedArticles.containsKey(language)) {
             if (storedTranslatedArticles.get(language).containsKey(article)) {
                 return storedTranslatedArticles.get(language).get(article);
