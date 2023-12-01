@@ -4,6 +4,7 @@ import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.ranking.RankingController;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 import use_case.article_retrieval.ArticleRetrievalInputBoundary;
 import use_case.article_retrieval.ArticleRetrievalInteractor;

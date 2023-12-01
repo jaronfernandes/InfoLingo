@@ -9,6 +9,7 @@ import interface_adapter.grouping.GroupingPresenter;
 import interface_adapter.ranking.RankingController;
 import interface_adapter.ranking.RankingPresenter;
 import interface_adapter.translation.TranslationController;
+import use_case.ranking.RankingInteractor;
 import use_case.translation.TranslationInputBoundary;
 
 
@@ -40,6 +41,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
         this.articleRetrievalController = controller;
         this.homeViewModel = homeViewModel;
+        this.rankingController = new RankingController(new RankingInteractor(new RankingPresenter(homeViewModel)));
         homeViewModel.addPropertyChangeListener(this);
 
         //Page
@@ -103,18 +105,19 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         final JMenu PrefMenu;
         final JButton refresh = new JButton("Refresh/Search");
         JTextField DateSearch = new JTextField("YYYY-MM-DD",20);
+
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(refresh)) {
                     articleRetrievalController.execute(searchField.getText());
-                    rankingController.execute(prefCountry, DateSearch.getText());
+                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getArticles());
                 }
             }
         });
 
         final JMenuItem CountryMenu, DateMenu;
-        final JCheckBoxMenuItem CanButton, FraButton, ChiButton;
+        final JCheckBox CanButton, FraButton, ChiButton;
         menuBar = new JMenuBar();
 
 
@@ -124,12 +127,13 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         menuBar.add(PrefMenu);
 
         //Countries submenu
+        this.prefCountry = new ArrayList<>();
         CountryMenu = new JMenu("Country");
 
         ButtonGroup countries = new ButtonGroup();
 
 
-        CanButton = new JCheckBoxMenuItem("Canada");
+        CanButton = new JCheckBox("Canada");
         countries.add(CanButton);
         CountryMenu.add(CanButton);
         CanButton.addItemListener(new ItemListener() {
@@ -146,7 +150,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             }
         });
 
-        FraButton = new JCheckBoxMenuItem("France");
+        FraButton = new JCheckBox("France");
         countries.add(FraButton);
         CountryMenu.add(FraButton);
         FraButton.addItemListener(new ItemListener() {
@@ -154,14 +158,16 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prefCountry.add("France");
+                    System.out.println("France");
                 }
                 if (e.getStateChange() == ItemEvent.DESELECTED) {
                     prefCountry.remove("France");
+                    System.out.println("No France");
                 }
             }
         });
 
-        ChiButton = new JCheckBoxMenuItem("China");
+        ChiButton = new JCheckBox("China");
         countries.add(ChiButton);
         CountryMenu.add(ChiButton);
         ChiButton.addItemListener(new ItemListener() {
@@ -169,9 +175,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prefCountry.add("China");
+                    System.out.println("China");
                 }
                 if (e.getStateChange() == ItemEvent.DESELECTED) {
                     prefCountry.remove("China");
+                    System.out.println("No China");
                 }
             }
         });
@@ -203,8 +211,9 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                 }
             }
         });
+        DateMenu.add(DateSearch);
 
-        PrefMenu.add(DateSearch);
+        PrefMenu.add(DateMenu);
 
         //Search Field
         menuBar.add(searchField);

@@ -39,6 +39,8 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
         // Set headlines.
         currentHomeState.setHeadlines(headlines);
         homeViewModel.firePropertyChanged("articleRetrieval");
+
+
     }
 
     @Override

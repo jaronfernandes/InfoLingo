@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ranking {
 
@@ -12,7 +13,10 @@ public class Ranking {
         this.preferences = preferences;
     }
 
-    public String getHeadline() {
-        return this.articles.get(0).getHeadline();
+    public List<Article> getAricles(){
+        return articles;
+    }
+    public Preferences getPreferences(){
+        return preferences;
     }
 }
