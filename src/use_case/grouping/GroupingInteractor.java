@@ -18,7 +18,8 @@ public class GroupingInteractor implements GroupingInputBoundary{
     public void execute(GroupingInputData inputData) {
         GroupingFactory groupingFactory = new GroupingFactory();
         HeadlineMapFactory headlineMapFactory = new HeadlineMapFactory();
-        ArrayList<Article> articles = inputData.getArticles();
+        ArrayList<Article> inputArticles = inputData.getArticles();
+        ArrayList<Article> articles = new ArrayList<>(inputArticles);
         HashMap<Article, HeadlineMap> articleMaps = new HashMap<>();
         ArrayList<Grouping> groupings = new ArrayList<>();
         for (Article article : articles) {
