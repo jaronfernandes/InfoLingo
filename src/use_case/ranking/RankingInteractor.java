@@ -15,7 +15,7 @@ public class RankingInteractor implements RankingInputBoundary {
 
     @Override
     public void execute(RankingInputData inputData) {
-        if (Objects.equals(inputData.getDate(), "YYYY-MM-DD") && inputData.getCountries().isEmpty()) {
+        if (inputData.getDate().compareTo("YYYY-MM-DD") == 0 && inputData.getCountries().isEmpty()) {
             System.out.println("No preferences entered.");
             return;
         }
@@ -31,35 +31,55 @@ public class RankingInteractor implements RankingInputBoundary {
         for (Article article: articles){
             if(matchPreferences(article, preferences, countries, date, inputData)) {
                 ranking.add(article);
+                //System.out.println("added");
             }
         }
         if (ranking.isEmpty()) {
+            //System.out.println("nooo");
             presenter.prepareFailView("Nothing matches your preferences. Try reducing filter!");
         }
         else {
             RankingOutputData outputData = new RankingOutputData(rankingFactory.create(ranking, preferences));
             presenter.prepareSuccessView(outputData);
+            for (Article article: ranking){
+                System.out.println(article.getHeadline());
+            }
         }
     }
 
     boolean matchPreferences(Article article, Preferences preferences, List<String> countries, String date,
                              RankingInputData input) {
-        if (!input.getCountries().isEmpty() && input.getDate() != "YYYY-MM-DD") {
-            if (Objects.equals(article.getPublishedAt(), preferences.getDate()) &&
+        if (!input.getCountries().isEmpty() && !input.getDate().equals("YYYY-MM-DD")) {
+            if (article.getPublishedAt().equals(preferences.getDate()) &&
                     preferences.getCountries().contains(article.getCountry())) {
+                System.out.println("wooh");
                 return true;
             }
         }
-        if (Objects.equals(input.getDate(), "YYYY-MM-DD")) {
+        if (input.getDate().equals("YYYY-MM-DD")) {
+            System.out.println("wooh?");
+            System.out.println(article.getCountry());
+            System.out.println("preferences.countries:");
+            for (String country: preferences.getCountries()){
+                System.out.println(country);
+            }
             if (preferences.getCountries().contains(article.getCountry())) {
+                System.out.println("wooh1");
                 return true;
             }
         }
         if (input.getCountries().isEmpty()) {
-            if (preferences.getCountries().contains(article.getCountry())) {
+            // System.out.println("wooh??");
+            // System.out.println(article.getPublishedAt());
+            // System.out.println("preferences.date:");
+            // System.out.println(preferences.getDate());
+            if (article.getPublishedAt().equals(preferences.getDate())) {
+                // System.out.println("wooh2");
+                // System.out.println((article.getPublishedAt()).equals(preferences.getDate()));
                 return true;
             }
         }
+        System.out.println("nooo1");
         return false;
     }
 
