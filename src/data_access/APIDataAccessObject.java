@@ -14,6 +14,7 @@ import entity.TranslatedArticle;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -22,17 +23,14 @@ import java.net.http.HttpResponse;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+
 import org.json.*;
 import use_case.summarization.SummarizationDataAccessInterface;
 import use_case.translation.TranslateAPIDataAccessInterface;
 
 import javax.print.URIException;
 import java.lang.Math;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, TranslateAPIDataAccessInterface {
     private static final String BASE_URL = "https://newsapi.org/v2/";
@@ -68,13 +66,11 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             // Limits number of articles retrieved to numArticles at most.
             for(int i = 0; i < Math.min(this.numArticles, articles.length()); i++) {
                 JSONObject article = articles.getJSONObject(i);
-                System.out.println(article);
+//                System.out.println(article);
                 formattedArticles.add(formatArticle(article));
-
-
-
 //            System.out.println(firstArticle);
             }
+            removeDuplicateArticles(formattedArticles);
 
             System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         } catch (Exception e) {
@@ -87,9 +83,35 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         return formattedArticles;
     }
 
+    /**
+     * <p> Removes duplicate articles from the given List of Article objects through mutation.
+     * </p>
+     * @param articles the List of Articles.
+     * @author Jaron Fernandes
+     */
+    private void removeDuplicateArticles(List<Article> articles) {
+        HashSet<String> existingHeadlines = new HashSet<>();
+        int i = 0;
+
+        while (i < articles.size()) {
+            Article article = articles.get(i);
+            if (!existingHeadlines.contains(article.getHeadline())) {
+                existingHeadlines.add(article.getHeadline());
+                i++;
+            }
+            else {
+                System.out.println("Removed duplicate Article!");
+                articles.remove(article);
+            }
+        }
+    }
+
     private Article formatArticle(JSONObject unformattedArticle){
         // Retrieve details of first article.
-        String description = getValue(unformattedArticle, "description");
+        String description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
+        System.out.println(description);
+        System.out.println("IT HAPPENED)");
+
         String title = getValue(unformattedArticle, "title");
         String url = getValue(unformattedArticle, "url");
         // Not sure how to get the sources from the nested dict
@@ -115,8 +137,14 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
     @Override
     public TranslatedArticle translateArticle(Article article, String language) {
+        System.out.println(language);
         String translatedHeadline = null, translatedContent = null;
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
+
+        // TEST
+        String modifiedContent = article.getContent().replaceAll("[\\t\\n\\r\\f\\v]", " ");
+//        translatedContent = article.getContent();
+        System.out.println(translatedContent);
 
         // sample: https://api-free.deepl.com/v2/translate?auth_key=
         // 8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx
@@ -129,7 +157,9 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 
         try {
             translatedHeadline = translateText(article.getHeadline(), language);
-            translatedContent = translateText(article.getContent(), language);
+            System.out.println(translatedHeadline);
+            translatedContent = translateText(modifiedContent, language);
+            System.out.println(translatedContent);
         }
         catch (Exception e) {
             // try using Google's instead as a backup! (due to char limit on DeepL)

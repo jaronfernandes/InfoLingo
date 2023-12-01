@@ -1,5 +1,7 @@
 package view;
 
+import entity.Article;
+import interface_adapter.GroupingViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalController;
 import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
@@ -8,11 +10,12 @@ import interface_adapter.grouping.GroupingController;
 import interface_adapter.grouping.GroupingPresenter;
 import interface_adapter.ranking.RankingController;
 import interface_adapter.ranking.RankingPresenter;
+import interface_adapter.transfer_article.TransferArticleController;
 import interface_adapter.translation.TranslationController;
 import use_case.ranking.RankingInteractor;
 import use_case.translation.TranslationInputBoundary;
 
-
+//
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,25 +27,46 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;    
 
 public class HomeView extends JPanel implements PropertyChangeListener{
     public final String viewName = "Home";
+
     private HomeViewModel homeViewModel;
+    GroupingViewModel groupingViewModel;
+
     private ArticleRetrievalController articleRetrievalController;
     private ArticleRetrievalPresenter articleRetrievalPresenter;
+  
     private RankingController rankingController;
     private RankingPresenter rankingPresenter;
-    private JList<String> headlinesUI;
+  
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     //Where the GUI is created:
     private List<String> prefCountry;
+  
+    private TransferArticleController transferArticleController;
+  
+    final private GroupingController groupingController;
+  
+    private JList<String> headlinesUI;
 
-    public HomeView(ArticleRetrievalController controller, HomeViewModel homeViewModel) {
+
+    //Where the GUI is created:
+     public HomeView(ArticleRetrievalController controller,
+                     HomeViewModel homeViewModel,
+                     GroupingViewModel groupingViewModel,
+                     GroupingController groupingController,
+                     TransferArticleController transferArticleController) {
         this.articleRetrievalController = controller;
+        this.groupingController = groupingController;
+        this.transferArticleController = transferArticleController;
         this.homeViewModel = homeViewModel;
         this.rankingController = new RankingController(new RankingInteractor(new RankingPresenter(homeViewModel)));
+        this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
+        groupingViewModel.addPropertyChangeListener(this);
+
 
         //Page
         // Headlines
@@ -54,6 +78,14 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         listScroller.setPreferredSize(new Dimension(250, 80));
         this.add(headlines);
 
+        JList<String> groupingHeadlines = new JList<String>(groupingViewModel.getGroupingState().getHeadlinesModel()); //data has type Object[]
+        groupingHeadlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        groupingHeadlines.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        groupingHeadlines.setVisibleRowCount(-1);
+        JScrollPane groupingListScroller = new JScrollPane(groupingHeadlines);
+        groupingListScroller.setPreferredSize(new Dimension(250, 80));
+        this.add(groupingHeadlines);
+
         headlines.addListSelectionListener(
                 new ListSelectionListener() {
                     @Override
@@ -63,10 +95,34 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                         } else {
                             // Selection made.
                             System.out.println("Selected article.");
-                            support.firePropertyChange("switchView", null, "ArticleView");
+                            Article article = homeViewModel
+                                    .getHomeState()
+                                    .getArticleByHeadline(headlines.getSelectedValue());
+                            transferArticleController.execute(article);
+//                            support.firePropertyChange("switchView", null, "ArticleView");
                         }
                     }
                 }
+        );
+
+        groupingHeadlines.addListSelectionListener(
+             new ListSelectionListener() {
+                 @Override
+                 public void valueChanged(ListSelectionEvent e) {
+                     if (groupingHeadlines.getSelectedIndex() == -1) {
+                         System.out.println("Didn't select group.");
+                     } else {
+                         // Selection made.
+                         System.out.println("Selected group.");
+                         ArrayList<Article> articles = groupingViewModel.getGroupingState().getGroupings().get(groupingHeadlines.getSelectedIndex()).getArticles();
+                         DefaultListModel<String> listArticles = homeViewModel.getHomeState().getHeadlinesModel();
+                         listArticles.clear();
+                         for (int i = 0; i < articles.size(); i++) {
+                             listArticles.add(i, articles.get(i).getHeadline());
+                         }
+                     }
+                 }
+             }
         );
         headlinesUI = headlines;
         //background colour
@@ -83,11 +139,18 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.weightx = 0;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         this.add(headlines, gridBagConstraints);
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        this.add(groupingHeadlines, gridBagConstraints);
 
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0;
@@ -97,6 +160,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         this.add(menuBar, gridBagConstraints);
     }
 
+
     private JMenuBar getBar() {
         JTextField searchField = new JTextField("Search!",20);
         searchField.setHorizontalAlignment(JTextField.CENTER);
@@ -105,6 +169,8 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         final JMenu PrefMenu;
         final JButton refresh = new JButton("Refresh/Search");
         JTextField DateSearch = new JTextField("YYYY-MM-DD",20);
+      
+        final JButton grouping = new JButton("Group");
 
         refresh.addActionListener(new ActionListener() {
             @Override
@@ -116,8 +182,23 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             }
         });
 
+
         final JMenuItem CountryMenu, DateMenu;
         final JCheckBox CanButton, FraButton, ChiButton;
+
+        grouping.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(grouping)) {
+                    groupingController.execute((ArrayList<Article>) homeViewModel.getHomeState().getArticles());
+                }
+            }
+        });
+
+
+        final JMenuItem LangMenu;
+        final JRadioButtonMenuItem EngButton, IceButton;
+
         menuBar = new JMenuBar();
 
 
@@ -241,6 +322,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
         menuBar.add(refresh);
+
+        //Group Button
+        grouping.setMnemonic(KeyEvent.VK_R);
+        menuBar.add(grouping);
+
         return menuBar;
     }
 
@@ -250,7 +336,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             HomeState state = (HomeState) evt.getNewValue();
             if (state.getArticleRetrievalError() != null) {
                 JOptionPane.showMessageDialog(this, state.getArticleRetrievalError());
-            } else {
             }
         }
     }
