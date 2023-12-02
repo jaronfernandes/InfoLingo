@@ -4,21 +4,28 @@ import entity.Article;
 import entity.Preferences;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RankingInputData {
-    private ArrayList<Article> articles;
-    private Preferences preferences;
+    private List<Article> articles;
+    private List<String> countries;
+    private String date;
 
-    public RankingInputData(ArrayList<Article> articles, Preferences preferences){
+    public RankingInputData(List<String> countries, String date, List<Article> articles){
+        this.countries = countries;
+        this.date = date;
         this.articles = articles;
-        this.preferences = preferences;
     }
 
-    public ArrayList<Article> getArticles(){
+    public List<String> getCountries(){
+        return this.countries;
+    }
+
+    public String getDate(){
+        return this.date;
+    }
+
+    public List<Article> getArticles(){
         return this.articles;
-    }
-
-    public Preferences getPreferences(){
-        return this.preferences;
     }
 }

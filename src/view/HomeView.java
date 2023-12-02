@@ -7,20 +7,22 @@ import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.article_retrieval.ArticleRetrievalPresenter;
 import interface_adapter.grouping.GroupingController;
+import interface_adapter.grouping.GroupingPresenter;
+import interface_adapter.ranking.RankingController;
+import interface_adapter.ranking.RankingPresenter;
 import interface_adapter.transfer_article.TransferArticleController;
 import interface_adapter.translation.TranslationController;
+import use_case.ranking.RankingInteractor;
 import use_case.translation.TranslationInputBoundary;
 
 //
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.View;
+import javax.swing.text.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -34,11 +36,20 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     GroupingViewModel groupingViewModel;
 
     private ArticleRetrievalController articleRetrievalController;
-    private TransferArticleController transferArticleController;
-    final private GroupingController groupingController;
     private ArticleRetrievalPresenter articleRetrievalPresenter;
-    private JList<String> headlinesUI;
+  
+    private RankingController rankingController;
+    private RankingPresenter rankingPresenter;
+  
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    //Where the GUI is created:
+    private List<String> prefCountry;
+  
+    private TransferArticleController transferArticleController;
+  
+    final private GroupingController groupingController;
+  
+    private JList<String> headlinesUI;
 
 
     //Where the GUI is created:
@@ -51,6 +62,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         this.groupingController = groupingController;
         this.transferArticleController = transferArticleController;
         this.homeViewModel = homeViewModel;
+        this.rankingController = new RankingController(new RankingInteractor(new RankingPresenter(homeViewModel)));
         this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
         groupingViewModel.addPropertyChangeListener(this);
@@ -113,6 +125,9 @@ public class HomeView extends JPanel implements PropertyChangeListener{
              }
         );
         headlinesUI = headlines;
+        //background colour
+        this.setBackground(new Color(240, 240, 240));
+
 
         // Menu
         final JMenuBar menuBar = getBar();
@@ -153,15 +168,23 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         final JMenuBar menuBar;
         final JMenu PrefMenu;
         final JButton refresh = new JButton("Refresh/Search");
+        JTextField DateSearch = new JTextField("YYYY-MM-DD",20);
+      
         final JButton grouping = new JButton("Group");
+
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(refresh)) {
                     articleRetrievalController.execute(searchField.getText());
+                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getArticles());
                 }
             }
         });
+
+
+        final JMenuItem CountryMenu, DateMenu;
+        final JCheckBox CanButton, FraButton, ChiButton;
 
         grouping.addActionListener(new ActionListener() {
             @Override
@@ -175,6 +198,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         final JMenuItem LangMenu;
         final JRadioButtonMenuItem EngButton, IceButton;
+
         menuBar = new JMenuBar();
 
 
@@ -183,26 +207,117 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         PrefMenu.setMnemonic(KeyEvent.VK_P);
         menuBar.add(PrefMenu);
 
-        //Languages submenu
-        LangMenu = new JMenu("Language");
-        LangMenu.setMnemonic(KeyEvent.VK_L);
+        //Countries submenu
+        this.prefCountry = new ArrayList<>();
+        CountryMenu = new JMenu("Country");
 
-        ButtonGroup languages = new ButtonGroup();
-        EngButton = new JRadioButtonMenuItem("English");
-        EngButton.setMnemonic(KeyEvent.VK_E);
-        EngButton.setSelected(true);
-        languages.add(EngButton);
-        LangMenu.add(EngButton);
+        ButtonGroup countries = new ButtonGroup();
 
-        IceButton = new JRadioButtonMenuItem("Icelandic");
-        IceButton.setMnemonic(KeyEvent.VK_I);
-        languages.add(IceButton);
-        LangMenu.add(IceButton);
 
-        PrefMenu.add(LangMenu);
+        CanButton = new JCheckBox("Canada");
+        countries.add(CanButton);
+        CountryMenu.add(CanButton);
+        CanButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prefCountry.add("Canada");
+                    System.out.println("Canada");
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    prefCountry.remove("Canada");
+                    System.out.println("no Canada");
+                }
+            }
+        });
+
+        FraButton = new JCheckBox("France");
+        countries.add(FraButton);
+        CountryMenu.add(FraButton);
+        FraButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prefCountry.add("France");
+                    System.out.println("France");
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    prefCountry.remove("France");
+                    System.out.println("No France");
+                }
+            }
+        });
+
+        ChiButton = new JCheckBox("China");
+        countries.add(ChiButton);
+        CountryMenu.add(ChiButton);
+        ChiButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prefCountry.add("China");
+                    System.out.println("China");
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    prefCountry.remove("China");
+                    System.out.println("No China");
+                }
+            }
+        });
+
+        PrefMenu.add(CountryMenu);
+
+        //Dates submenu
+        DateMenu = new JMenu("Date");
+        PrefMenu.setMnemonic(KeyEvent.VK_D);
+
+
+        // Has a max amount of characters on DateSearch
+        AbstractDocument dateDocument = (AbstractDocument) DateSearch.getDocument();
+
+        dateDocument.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if ((fb.getDocument().getLength() + string.length()) <= 10) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                    throws BadLocationException {
+                if ((fb.getDocument().getLength() + text.length() - length) <= 10) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+        DateMenu.add(DateSearch);
+
+        PrefMenu.add(DateMenu);
 
         //Search Field
         menuBar.add(searchField);
+        searchField.setForeground(Color.GRAY);
+        searchField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (searchField.getText().equals("Search!")) {
+                    searchField.setText("");
+                    searchField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (searchField.getText().isEmpty()) {
+                    searchField.setText("Search!");
+                    searchField.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+
 
         //Refresh/Search Button
         refresh.setMnemonic(KeyEvent.VK_R);
@@ -228,4 +343,5 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
 }
