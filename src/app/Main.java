@@ -78,7 +78,9 @@ public class Main {
         application.pack();
         application.setVisible(true);
         //plays background music
-        homeView.playBackgroundMusic("I just wanna be your sigma (full song).wav");
+        while (true) {
+            homeView.playBackgroundMusic("I just wanna be your sigma (full song).wav");
+        }
 
     }
 }
