@@ -13,6 +13,7 @@ import interface_adapter.transfer_article.TransferArticleController;
 import use_case.ranking.RankingInteractor;
 
 //
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -23,6 +24,8 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;    
 
@@ -63,6 +66,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         this.groupingViewModel = groupingViewModel;
         homeViewModel.addPropertyChangeListener(this);
         groupingViewModel.addPropertyChangeListener(this);
+        JOptionPane error = new JOptionPane();
 
 
         //Page
@@ -193,9 +197,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         });
 
 
-        final JMenuItem LangMenu;
-        final JRadioButtonMenuItem EngButton, IceButton;
-
         menuBar = new JMenuBar();
 
 
@@ -221,7 +222,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                     prefCountry.add("Canada");
                     System.out.println("Canada");
                 }
-                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                else if (e.getStateChange() == ItemEvent.DESELECTED){
                     prefCountry.remove("Canada");
                     System.out.println("no Canada");
                 }
@@ -238,7 +239,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                     prefCountry.add("France");
                     System.out.println("France");
                 }
-                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     prefCountry.remove("France");
                     System.out.println("No France");
                 }
@@ -255,7 +256,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                     prefCountry.add("China");
                     System.out.println("China");
                 }
-                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     prefCountry.remove("China");
                     System.out.println("No China");
                 }
@@ -326,6 +327,29 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         return menuBar;
     }
+
+    //plays music
+    public static void playBackgroundMusic(String filePath) {
+        try {
+            File audioFile = new File(filePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+            // Sleep to allow background music to play (adjust as needed)
+            Thread.sleep(50000); // 50 seconds
+
+            // Stop the music after some time (adjust as needed)
+            clip.stop();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
