@@ -5,12 +5,8 @@ package data_access;
 //import com.google.cloud.translate.TranslateOptions;
 //import com.google.cloud.translate.Translation;
 
-import entity.Article;
-import entity.ArticleFactory;
-import entity.TranslatedArticleFactory;
-import entity.Source;
+import entity.*;
 
-import entity.TranslatedArticle;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
 
 import java.io.IOException;
@@ -37,13 +33,13 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
     private final Integer numArticles = 10;
     private static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
     private static String DEEPL_TRANSLATE_API_KEY = "8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx";
+    private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
     @Override
     public List<Article> getArticles(String rawSearchTerm) {
         // Replace any spaces with '-' for a valid link.
         String searchTerm = rawSearchTerm.replace(' ', '-');
-
 
         List<Article> formattedArticles = new ArrayList<>();
 
@@ -71,6 +67,10 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
 //            System.out.println(firstArticle);
             }
             removeDuplicateArticles(formattedArticles);
+
+            for (Article article : formattedArticles) {
+                storedArticles.put(article.getHeadline(), article);
+            }
 
             System.out.println("Request for search \"" + rawSearchTerm + "\" successful");
         } catch (Exception e) {
@@ -106,6 +106,12 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         }
     }
 
+    /**
+     * <p> Extracts article data from a JSONObject and uses an Article factory to instantiate it as an Article object.
+     * </p>
+     * @param unformattedArticle a JSONObject containing the article data
+     * @author Jaron Fernandes
+     */
     private Article formatArticle(JSONObject unformattedArticle){
         // Retrieve details of first article.
         String description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
@@ -126,6 +132,13 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
         return articleFactory.create(title, description, sourceObj, author, url, country, publishedAt);
     }
 
+    /**
+     * <p> Retrieves specific article data from a JSONObject by key.
+     * </p>
+     * @param jsonObject a JSONObject containing the article data
+     * @param key A string for the word to extract data from the JSONObject.
+     * @author Jaron Fernandes, Jaiz Jeeson
+     */
     private String getValue(JSONObject jsonObject, String key) {
         try {
             return jsonObject.getString(key);
@@ -133,6 +146,37 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             System.out.println(e.getMessage());
             return "N.A.";
         }
+    }
+
+    /**
+     * <p> Returns the associated Article object by headline from the data access object.
+     * Throws an exception if there is none.
+     * </p>
+     * @param headline An article headline as a String.
+     * @throws NoSuchElementException if no article with the headline is found
+     * @author Jaron Fernandes
+     */
+    private Article retrieveArticleByHeadline(String headline) throws NoSuchElementException {
+        Article article = storedArticles.get(headline);
+        if (article == null) {
+            throw new NoSuchElementException();
+        }
+        return article;
+    }
+
+    /**
+     * <p> Returns a TranslatedArticle object from the given headline. Assumes the article has already been searched
+     * for and exists in the data access object. Throws a NoSuchElementException if cannot retrieve article by headline.
+     * </p>
+     * @param headline An article headline as a String.
+     * @param language A String indicating the language in the ISO 639 format.
+     * @throws NoSuchElementException if no article with the headline is found
+     * @author Jaron Fernandes
+     */
+    @Override
+    public TranslatedArticle translateArticle(String headline, String language) throws NoSuchElementException {
+        Article article = retrieveArticleByHeadline(headline);
+        return translateArticle(article, language);
     }
 
     @Override
@@ -193,6 +237,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
             newTranslatedArticles.put(article, finishedTranslatedArticle);
             storedTranslatedArticles.put(language, newTranslatedArticles);
         }
+//        storedArticles.put(finishedTranslatedArticle.getHeadline(), finishedTranslatedArticle);
 
         return finishedTranslatedArticle;
     }

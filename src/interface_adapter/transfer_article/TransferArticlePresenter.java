@@ -1,21 +1,17 @@
 package interface_adapter.transfer_article;
 
-import entity.Article;
-import interface_adapter.HomeState;
 import interface_adapter.HomeViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.transfer_article.TransferArticleOutputBoundary;
 import use_case.transfer_article.TransferArticleOutputData;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class TransferArticlePresenter implements TransferArticleOutputBoundary {
     private final ViewManagerModel viewManagerModel;
+    private final HomeViewModel homeViewModel;
 
-    public TransferArticlePresenter(ViewManagerModel homeViewModel) {
-        this.viewManagerModel = homeViewModel;
+    public TransferArticlePresenter(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.homeViewModel = homeViewModel;
     }
 
     @Override
@@ -25,5 +21,6 @@ public class TransferArticlePresenter implements TransferArticleOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        homeViewModel.firePropertyChanged("transferArticleError", error);
     }
 }

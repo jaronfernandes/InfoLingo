@@ -232,7 +232,9 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(translate)) {
                     String langSelected = getLanguage(languages, languageMap);
-                    translationController.execute(article, langSelected);
+//                    translationController.execute(article, langSelected);
+                    // Uses the overloaded method to get the article data.
+                    translationController.execute(articleViewModel.getArticleState().getHeadline(), langSelected);
                 }
             }
         });

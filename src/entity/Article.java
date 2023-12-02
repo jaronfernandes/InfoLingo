@@ -28,7 +28,7 @@ public class Article implements ArticleInterface {
         this.author = author;
         this.URL = url;
         this.country = country;
-        this.publishedAt = publishedAt;
+        this.publishedAt = publishedAt.substring(0,10);
         this.translatedArticles = new ArrayList<>();
     }
 

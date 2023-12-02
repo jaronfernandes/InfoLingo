@@ -8,6 +8,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.ranking.RankingController;
 import interface_adapter.grouping.GroupingController;
 import interface_adapter.grouping.GroupingPresenter;
+import interface_adapter.ranking.RankingPresenter;
 import interface_adapter.transfer_article.TransferArticleController;
 import interface_adapter.transfer_article.TransferArticlePresenter;
 import use_case.article_retrieval.ArticleRetrievalDataAccessInterface;
@@ -17,12 +18,14 @@ import use_case.article_retrieval.ArticleRetrievalOutputBoundary;
 import use_case.grouping.GroupingInputBoundary;
 import use_case.grouping.GroupingInteractor;
 import use_case.grouping.GroupingOutputBoundary;
+import use_case.ranking.RankingInputBoundary;
+import use_case.ranking.RankingInputData;
+import use_case.ranking.RankingInteractor;
+import use_case.ranking.RankingOutputBoundary;
 import use_case.transfer_article.TransferArticleInputBoundary;
 import use_case.transfer_article.TransferArticleInteractor;
 import use_case.transfer_article.TransferArticleOutputBoundary;
-import view.ArticleView;
 import view.HomeView;
-import view.ViewManager;
 
 public class ArticleRetrievalUseCaseFactory {
 
@@ -32,7 +35,8 @@ public class ArticleRetrievalUseCaseFactory {
         ArticleRetrievalController articleRetrievalController = createArticleRetrievalUseCase(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject);
         GroupingController groupingController = createGroupingUseCase(viewManagerModel, groupingViewModel);
         TransferArticleController transferArticleController = createTransferArticleUseCase(viewManagerModel, homeViewModel);
-        return new HomeView(articleRetrievalController, homeViewModel, groupingViewModel, groupingController, transferArticleController);
+        RankingController rankingController = createRankingUseCase(viewManagerModel, homeViewModel);
+        return new HomeView(articleRetrievalController, homeViewModel, groupingViewModel, groupingController, transferArticleController, rankingController);
     }
 //
     private static ArticleRetrievalController createArticleRetrievalUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel, ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject) {
@@ -50,9 +54,18 @@ public class ArticleRetrievalUseCaseFactory {
     }
 
     private static TransferArticleController createTransferArticleUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
-        TransferArticleOutputBoundary transferArticleOutputBoundary = new TransferArticlePresenter(viewManagerModel);
+        TransferArticleOutputBoundary transferArticleOutputBoundary = new TransferArticlePresenter(viewManagerModel, homeViewModel);
         TransferArticleInputBoundary transferArticleInputBoundary = new TransferArticleInteractor(transferArticleOutputBoundary);
 
         return new TransferArticleController(transferArticleInputBoundary);
     }
+
+    private static RankingController createRankingUseCase(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel) {
+        RankingOutputBoundary rankingOutputBoundary = new RankingPresenter(homeViewModel);
+        RankingInputBoundary rankingInputBoundary = new RankingInteractor(rankingOutputBoundary);
+
+        return new RankingController(rankingInputBoundary);
+
+    }
+
 }

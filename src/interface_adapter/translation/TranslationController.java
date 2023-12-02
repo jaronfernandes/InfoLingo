@@ -18,4 +18,11 @@ public class TranslationController {
         TranslationInputData TranslationInputData = new TranslationInputData(article, language);
         translationInteractor.execute(TranslationInputData);
     }
+
+    public void execute(String articleHeadline, String language) {
+        // TODO: May need to edit this, instead of article might need something like Article_ID to locate the
+        //  article object in the DAO.
+        TranslationInputData TranslationInputData = new TranslationInputData(articleHeadline, language);
+        translationInteractor.execute(TranslationInputData);
+    }
 }
