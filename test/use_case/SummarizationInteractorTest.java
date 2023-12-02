@@ -1,4 +1,4 @@
-package view;
+package use_case;
 
 import data_access.SummarisationDataAccessObject;
 import org.junit.Test;
