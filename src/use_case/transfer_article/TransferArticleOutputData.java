@@ -8,26 +8,12 @@ import java.util.List;
 
 public class TransferArticleOutputData {
 
-    Article article = null;
-    String transferArticleError = null;
-
+    Article article;
     public TransferArticleOutputData(Article article) {
         this.article = article;
     }
 
     public Article getArticle() {
         return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
-    public String getTransferArticleError() {
-        return transferArticleError;
-    }
-
-    public void setTransferArticleError(String transferArticleError) {
-        this.transferArticleError = transferArticleError;
     }
 }
