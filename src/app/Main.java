@@ -57,8 +57,8 @@ public class Main {
 
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel, homeView);
 
-
         // Set initial view.
+
 
 
         ArticleView articleView = TranslationUseCaseFactory.create(
@@ -77,5 +77,8 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+        //plays background music
+        homeView.playBackgroundMusic("I just wanna be your sigma (full song).wav");
+
     }
 }
