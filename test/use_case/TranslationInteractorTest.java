@@ -17,8 +17,9 @@ public class TranslationInteractorTest {
 
     @Test
     public void successfulTranslateTest() {
-        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
         TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
+
         final Article[] articleToTest = new Article[1];
         final HashSet<String> languageMapTest = new HashSet<>();
 
@@ -71,8 +72,9 @@ public class TranslationInteractorTest {
 
     @Test
     public void failTranslateTest() {
-        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject(true);
         TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
+        
         final Article[] articleToTest = new Article[1];
         final String query = "roblox", language = "EA";  // Non-existent ISO 639-2 language!
 
@@ -116,7 +118,7 @@ public class TranslationInteractorTest {
 
     @Test
     public void failSearchArticleToTranslateTest() {
-        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject(true);
         TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
 
         TranslationOutputBoundary translationPresenter = new TranslationOutputBoundary() {
