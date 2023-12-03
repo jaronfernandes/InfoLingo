@@ -17,7 +17,7 @@ public class TranslationInteractorTest {
 
     @Test
     public void successfulTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject(true);
         TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
 
         final Article[] articleToTest = new Article[1];
