@@ -168,17 +168,14 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface,
      * </p>
      * @param headline An article headline as a String.
      * @param language A String indicating the language in the ISO 639 format.
-     * @throws NoSuchElementException if no article with the headline is found
+     * @throws NoSuchElementException if no article with the headline is found.
+     * @throws NullPointerException if the API failed to translate the article.
      * @author Jaron Fernandes
      */
     @Override
-    public TranslatedArticle translateArticle(String headline, String language) throws NoSuchElementException {
+    public TranslatedArticle translateArticle(String headline, String language) throws NoSuchElementException, NullPointerException {
         Article article = retrieveArticleByHeadline(headline);
-        return translateArticle(article, language);
-    }
 
-    @Override
-    public TranslatedArticle translateArticle(Article article, String language) {
         System.out.println(language);
         String translatedHeadline = null, translatedContent = null;
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
