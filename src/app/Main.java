@@ -60,9 +60,6 @@ public class Main {
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel, homeView);
 
         // Set initial view.
-
-
-
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
                 articleViewModel,
