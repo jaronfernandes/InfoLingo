@@ -1,12 +1,15 @@
 package use_case;
 
 import data_access.APIDataAccessObject;
+import data_access.TranslationAPIDataAccessObject;
 import entity.Article;
 import org.junit.Test;
 import use_case.translation.*;
 import use_case.article_retrieval.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -14,13 +17,22 @@ public class TranslationInteractorTest {
 
     @Test
     public void successfulTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
         final Article[] articleToTest = new Article[1];
+        final HashSet<String> languageMapTest = new HashSet<>();
+
+        // ISO 639-2 Language Codes:
+        languageMapTest.add("EN");
+        languageMapTest.add("FR");
+        languageMapTest.add("ZH");
+        languageMapTest.add("JA");
+        languageMapTest.add("TR");
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
             @Override
             public void prepareSuccessView(ArticleRetrievalOutputData outputData) {
-                assertNotEquals(outputData.getArticles(), new ArrayList<Article>());
+                assertNotEquals(outputData.getArticles().size(), 0);
                 articleToTest[0] = outputData.getArticles().get(0);
             }
 
@@ -34,6 +46,8 @@ public class TranslationInteractorTest {
             @Override
             public void prepareSuccessView(TranslationOutputData outputData) {
                 assertNotEquals(outputData.getTranslatedContent(), "");
+                assertNotEquals(outputData.getTranslatedHeadline(), "");
+                assert languageMapTest.contains(outputData.getLanguage());
             }
 
             @Override
@@ -44,7 +58,7 @@ public class TranslationInteractorTest {
 
         ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData("roblox");
 
-        ArticleRetrievalInputBoundary articleRetrievalInteractor = new ArticleRetrievalInteractor(articleRetrievalPresenter, translationDataAccessObject);
+        ArticleRetrievalInputBoundary articleRetrievalInteractor = new ArticleRetrievalInteractor(articleRetrievalPresenter, articleRetrievalDataAccessObject);
 
         articleRetrievalInteractor.execute(articleRetrievalInputData);
 
@@ -57,14 +71,16 @@ public class TranslationInteractorTest {
 
     @Test
     public void failTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
         final Article[] articleToTest = new Article[1];
+        final String query = "roblox", language = "EA";  // Non-existent ISO 639-2 language!
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
             @Override
             public void prepareSuccessView(ArticleRetrievalOutputData outputData) {
                 assertNotEquals(outputData.getArticles(), new ArrayList<Article>());
-                articleToTest[0] = outputData.getArticles().get(0);
+                articleToTest[0] = outputData.getArticles().get(1);
             }
 
             @Override
@@ -85,13 +101,13 @@ public class TranslationInteractorTest {
             }
         };
 
-        ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData("math proof");
+        ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData(query);
 
-        ArticleRetrievalInputBoundary articleRetrievalInteractor = new ArticleRetrievalInteractor(articleRetrievalPresenter, translationDataAccessObject);
+        ArticleRetrievalInputBoundary articleRetrievalInteractor = new ArticleRetrievalInteractor(articleRetrievalPresenter, articleRetrievalDataAccessObject);
 
         articleRetrievalInteractor.execute(articleRetrievalInputData);
 
-        TranslationInputData translationInputData = new TranslationInputData(articleToTest[0].getHeadline(), "ZH");
+        TranslationInputData translationInputData = new TranslationInputData(articleToTest[0].getHeadline(), language);
 
         TranslationInputBoundary translationInteractor = new TranslationInteractor(translationPresenter, translationDataAccessObject);
 
@@ -100,7 +116,8 @@ public class TranslationInteractorTest {
 
     @Test
     public void failSearchArticleToTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        TranslationAPIDataAccessObject translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
 
         TranslationOutputBoundary translationPresenter = new TranslationOutputBoundary() {
             @Override
@@ -115,7 +132,7 @@ public class TranslationInteractorTest {
             }
         };
 
-        TranslationInputData translationInputData = new TranslationInputData("i LOVE pineapple on pizza", "JA");
+        TranslationInputData translationInputData = new TranslationInputData("i LOVE pineapple on pizza", "ZH");
 
         TranslationInputBoundary translationInteractor = new TranslationInteractor(translationPresenter, translationDataAccessObject);
 
