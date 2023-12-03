@@ -4,8 +4,10 @@ import app.ArticleRetrievalUseCaseFactory;
 import app.TranslationUseCaseFactory;
 import data_access.APIDataAccessObject;
 import data_access.SummarisationDataAccessObject;
+import data_access.TranslationAPIDataAccessObject;
 import interface_adapter.*;
 import use_case.summarization.SummarizationDataAccessInterface;
+import use_case.translation.TranslateAPIDataAccessInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +37,8 @@ public class HomeViewTest {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject(true);
+        TranslateAPIDataAccessInterface translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
         SummarizationDataAccessInterface summarisationDataAccessObject = new SummarisationDataAccessObject();
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -55,7 +58,7 @@ public class HomeViewTest {
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
                 articleViewModel,
-                articleRetrievalDataAccessObject,
+                translationDataAccessObject,
                 summarisationDataAccessObject
         );
 
