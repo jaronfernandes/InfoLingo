@@ -6,7 +6,6 @@ public class TransferArticleInputData {
     private Article article = null;
 
     public TransferArticleInputData() {
-
     }
 
     public TransferArticleInputData(Article article) {
