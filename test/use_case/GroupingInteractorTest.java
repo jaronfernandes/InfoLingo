@@ -1,4 +1,4 @@
-package view;
+package use_case;
 import entity.Article;
 import entity.Source;
 import org.junit.Test;

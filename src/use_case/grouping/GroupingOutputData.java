@@ -16,7 +16,4 @@ public class GroupingOutputData {
         return groupings;
     }
 
-    public void setGroupings(ArrayList<Grouping> groupings) {
-        this.groupings = groupings;
-    }
 }
