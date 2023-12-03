@@ -36,14 +36,13 @@ public class ArticleRetrievalInteractorTest {
     }
 
     @Test
-    public void failTranslateTest() {
+    public void failRetrieveArticleTest() {
         APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
-        final Article[] articleToTest = new Article[1];
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
             @Override
             public void prepareSuccessView(ArticleRetrievalOutputData outputData) {
-                fail("Should not have found an article with the given complex headline.");
+                fail("Should not have found an article with the given complex headline. Unexpected failure.");
             }
 
             @Override
