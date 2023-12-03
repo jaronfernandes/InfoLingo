@@ -26,7 +26,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
     private final Integer numArticles = 10;
     private final static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
     private final static String W_API_TOKEN = "cc6707f3f6db448f8800fc5cd0863a78";
-    private boolean useTestAPI = true; // True means DO NOT USE WORLDNEWSAPI. False means you are USING IT.
+    private boolean useTestAPI; // True means DO NOT USE WORLDNEWSAPI. False means you are USING IT.
     private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
