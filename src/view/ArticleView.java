@@ -167,9 +167,10 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         // ISO 639-2 Language Codes:
         languageMap.put("English", "EN");
-        languageMap.put("Icelandic", "IS");
+        languageMap.put("French", "FR");
         languageMap.put("Chinese", "ZH");
         languageMap.put("Japanese", "JA");
+        languageMap.put("Turkish", "TR");
 
         final JMenuBar translateBar = new JMenuBar();
         final JMenu LangMenu = new JMenu("Languages");
@@ -214,10 +215,14 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                     tempLanguageButton.setMnemonic(KeyEvent.VK_E);
                     tempLanguageButton.setSelected(true);
                 }
-                case 'I' -> // ICELANDIC NOT IN API
-                        tempLanguageButton.setMnemonic(KeyEvent.VK_I);
-                case 'J' -> // ICELANDIC NOT IN API
+                case 'F' -> // French
+                        tempLanguageButton.setMnemonic(KeyEvent.VK_F);
+                case 'C' -> // Chinese
+                        tempLanguageButton.setMnemonic(KeyEvent.VK_C);
+                case 'J' -> // Japanese
                         tempLanguageButton.setMnemonic(KeyEvent.VK_J);
+                case 'T' -> // Turkish
+                        tempLanguageButton.setMnemonic(KeyEvent.VK_T);
                 default -> {
                     tempLanguageButton.setMnemonic(KeyEvent.VK_0);
                 }
@@ -294,10 +299,10 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
         // ISO 639-2 Language Codes:
         translationSuccessful.put("EN", "");
-        translationSuccessful.put("IS", " | Þýðing tókst!");
-        translationSuccessful.put("IS", " | 翻译成功！");
+        translationSuccessful.put("FR", " | Traduction réussie!");
+        translationSuccessful.put("ZH", " | 翻译成功！");
         translationSuccessful.put("JA", " | 翻訳が成功しました!");
-
+        translationSuccessful.put("TR", "Çeviri başarılı!");
 
         try {
             ArticleState state = (ArticleState) evt.getNewValue();
@@ -314,6 +319,9 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 //                headlineUI.setText(state.getTranslatedHeadline());
                 System.out.println(state.getTranslatedContent());
                 translationUI.setText(state.getTranslatedContent());
+            }
+            else if (evt.getPropertyName().equals("failedTranslationArticleUpdate")) {
+                JOptionPane.showMessageDialog(this, "Failed to translate article!");
             }
             else if (evt.getPropertyName().equals("summarizationUpdate")) {
                 if (state.getSummarisationError() != null) {
