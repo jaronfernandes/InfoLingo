@@ -25,6 +25,8 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private final Integer numArticles = 10;
     private final static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
+    private final static String W_API_TOKEN = "cc6707f3f6db448f8800fc5cd0863a78";
+    private final boolean useTestAPI = true; // True means DO NOT USE WORLDNEWSAPI. False means you are USING IT.
     private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
@@ -36,28 +38,40 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
         List<Article> formattedArticles = new ArrayList<>();
 
         try {
-            System.out.println(API_TOKEN);
-            URI uri = new URI(BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN);
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder().
-                    uri(uri).
-                    GET().
-                    build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String body = response.body();
-            JSONObject data = new JSONObject(body);
-            System.out.println(data);
+            JSONObject data;
+            JSONArray articles;
 
-            // Retrieve first article.
-            JSONArray articles = data.getJSONArray("articles");
+            if (useTestAPI) {
+                URI uri = new URI(BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN);
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder().
+                        uri(uri).
+                        GET().
+                        build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                String body = response.body();
+                data = new JSONObject(body);
+                articles = data.getJSONArray("articles");
+            }
+            else {
+                URI uri = new URI("https://api.worldnewsapi.com/search-news?text=" + searchTerm + "&api-key=" + W_API_TOKEN);
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder().
+                        uri(uri).
+                        GET().
+                        build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                String body = response.body();
+                data = new JSONObject(body);
+                articles = data.getJSONArray("news");
+            }
 
             // Limits number of articles retrieved to numArticles at most.
             for(int i = 0; i < Math.min(this.numArticles, articles.length()); i++) {
                 JSONObject article = articles.getJSONObject(i);
-//                System.out.println(article);
                 formattedArticles.add(formatArticle(article));
-//            System.out.println(firstArticle);
             }
+
             removeDuplicateArticles(formattedArticles);
 
             for (Article article : formattedArticles) {
@@ -68,7 +82,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
         } catch (Exception e) {
             System.out.println("Request for search \""
                     + rawSearchTerm + "\" unsuccessful - caught " + e);
-            System.out.println(Arrays.toString(e.getStackTrace()));
+//            System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
         // Return all articles here.
@@ -105,23 +119,35 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
      * @author Jaron Fernandes
      */
     private Article formatArticle(JSONObject unformattedArticle){
-        // Retrieve details of first article.
-        String description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
-        System.out.println(description);
-        System.out.println("IT HAPPENED)");
-
+        // Retrieve details of the article.
         String title = getValue(unformattedArticle, "title");
         String url = getValue(unformattedArticle, "url");
-        // Not sure how to get the sources from the nested dict
-        String source = getValue(unformattedArticle.getJSONObject("source"), "name");
         String author = getValue(unformattedArticle, "author");
-        String country = getValue(unformattedArticle, "country");
-        String publishedAt = getValue(unformattedArticle, "publishedAt");
-//            System.out.println(source);
-        Source sourceObj = new Source(source, "English");
 
+        String source, description, country, publishedAt;
+        Source sourceObj;
         ArticleFactory articleFactory = new ArticleFactory();
-        return articleFactory.create(title, description, sourceObj, author, url, country, publishedAt);
+
+        if (useTestAPI) {
+            // Source COMPANY
+            source = getValue(unformattedArticle.getJSONObject("source"), "name");
+            description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
+            country = getValue(unformattedArticle, "country");
+            publishedAt = getValue(unformattedArticle, "publishedAt");
+
+            sourceObj = new Source(source, "English");
+            return articleFactory.create(title, description, sourceObj, author, url, country, publishedAt);
+        }
+        else {
+            // Source COUNTRY
+            source = getValue(unformattedArticle, "source_country");
+            description = getValue(unformattedArticle, "text");
+            publishedAt = getValue(unformattedArticle, "publish_date");
+
+            sourceObj = new Source(source, getValue(unformattedArticle, "language"));
+
+            return articleFactory.create(title, description, sourceObj, author, url, source, publishedAt);
+        }
     }
 
     /**
