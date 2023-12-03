@@ -29,8 +29,8 @@ import java.lang.Math;
 public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface, TranslateAPIDataAccessInterface {
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private final Integer numArticles = 10;
-    private final static String API_TOKEN = System.getenv("API_TOKEN");
-    private final static String DEEPL_TRANSLATE_API_KEY = System.getenv("DEEPL_TRANSLATE_API_KEY");
+    private final static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
+    private final static String DEEPL_TRANSLATE_API_KEY = "8dbcc2f3-03ef-8e22-3c4a-718f08bbe557:fx";
     private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
