@@ -14,7 +14,7 @@ public class TranslationInteractorTest {
 
     @Test
     public void successfulTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
         final Article[] articleToTest = new Article[1];
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
@@ -57,7 +57,7 @@ public class TranslationInteractorTest {
 
     @Test
     public void failTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
         final Article[] articleToTest = new Article[1];
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
@@ -100,7 +100,7 @@ public class TranslationInteractorTest {
 
     @Test
     public void failSearchArticleToTranslateTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
 
         TranslationOutputBoundary translationPresenter = new TranslationOutputBoundary() {
             @Override
