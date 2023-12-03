@@ -151,15 +151,5 @@ public class HomeViewTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        headlines.setSelectedIndex(1);
-
-        // Wait for redirection.
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }
