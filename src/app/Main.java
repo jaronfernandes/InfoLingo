@@ -40,7 +40,7 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
+        ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject(false);
         TranslateAPIDataAccessInterface translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
         SummarizationDataAccessInterface summarisationDataAccessObject = new SummarisationDataAccessObject();
 
@@ -60,9 +60,6 @@ public class Main {
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel, homeView);
 
         // Set initial view.
-
-
-
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
                 articleViewModel,
