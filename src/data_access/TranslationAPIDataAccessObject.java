@@ -96,7 +96,7 @@ public class TranslationAPIDataAccessObject implements TranslateAPIDataAccessInt
         URI uri = new URI("https://api-free.deepl.com/v2/translate?auth_key=" + DEEPL_TRANSLATE_API_KEY +
                 "&text=" + formattedText + "&target_lang=" + language);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRiequest.newBuilder().
+        HttpRequest request = HttpRequest.newBuilder().
                 uri(uri).
                 GET().
                 build();
