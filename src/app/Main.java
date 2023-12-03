@@ -2,6 +2,7 @@ package app;
 
 import data_access.APIDataAccessObject;
 
+import data_access.TranslationAPIDataAccessObject;
 import interface_adapter.*;
 import entity.Article;
 import interface_adapter.ArticleViewModel;
@@ -39,7 +40,8 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        APIDataAccessObject articleRetrievalDataAccessObject = new APIDataAccessObject();
+        ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject = new APIDataAccessObject();
+        TranslateAPIDataAccessInterface translationDataAccessObject = new TranslationAPIDataAccessObject(articleRetrievalDataAccessObject);
         SummarizationDataAccessInterface summarisationDataAccessObject = new SummarisationDataAccessObject();
 
         // Keeps track of views.
@@ -64,7 +66,7 @@ public class Main {
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
                 articleViewModel,
-                articleRetrievalDataAccessObject,
+                translationDataAccessObject,
                 summarisationDataAccessObject
         );
 
