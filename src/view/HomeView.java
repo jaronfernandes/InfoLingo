@@ -241,11 +241,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("Canada");
+                    prefCountry.add("ca");
                     System.out.println("Canada");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED){
-                    prefCountry.remove("Canada");
+                    prefCountry.remove("ca");
                     System.out.println("no Canada");
                 }
             }
@@ -258,11 +258,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("France");
+                    prefCountry.add("fr");
                     System.out.println("France");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    prefCountry.remove("France");
+                    prefCountry.remove("fr");
                     System.out.println("No France");
                 }
             }
@@ -275,11 +275,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("China");
+                    prefCountry.add("cn");
                     System.out.println("China");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    prefCountry.remove("China");
+                    prefCountry.remove("cn");
                     System.out.println("No China");
                 }
             }
