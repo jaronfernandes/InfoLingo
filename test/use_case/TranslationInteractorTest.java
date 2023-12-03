@@ -26,7 +26,7 @@ public class TranslationInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                fail("Article Retrieval use case should have passed. Unexpected failure.");
+                fail("Article Retrieval use case should have passed for translation test. Unexpected failure.");
             }
         };
 
@@ -69,20 +69,19 @@ public class TranslationInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                fail("Article Retrieval use case should have passed. Unexpected failure.");
+                fail("Article Retrieval use case should have passed for translation test. Unexpected failure.");
             }
         };
 
         TranslationOutputBoundary translationPresenter = new TranslationOutputBoundary() {
             @Override
             public void prepareSuccessView(TranslationOutputData outputData) {
-                assertNotEquals(outputData.getTranslatedContent(), "");
+                fail("Translation fail case should have failed to translate text and not succeeded.");
             }
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println(error);
-                assertEquals(error, "Failed to translate the article!");
+                assertEquals("Failed to translate the article!", error);
             }
         };
 
@@ -92,10 +91,35 @@ public class TranslationInteractorTest {
 
         articleRetrievalInteractor.execute(articleRetrievalInputData);
 
-        TranslationInputData translationInputData = new TranslationInputData(articleToTest[0].getHeadline(), "FR");
+        TranslationInputData translationInputData = new TranslationInputData(articleToTest[0].getHeadline(), "ZH");
+
+        TranslationInputBoundary translationInteractor = new TranslationInteractor(translationPresenter, translationDataAccessObject);
+
+        translationInteractor.execute(translationInputData);
+    }
+
+    @Test
+    public void failSearchArticleToTranslateTest() {
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+
+        TranslationOutputBoundary translationPresenter = new TranslationOutputBoundary() {
+            @Override
+            public void prepareSuccessView(TranslationOutputData outputData) {
+                fail("Translation fail case should have failed to retrieve " +
+                        "existing article based on deceptive headline and not succeeded.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Could not find article with the given headline!", error);
+            }
+        };
+
+        TranslationInputData translationInputData = new TranslationInputData("i LOVE pineapple on pizza", "JA");
 
         TranslationInputBoundary translationInteractor = new TranslationInteractor(translationPresenter, translationDataAccessObject);
 
         translationInteractor.execute(translationInputData);
     }
 }
+
