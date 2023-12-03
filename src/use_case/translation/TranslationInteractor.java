@@ -2,6 +2,7 @@ package use_case.translation;
 
 import entity.TranslatedArticle;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 public class TranslationInteractor implements TranslationInputBoundary {
@@ -17,13 +18,10 @@ public class TranslationInteractor implements TranslationInputBoundary {
     @Override
     public void execute(TranslationInputData inputData) {
         try {
-            TranslatedArticle article;
-            if (!inputData.articleExists()) {
-                article = translationDataAccessObject.translateArticle(inputData.getHeadline(), inputData.getLanguage());
-            }
-            else {
-                article = translationDataAccessObject.translateArticle(inputData.getArticle(), inputData.getLanguage());
-            }
+            TranslatedArticle article = translationDataAccessObject.translateArticle(
+                    inputData.getHeadline(),
+                    inputData.getLanguage()
+            );
 
             TranslationOutputData outputData =
                     new TranslationOutputData(
