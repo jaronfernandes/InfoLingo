@@ -31,7 +31,7 @@ public class Main {
         // Application window.
         JFrame application = new JFrame("InfoLingo");
 
-        // menu end
+        // Menu end.
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -50,7 +50,6 @@ public class Main {
 
         GroupingViewModel groupingViewModel = new GroupingViewModel(new GroupingState(new ArrayList<>()));
 
-        // Set initial view.
         HomeView homeView = ArticleRetrievalUseCaseFactory.create(viewManagerModel, homeViewModel, articleRetrievalDataAccessObject, groupingViewModel);
 
         views.add(homeView, homeView.viewName);
@@ -60,9 +59,6 @@ public class Main {
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel, homeView);
 
         // Set initial view.
-
-
-
         ArticleView articleView = TranslationUseCaseFactory.create(
                 viewManagerModel,
                 articleViewModel,
@@ -72,15 +68,14 @@ public class Main {
 
         views.add(articleView, articleView.viewName);
 
-//        // TODO: FOR ARTICLEVIEW TESTING PURPOSES ONLY, COMMENT THIS PART OUT WHEN DONE!
-        viewManagerModel.setActiveView(articleView.viewName);
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
-        //plays background music
-        homeView.playBackgroundMusic("I just wanna be your sigma (full song).wav");
+
+        // Plays background music.
+//        homeView.playBackgroundMusic("I just wanna be your sigma (full song).wav");
 
     }
 }
