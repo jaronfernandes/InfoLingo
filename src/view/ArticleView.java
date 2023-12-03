@@ -188,7 +188,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 getOriginalContent().
                 split(" ")
                 .length;
-        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), 100);
+        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), numWordsArticle);
         numWords.setPaintTrack(true);
         numWords.setMajorTickSpacing(10);
         numWords.setPaintLabels(true);
