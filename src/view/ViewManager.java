@@ -64,10 +64,10 @@ public class ViewManager implements PropertyChangeListener {
 
             numWords.setMinimum(Math.min(numWordsArticle, 20));
             numWords.setMaximum(numWordsArticle);
-            System.out.println(numWordsArticle);
+//            System.out.println(numWordsArticle);
 
             int tickSpacing = Math.floorDiv(numWordsArticle - Math.min(numWordsArticle, 20), 10);
-            System.out.println(tickSpacing);
+//            System.out.println(tickSpacing);
             numWords.setMajorTickSpacing(tickSpacing);
 
             // Set headline.

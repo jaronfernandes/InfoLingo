@@ -39,7 +39,7 @@ public class TranslationAPIDataAccessObject implements TranslateAPIDataAccessInt
     public TranslatedArticle translateArticle(String headline, String language) throws NoSuchElementException, NullPointerException {
         Article article = articleRetrievalDataAccessObject.retrieveArticleByHeadline(headline);
 
-        System.out.println(language);
+        System.out.println("Translating to: "+language);
         String translatedHeadline, translatedContent;
         TranslatedArticleFactory translatedArticleFactory = new TranslatedArticleFactory();
 

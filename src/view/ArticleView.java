@@ -164,11 +164,11 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         // Label for number of words
         JLabel numWordsLabel = new JLabel("Word Count: ");
 
-        System.out.println(articleViewModel.
-                getArticleState().
-                getOriginalContent().
-                split(" ")
-                .length);
+//        System.out.println(articleViewModel.
+//                getArticleState().
+//                getOriginalContent().
+//                split(" ")
+//                .length);
 
         // Number of words
         numWordsArticle = articleViewModel.
@@ -310,7 +310,6 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 //                );
 
 //                headlineUI.setText(state.getTranslatedHeadline());
-                System.out.println(state.getTranslatedContent());
                 translationUI.setText(state.getTranslatedContent());
             }
             else if (evt.getPropertyName().equals("failedTranslationArticleUpdate")) {
