@@ -14,7 +14,7 @@ public class ArticleRetrievalInteractorTest {
 
     @Test
     public void successfulArticleRetrieval() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
             @Override
@@ -37,7 +37,7 @@ public class ArticleRetrievalInteractorTest {
 
     @Test
     public void failRetrieveArticleTest() {
-        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject();
+        APIDataAccessObject translationDataAccessObject = new APIDataAccessObject(true);
 
         ArticleRetrievalOutputBoundary articleRetrievalPresenter = new ArticleRetrievalOutputBoundary() {
             @Override
