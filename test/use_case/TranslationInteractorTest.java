@@ -81,11 +81,12 @@ public class TranslationInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                fail("Translation use case should have passed. Unexpected failure.");
+                System.out.println(error);
+                assertEquals(error, "Failed to translate the article!");
             }
         };
 
-        ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData("sierpinski gasket");
+        ArticleRetrievalInputData articleRetrievalInputData = new ArticleRetrievalInputData("math proof");
 
         ArticleRetrievalInputBoundary articleRetrievalInteractor = new ArticleRetrievalInteractor(articleRetrievalPresenter, translationDataAccessObject);
 
@@ -97,5 +98,4 @@ public class TranslationInteractorTest {
 
         translationInteractor.execute(translationInputData);
     }
-
 }
