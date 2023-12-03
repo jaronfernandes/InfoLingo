@@ -85,7 +85,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         contentScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         contentScrollPane.setPreferredSize(new Dimension(250, 145));
-        contentScrollPane.setMinimumSize(new Dimension(10, 10));
+        contentScrollPane.setMinimumSize(new Dimension(10, 200));
 
         // Where the summary is displayed.
         JTextArea summaryArea = new JTextArea();
@@ -101,7 +101,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         summaryScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         summaryScrollPane.setPreferredSize(new Dimension(250, 145));
-        summaryScrollPane.setMinimumSize(new Dimension(10, 10));
+        summaryScrollPane.setMinimumSize(new Dimension(10, 200));
 
         // Where the summary is displayed.
         JTextArea translatedContent = new JTextArea();
@@ -117,7 +117,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         translationScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         translationScrollPane.setPreferredSize(new Dimension(250, 145));
-        translationScrollPane.setMinimumSize(new Dimension(10, 10));
+        translationScrollPane.setMinimumSize(new Dimension(10, 200));
 
         this.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 
