@@ -9,7 +9,7 @@ public class TranslationController {
 
 
     /**
-     * This translation controller class used to handle and process user input regarding
+     * This translation controller class is used to handle and process user input regarding
      * a string of text and the language they want to translate the text into.
      *
      * @param translationInteractor The translation interactor object for dependency injection.
