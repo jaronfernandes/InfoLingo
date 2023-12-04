@@ -10,6 +10,7 @@ public class HomeState {
     List<String> headlines;
     DefaultListModel<String> headlinesModel;
     String articleRetrievalError;
+    List<Article> gotarticles;
 
     public HomeState(List<Article> articles) {
         this.articles = articles;
@@ -19,6 +20,13 @@ public class HomeState {
             this.headlines.add(articles.get(i).getHeadline());
         }
         this.headlinesModel = new DefaultListModel<String>();
+    }
+    public void setGotArticles(List<Article> articles) {
+        this.gotarticles = articles;
+    }
+
+    public List<Article> getGotarticles() {
+        return gotarticles;
     }
 
     public List<Article> getArticles() {

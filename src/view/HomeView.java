@@ -182,17 +182,28 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         final JMenuBar menuBar;
         final JMenu PrefMenu;
-        final JButton refresh = new JButton("Refresh/Search");
+        final JButton search = new JButton("Search");
+        final JButton filter = new JButton("Filter");
         JTextField DateSearch = new JTextField("YYYY-MM-DD",20);
       
         final JButton grouping = new JButton("Group");
-
-        refresh.addActionListener(new ActionListener() {
+        filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(refresh)) {
+                if (e.getSource().equals(filter)) {
+                    if (!homeViewModel.getHomeState().getArticles().isEmpty()){
+                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getGotarticles());
+                    }
+                }
+            }
+        });
+
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(search)) {
                     articleRetrievalController.execute(searchField.getText());
-                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getArticles());
+                    homeViewModel.getHomeState().setGotArticles(homeViewModel.getHomeState().getArticles());
                 }
             }
         });
@@ -348,8 +359,9 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
 
         //Refresh/Search Button
-        refresh.setMnemonic(KeyEvent.VK_R);
-        menuBar.add(refresh);
+        search.setMnemonic(KeyEvent.VK_ENTER);
+        menuBar.add(search);
+        menuBar.add(filter);
 
         //Group Button
         grouping.setMnemonic(KeyEvent.VK_R);
