@@ -1,7 +1,8 @@
 package entity;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface RankingFactoryInterface {
 
-    Ranking create(ArrayList<Article> articles, Preferences preferences);
+    Ranking create(List<Article> articles, Preferences preferences);
 }
