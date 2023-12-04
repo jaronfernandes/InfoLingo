@@ -46,7 +46,7 @@ Please be aware of this usage when you run the program!
 - Click group button to create list of groups to the right of headlines. Toggle between groups to access headlines under the same group.
 - Click on preferences bar again to choose country of origin and publishing date and click filter button to narrow down headlines displayed.
 - Click on desired headline. This displays an article in 3 columns, a summary button, a summary length slider, a translate button, and a language bar.
-- Change slider to adjust the number of words required in generated summary and click summary button. This generates a summary of the first column in the second column.
+- Change slider to adjust the number of words required in generated summary and click summary button. This generates a summary of the first column in the second column. Note that summarisation may take a while, sometimes up to around 30-45 seconds.
 - Click on translate bar to choose desired language and click translate button. This translates the first column and displays it in the third.
 
 ## Test Cases
