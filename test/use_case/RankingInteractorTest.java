@@ -34,8 +34,8 @@ public class RankingInteractorTest {
         String date = "1003-02-11";
         List<Article> articles = new ArrayList<>();
         Article distract1 = new Article("Roblox bad", "Roblox is not great!", new Source("EvilCorp", "en"), "Jill", "https://roblox.com", "cn", "2031-11-02");
-        Article distract2 = new Article("Roblox good", "Roblox is  great!", new Source("AwesomePeople", "en"), "Jessie", "https://roblox.com", "fr", "1003-02-11");
-        Article target = new Article("Roblox alright", "Roblox is  great!", new Source("AwesomePeople", "en"), "Jessie", "https://roblox.com", "ca", "1003-02-11");
+        Article distract2 = new Article("Roblox good", "Roblox is  great!", new Source("AwesomePeople", "en"), "Jessie", "https://roblox.com", "ca", "1003-02-11");
+        Article target = new Article("Roblox alright", "Roblox is  alright!", new Source("Lamos", "en"), "Jessie", "https://roblox.com", "fr", "1003-02-11");
         articles.add(distract1);
         articles.add(target);
         articles.add(distract2);
@@ -75,4 +75,3 @@ public class RankingInteractorTest {
 
     }
     }
-}
