@@ -38,17 +38,28 @@ articles being stored using memoization.
 
 Please be aware of this usage when you run the program!
 
+## Instructions for Usage
+- Click on "Run" to launch home screen.
+- Home screen includes search bar, preferences bar, filter button, group button and search button.
+- Click on preferences bar to choose desired country of origin and publishing date.
+- Type keywords into search bar and click search button. This displays a list headlines related to keywords.
+- Click group button to create list of groups to the right of headlines. Toggle between groups to access headlines under the same group.
+- Click on preferences bar again to choose country of origin and publishing date and click filter button to narrow down headlines displayed.
+- Click on desired headline. This displays an article in 3 columns, a summary button, a summary length slider, a translate button, and a language bar.
+- Change slider to adjust the number of words required in generated summary and click summary button. This generates a summary of the first column in the second column.
+- Click on translate bar to choose desired language and click translate button. This translates the first column and displays it in the third.
+
 ## Test Cases
 Our test cases can be located under the `tests` folder. Note that unlike the main program,
 the test cases call our *Testing News Retrieval API*, which retrieves different (and shortened article texts)
 news article, so it will not be the exact same as the default news API. This is because running all the tests
 will immediately use up the daily maximum requests.
 
-## Tentative APIs
-- NewsAPI - https://newsapi.org 
-- LibreTranslate - https://libretranslate.com/
-- HuggingFace - https://huggingface.co
-- Google Cloud Translation AI - https://cloud.google.com/translate 
+## APIs
+- NewsAPI - https://newsapi.org
+- DeepL Translate - https://www.deepl.com/docs-api/translate-text
+- MeaningCloud Summarization API - https://www.meaningcloud.com/developer/summarization
+- World News API - https://worldnewsapi.com/
 
 ## API Call via GUI 
 ![Screenshot](API_Call_Screenshot.png)
