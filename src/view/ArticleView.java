@@ -33,37 +33,21 @@ import java.util.Iterator;
 
 public class ArticleView extends JPanel implements PropertyChangeListener {
     public final String viewName = "Article";
-    private Article article;
     ArticleViewModel articleViewModel;
     private TranslationController translationController;
     private SummarizationController summarizationController;
-    TranslationPresenter articleRetrievalPresenter;
-    private JLabel headlineUI;
-    private JTextPane contentUI;
     private JTextArea summaryUI;
     private JTextArea translationUI;
-    private String sampleArticleContent = "\nOne $$$of the \n biggest philosophical @traps is this ideal of living minimalistically. Being minimalistic is actually a good thing in itself but many people take that to mean cutting people and things out of your life, not because they are harmful but because it's too much. A lot of people that subscribe to minimalism fall into the same but opposite category of obsessives as materialistic people. Materialistic people gather resources for the sake of it and to feel they are moving up in the world. They get dopamine from acquiring the latest new thing. Minimalists throw out everything they have regardless of its sentimental value and they get dopamine from it because they believe they are moving forward in the world by having absolutely nothing to their name except the essentials. Having things with sentimental value is incredibly important for growth and happiness, regardless of what it is.\n";
+
+    private int numWordsArticle;
 
     public ArticleView(TranslationController controller,
                        ArticleViewModel articleViewModel,
                        SummarizationController summarizationController) {
-        // TODO: - TRANSLATION - only created the file so intellij stops complaining (for now)
         this.translationController = controller;
         this.articleViewModel = articleViewModel;
         this.summarizationController = summarizationController;
         articleViewModel.addPropertyChangeListener(this);
-
-        // TODO: CHANGE ARTICLE TO ACTUAL ORIGINAL ARTICLE OBJECT - FIND A WAY TO ACCESS IT!
-        article = new Article(
-                "Philosophical BS",
-                sampleArticleContent,
-                new Source("Roblox", "EN"),
-                "Your Mother",
-                "https://www.youtube.com/@WarfighterXK/videos",
-                "canada",
-                "publishedAtDate"
-        );
-
 
         final JMenuBar menuBar = getBar();
 
@@ -71,13 +55,11 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         final JLabel headline = new JLabel();
         headline.setText(articleViewModel.getArticleState().getHeadline());
         headline.setFont(headline.getFont().deriveFont(Font.BOLD, 14f));
-        headlineUI = headline;
 
         // Where the article is displayed.
         final JTextPane content = new JTextPane();
         content.setEditable(false);
         content.setText(articleViewModel.getArticleState().getOriginalContent());
-        contentUI = content;
 
         // Put the pane in a scroll pane.
         JScrollPane contentScrollPane = new JScrollPane(content);
@@ -182,18 +164,29 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         // Label for number of words
         JLabel numWordsLabel = new JLabel("Word Count: ");
 
+        System.out.println(articleViewModel.
+                getArticleState().
+                getOriginalContent().
+                split(" ")
+                .length);
+
         // Number of words
-        int numWordsArticle = articleViewModel.
+        numWordsArticle = articleViewModel.
                 getArticleState().
                 getOriginalContent().
                 split(" ")
                 .length;
-        JSlider numWords = new JSlider(Math.min(numWordsArticle, 40), 100);
+
+        numWordsArticle = Math.floorDiv(numWordsArticle, 4);
+        JSlider numWords = new JSlider(Math.min(numWordsArticle, 20), numWordsArticle);
         numWords.setPaintTrack(true);
-        numWords.setMajorTickSpacing(10);
+
+        // Making sure the spacing is valid and that maximum and minimum are feasible.
+        int tickSpacing = Math.floorDiv(numWordsArticle - Math.min(numWordsArticle, 20), 10);
+        numWords.setMajorTickSpacing(tickSpacing);
         numWords.setPaintLabels(true);
         numWords.setPaintTicks(true);
-        numWords.setValue(Math.min(numWordsArticle, 40));
+        numWords.setValue(Math.min(numWordsArticle, 20));
 
         translateBar.add(numWordsLabel);
         translateBar.add(numWords);
@@ -270,7 +263,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(summarise)) {
                     JSlider numWords = (JSlider) menuBar.getComponent(3);
-                    int numWordsArticle = articleViewModel.
+                    numWordsArticle = articleViewModel.
                             getArticleState().
                             getOriginalContent().
                             split(" ")
@@ -327,9 +320,7 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
                 if (state.getSummarisationError() != null) {
                     JOptionPane.showMessageDialog(this, state.getSummarisationError());
                 } else {
-                    System.out.println(state.getSummarisedContent());
                     summaryUI.setText(state.getSummarisedContent());
-//                    JOptionPane.showMessageDialog(this, state.getSummarisedContent());
                 }
             }
         } catch (ClassCastException e) {

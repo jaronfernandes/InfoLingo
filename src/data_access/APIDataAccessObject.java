@@ -44,29 +44,28 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
         try {
             JSONObject data;
             JSONArray articles;
+            String apiRequestString;
+            if (useTestAPI) {
+                apiRequestString = BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN;
+            }
+            else {
+                apiRequestString = "https://api.worldnewsapi.com/search-news?text=" + searchTerm + "&api-key=" + W_API_TOKEN;
+            }
+
+            URI uri = new URI(apiRequestString);
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder().
+                    uri(uri).
+                    GET().
+                    build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String body = response.body();
+            data = new JSONObject(body);
 
             if (useTestAPI) {
-                URI uri = new URI(BASE_URL + "everything/?q=" + searchTerm + "&apiKey=" + API_TOKEN);
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder().
-                        uri(uri).
-                        GET().
-                        build();
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                String body = response.body();
-                data = new JSONObject(body);
                 articles = data.getJSONArray("articles");
             }
             else {
-                URI uri = new URI("https://api.worldnewsapi.com/search-news?text=" + searchTerm + "&api-key=" + W_API_TOKEN);
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder().
-                        uri(uri).
-                        GET().
-                        build();
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                String body = response.body();
-                data = new JSONObject(body);
                 articles = data.getJSONArray("news");
             }
 

@@ -37,9 +37,6 @@ public class ViewManager implements PropertyChangeListener {
         } else if (evt.getPropertyName().equals("switchArticleView")) {
             System.out.println("Recieved event to switch view.");
 
-                // FIRST COMPONENT IS HOMEVIEW
-//                System.out.println(views.getComponent(1).getName());
-//                System.out.println(views.getComponent(1));
             TransferArticleOutputData outputData = (TransferArticleOutputData) evt.getNewValue();
             ArticleView articleView = (ArticleView) views.getComponent(1);
 
@@ -48,19 +45,36 @@ public class ViewManager implements PropertyChangeListener {
             state.setHeadline(outputData.getArticle().getHeadline());
             state.setOriginalContent(outputData.getArticle().getContent());
 
+            // Retrieve components.
             JLabel headline = (JLabel) articleView.getComponent(1);
             JScrollPane contentScrollPane = (JScrollPane) articleView.getComponent(2);
             JTextPane content = (JTextPane) ((JViewport) contentScrollPane.getComponent(0)).getComponent(0);
 
+            // Set slider size and spacing.
+            JMenuBar menuBar = (JMenuBar) articleView.getComponent(0);
+            JSlider numWords = (JSlider) menuBar.getComponent(3);
 
+            int numWordsArticle = articleViewModel.
+                    getArticleState().
+                    getOriginalContent().
+                    split(" ")
+                    .length;
+
+            numWordsArticle = Math.floorDiv(numWordsArticle, 4);
+
+            numWords.setMinimum(Math.min(numWordsArticle, 20));
+            numWords.setMaximum(numWordsArticle);
+            System.out.println(numWordsArticle);
+
+            int tickSpacing = Math.floorDiv(numWordsArticle - Math.min(numWordsArticle, 20), 10);
+            System.out.println(tickSpacing);
+            numWords.setMajorTickSpacing(tickSpacing);
+
+            // Set headline.
             headline.setText(state.getHeadline());
             content.setText(state.getOriginalContent());
 
             cardLayout.show(views, "Article");
         }
-    }
-
-    public ViewManagerModel getViewManagerModel() {
-        return viewManagerModel;
     }
 }

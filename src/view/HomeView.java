@@ -77,7 +77,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         headlines.setVisibleRowCount(-1);
         JScrollPane listScroller = new JScrollPane(headlines);
         listScroller.setPreferredSize(new Dimension(250, 80));
-        this.add(headlines);
 
         JList<String> groupingHeadlines = new JList<String>(groupingViewModel.getGroupingState().getHeadlinesModel()); //data has type Object[]
         groupingHeadlines.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -85,7 +84,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
         groupingHeadlines.setVisibleRowCount(-1);
         JScrollPane groupingListScroller = new JScrollPane(groupingHeadlines);
         groupingListScroller.setPreferredSize(new Dimension(250, 80));
-        this.add(groupingHeadlines);
 
         headlines.addListSelectionListener(
                 new ListSelectionListener() {
@@ -106,8 +104,6 @@ public class HomeView extends JPanel implements PropertyChangeListener{
                             } catch (Exception exception) {
                                 transferArticleController.execute("Could not find article.");
                             }
-
-
                         }
                     }
                 }
@@ -289,6 +285,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         //Dates submenu
         DateMenu = new JMenu("Date");
+
         PrefMenu.setMnemonic(KeyEvent.VK_D);
 
 
