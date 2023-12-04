@@ -89,6 +89,16 @@ public class TranslationAPIDataAccessObject implements TranslateAPIDataAccessInt
         return finishedTranslatedArticle;
     }
 
+    /**
+     * <p> Translates text into the given language.
+     * </p>
+     * @param text The text you want to translate.
+     * @param language A String indicating the language in the ISO 639 format.
+     * @throws URISyntaxException if the parameters along with the base API URL form an invalid request (violates RFC 2396)
+     * @throws IOException if an I/O error occurs when sending or receiving.
+     * @throws InterruptedException if the API call to translate the article was interrupted.
+     * @author Jaron Fernandes
+     */
     private String translateText(String text, String language) throws URISyntaxException, IOException, InterruptedException {
         String formattedText = String.join("%20", text.split(" "));
         // System.out.println(formattedText);
