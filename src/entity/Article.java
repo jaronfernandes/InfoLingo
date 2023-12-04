@@ -15,6 +15,16 @@ public class Article implements ArticleInterface {
     private String publishedAt;
     private List<TranslatedArticle> translatedArticles;
 
+    /**
+     * An unmodified Article entity
+     * @param headline String of the headline
+     * @param originalContent String of the originalContent
+     * @param source Source object of the source
+     * @param author String of the author
+     * @param url String of the url
+     * @param country String of the country
+     * @param publishedAt String of the publishedAt
+     */
     public Article(String headline,
                    String originalContent,
                    Source source,

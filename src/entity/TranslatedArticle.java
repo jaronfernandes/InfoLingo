@@ -13,6 +13,17 @@ public class TranslatedArticle implements ArticleInterface {
     private String publishedAt;
     private Source source;
 
+    /**
+     * A translated Article entity
+     * @param headline String of the headline
+     * @param content String of the content
+     * @param source Source object of the source
+     * @param translatedLanguage String of the language translated to.
+     * @param author String of the author
+     * @param URL String of the URL
+     * @param country String of the country
+     * @param publishedAt String of the publishedAt
+     */
     public TranslatedArticle(String headline,
                              String content,
                              Source source,
