@@ -18,6 +18,11 @@ public class RankingOutputData {
         this.preferences = ranking.getPreferences();
     }
 
+    /**
+     * @return ranking The new Ranking of Articles from retrieved list with entered preferences
+     * @author Dominic Le
+     */
+
     public List<Article> getRanking() {
         return ranking;
     }

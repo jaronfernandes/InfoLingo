@@ -13,8 +13,17 @@ public class RankingInteractor implements RankingInputBoundary {
     private RankingOutputBoundary presenter;
     private PreferencesMatcher preferencesMatcher;
 
-    public RankingInteractor(RankingOutputBoundary presenter) {
-        this.presenter = presenter;
+    /**
+     * The Ranking interactor is used to handle the Ranking use case,
+     * by calling the Preference Matcher to get a list of articles that matches the retrieved articles, and then call the presenter to update the view
+     * so that it displays them.
+     *
+     * @param outputBoundary The Ranking Presenter object needed through dependency injection.
+     * @author Dominic Le
+     */
+
+    public RankingInteractor(RankingOutputBoundary outputBoundary) {
+        this.presenter = outputBoundary;
     }
 
     @Override
