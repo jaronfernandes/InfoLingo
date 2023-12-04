@@ -2,6 +2,11 @@ package use_case.transfer_article;
 
 import entity.Article;
 
+/**
+ * Input data for navigation.
+ * @author Jaiz Jeeson
+ * @author Jaron Fernandes
+ */
 public class TransferArticleInputData {
     private Article article = null;
 

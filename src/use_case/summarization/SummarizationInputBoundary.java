@@ -1,5 +1,9 @@
 package use_case.summarization;
 
+/**
+ * Implemented by Interactor to obey dependency rule.
+ * @author Jaiz Jeeson
+ * */
 public interface SummarizationInputBoundary {
     /**
      * Checks for problematic summary word counts before sending content for summarisation to SummarisationDataAccessInterface.

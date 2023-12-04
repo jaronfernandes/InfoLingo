@@ -1,5 +1,10 @@
 package use_case.transfer_article;
 
+/**
+ * Implemented by presenter to obey dependency rule.
+ * @author Jaiz Jeeson
+ * @author Jaron Fernandes
+ */
 public interface TransferArticleOutputBoundary {
     /**
      * Changes parameters in view model's state and calls fires a signal to view indicating that parameters have been changed.

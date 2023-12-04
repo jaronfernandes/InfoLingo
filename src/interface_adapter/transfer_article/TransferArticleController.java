@@ -5,6 +5,11 @@ import entity.Article;
 import use_case.transfer_article.TransferArticleInputBoundary;
 import use_case.transfer_article.TransferArticleInputData;
 
+/**
+ * Packages and passes data relevant to navigation to Interactor.
+ * @author Jaiz Jeeson
+ * @author Jaron Fernandes
+ */
 public class TransferArticleController {
     final TransferArticleInputBoundary transferArticleInteractor;
 

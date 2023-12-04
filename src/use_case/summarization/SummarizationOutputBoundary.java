@@ -1,5 +1,9 @@
 package use_case.summarization;
 
+/**
+ * Implemented by presenter to obey dependency rule.
+ * @author Jaiz Jeeson
+ */
 public interface SummarizationOutputBoundary {
     /**
      * Changes parameters in view model's state and calls fires a signal to view indicating that parameters have been changed.
