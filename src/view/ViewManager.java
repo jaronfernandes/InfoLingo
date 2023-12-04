@@ -16,7 +16,15 @@ public class ViewManager implements PropertyChangeListener {
     private ViewManagerModel viewManagerModel;
     private HomeView homeView;
 
-
+    /**
+     * Observes the different views and handles how they're shown to the user based on signal events from presenters.
+     * @param views JPanel
+     * @param cardLayout CardLayout
+     * @param viewManagerModel ViewManagerModel
+     * @param homeView HomeView
+     * @author Jaiz Jeeson
+     * @author Jaron Fernandes
+     */
     public ViewManager(JPanel views, CardLayout cardLayout, ViewManagerModel viewManagerModel, HomeView homeView) {
         this.views = views;
         this.cardLayout = cardLayout;
@@ -24,7 +32,6 @@ public class ViewManager implements PropertyChangeListener {
         this.homeView = homeView;
         this.homeView.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
-
     }
 
     @Override

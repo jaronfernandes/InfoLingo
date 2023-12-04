@@ -41,6 +41,13 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
 
     private int numWordsArticle;
 
+    /**
+     * Instantiates the Article View UI.
+     *
+     * @param controller TranslationController
+     * @param articleViewModel ArticleViewModel
+     * @param summarizationController SummarizationController
+     */
     public ArticleView(TranslationController controller,
                        ArticleViewModel articleViewModel,
                        SummarizationController summarizationController) {
@@ -282,6 +289,10 @@ public class ArticleView extends JPanel implements PropertyChangeListener {
         return summarise;
     }
 
+    /**
+     * Returns the ArticleViewModel object.
+     * @return articleViewModel The ArticleViewModel.
+     */
     public ArticleViewModel getArticleViewModel() {
         return articleViewModel;
     }
