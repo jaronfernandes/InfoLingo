@@ -9,6 +9,11 @@ import use_case.summarization.SummarizationOutputData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Presenter class that controls View Model state.
+ * Javadocs for methods delegated to interface.
+ * @author Jaiz Jeeson
+ */
 public class SummarizationPresenter implements SummarizationOutputBoundary {
     private final ArticleViewModel articleViewModel;
 

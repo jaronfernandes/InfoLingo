@@ -8,6 +8,10 @@ public class ArticleRetrievalInputData {
         this.query = query;
     }
 
+    /**
+     * @return query The search query
+     * @author Jaron Fernandes
+     */
     public String getQuery() {
         return query;
     }

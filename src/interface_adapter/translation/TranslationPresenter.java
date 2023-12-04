@@ -16,35 +16,24 @@ import java.util.List;
 public class TranslationPresenter implements TranslationOutputBoundary {
     private final ArticleViewModel articleViewModel;
 
+    /**
+     * This translation presenter class is used to handle the output data and update the view accordingly.
+     *
+     * @param articleViewModel The ArticleViewModel for dependency injection to update the ArticleView.
+     * @author Jaron Fernandes
+     */
     public TranslationPresenter(ArticleViewModel articleViewModel) {
         this.articleViewModel = articleViewModel;
     }
 
     @Override
     public void prepareSuccessView(TranslationOutputData outputData) {
-        // TODO: - TRANSLATION - Hook up success view!
-        // System.out.println("HIII YAYYY");
-
         ArticleState currentArticleState = articleViewModel.getArticleState();
         currentArticleState.setTranslatedHeadline(outputData.getTranslatedHeadline());
         currentArticleState.setTranslatedContent(outputData.getTranslatedContent());
         currentArticleState.setTranslatedLanguage(outputData.getLanguage());
 
         articleViewModel.firePropertyChanged("translationArticleUpdate");
-//        System.out.println("success");
-//        HomeState currentHomeState = homeViewModel.getHomeState();
-//        currentHomeState.setArticles(outputData.getArticles());
-//
-//        // Extract headlines.
-//        List<String> headlines = new ArrayList<>();
-//        for (Article article:
-//             currentHomeState.getArticles()) {
-//            headlines.add(article.getHeadline());
-//        }
-//
-//        // Set headlines.
-//        currentHomeState.setHeadlines(headlines);
-//        homeViewModel.firePropertyChanged();
     }
 
     @Override

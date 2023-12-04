@@ -19,6 +19,15 @@ import view.ArticleView;
 
 public class TranslationUseCaseFactory {
 
+    /**
+     *
+     * @param viewManagerModel The ViewManagerModel
+     * @param articleViewModel The ArticleViewModel
+     * @param translationDataAccessObject The TranslateAPIDataAccessInterface
+     * @param summarizationDataAccessObject The SummarizationDataAccessInterface
+     * @return a new ArticleView
+     * @author Jaron Fernandes
+     */
     public static ArticleView create(ViewManagerModel viewManagerModel,
                                      ArticleViewModel articleViewModel,
                                      TranslateAPIDataAccessInterface translationDataAccessObject,

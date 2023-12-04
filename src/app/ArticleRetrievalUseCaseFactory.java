@@ -29,6 +29,18 @@ import view.HomeView;
 
 public class ArticleRetrievalUseCaseFactory {
 
+    /**
+     *
+     * @param viewManagerModel The ViewManagerModel
+     * @param homeViewModel The HomeViewModel
+     * @param articleRetrievalDataAccessObject The ArticleRetrievalDataAccessInterface
+     * @param groupingViewModel The GroupingViewModel
+     * @return a new ArticleView
+     * @author Seth Blatt
+     * @author Dominic Le
+     * @author Jaiz Jeeson
+     * @author Jaron Fernandes
+     */
     public static HomeView create(ViewManagerModel viewManagerModel, HomeViewModel homeViewModel,
                                   ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject,
                                   GroupingViewModel groupingViewModel) {

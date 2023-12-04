@@ -13,6 +13,13 @@ import java.util.List;
 public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary {
     private final HomeViewModel homeViewModel;
 
+    /**
+     * This article retrieval presenter class is used to handle the output data and update the view accordingly.
+     *
+     * @param homeViewModel The HomeViewModel for dependency injection to update the HomeView.
+     * @author Jaiz Jeeson (code)
+     * @author Jaron Fernandes (javadoc)
+     */
     public ArticleRetrievalPresenter(HomeViewModel homeViewModel) {
         this.homeViewModel = homeViewModel;
     }
@@ -39,8 +46,6 @@ public class ArticleRetrievalPresenter implements ArticleRetrievalOutputBoundary
         // Set headlines.
         currentHomeState.setHeadlines(headlines);
         homeViewModel.firePropertyChanged("articleRetrieval");
-
-
     }
 
     @Override

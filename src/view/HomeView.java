@@ -53,6 +53,17 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
 
     //Where the GUI is created:
+
+    /**
+     * Instantiates the Home View UI.
+     *
+     * @param controller ArticleRetrievalController
+     * @param homeViewModel HomeViewModel
+     * @param groupingViewModel GroupingViewModel
+     * @param groupingController GroupingController
+     * @param transferArticleController TransferArticleController
+     * @param rankingController RankingController
+     */
      public HomeView(ArticleRetrievalController controller,
                      HomeViewModel homeViewModel,
                      GroupingViewModel groupingViewModel,
@@ -348,6 +359,13 @@ public class HomeView extends JPanel implements PropertyChangeListener{
     }
 
     //plays music
+
+    /**
+     * Plays background music.
+     * @param filePath String of the music filepath
+     * @author Dominic Le (Code)
+     * @author Jaron Fernandes (Javadoc)
+     */
     public static void playBackgroundMusic(String filePath) {
         try {
             File audioFile = new File(filePath);

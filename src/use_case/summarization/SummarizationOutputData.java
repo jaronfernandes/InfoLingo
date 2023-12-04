@@ -1,9 +1,9 @@
 package use_case.summarization;
 
-import entity.Article;
-
-import java.util.List;
-
+/**
+ * Output data for summarisation.
+ * @author Jaiz Jeeson
+ */
 public class SummarizationOutputData {
     String summarizedText;
 

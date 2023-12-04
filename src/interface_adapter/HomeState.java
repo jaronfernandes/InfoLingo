@@ -54,10 +54,8 @@ public class HomeState {
     }
 
     public Article getArticleByHeadline(String headline) throws Exception {
-        System.out.println(headline);
         for (Article article:
              articles) {
-            System.out.println(article.getHeadline());
             if (article.getHeadline().equals(headline)) {
                 return article;
             }

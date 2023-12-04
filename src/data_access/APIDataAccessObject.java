@@ -25,8 +25,9 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private final Integer numArticles = 10;
     private final static String API_TOKEN = "724da595748f4aaa9c5692d0aae9fffb";
-    private final static String W_API_TOKEN = "cc6707f3f6db448f8800fc5cd0863a78";
-    private boolean useTestAPI = true; // True means DO NOT USE WORLDNEWSAPI. False means you are USING IT.
+    // World News API tokens: cc6707f3f6db448f8800fc5cd0863a78, e23b34bf9e094e3abee2cba0fce052dc
+    private final static String W_API_TOKEN = "e23b34bf9e094e3abee2cba0fce052dc";
+    private boolean useTestAPI; // True means DO NOT USE WORLDNEWSAPI. False means you are USING IT.
     private HashMap<String, Article> storedArticles = new HashMap<>();
     private static HashMap<String, HashMap<Article, TranslatedArticle>> storedTranslatedArticles = new HashMap<>();
 
@@ -135,7 +136,7 @@ public class APIDataAccessObject implements ArticleRetrievalDataAccessInterface 
             // Source COMPANY
             source = getValue(unformattedArticle.getJSONObject("source"), "name");
             description = getValue(unformattedArticle, "content").replaceAll("[\\t\\n\\r\\f\\v]", " ");
-            country = getValue(unformattedArticle, "country");
+            country = "N/A";  // No country response parameter for the test news api! (although the other one has it)
             publishedAt = getValue(unformattedArticle, "publishedAt");
 
             sourceObj = new Source(source, "English");
