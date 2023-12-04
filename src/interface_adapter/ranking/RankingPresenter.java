@@ -44,11 +44,9 @@ public class RankingPresenter implements RankingOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        System.out.println("failed");
-        System.out.println(error);
+        System.out.println("failed:" + error);
         HomeState currentHomeState = homeViewModel.getHomeState();
         currentHomeState.setArticleRetrievalError(error);
-        homeViewModel.firePropertyChanged("rankingUpdate");
-
+        homeViewModel.firePropertyChanged("rankingUpdate", error);
     }
 }
