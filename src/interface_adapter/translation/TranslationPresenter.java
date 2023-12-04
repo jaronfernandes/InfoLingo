@@ -16,6 +16,12 @@ import java.util.List;
 public class TranslationPresenter implements TranslationOutputBoundary {
     private final ArticleViewModel articleViewModel;
 
+    /**
+     * This translation presenter class is used to handle the output data and update the view accordingly.
+     *
+     * @param articleViewModel The ArticleViewModel for dependency injection to update the ArticleView.
+     * @author Jaron Fernandes
+     */
     public TranslationPresenter(ArticleViewModel articleViewModel) {
         this.articleViewModel = articleViewModel;
     }
