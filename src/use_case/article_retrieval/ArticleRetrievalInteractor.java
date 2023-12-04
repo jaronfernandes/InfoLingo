@@ -15,7 +15,7 @@ public class ArticleRetrievalInteractor implements ArticleRetrievalInputBoundary
      *
      * @param outputBoundary The Article Retrieval Presenter object needed through dependency injection.
      * @param articleRetrievalDataAccessObject The Article Retrieval DAO.
-     * @author Jaron Fernandes
+     * @author Seth Blatt, Jaiz Jeeson, Jaron Fernandes
      */
     public ArticleRetrievalInteractor(ArticleRetrievalOutputBoundary outputBoundary,
                                       ArticleRetrievalDataAccessInterface articleRetrievalDataAccessObject) {
