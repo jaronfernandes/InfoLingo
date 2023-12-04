@@ -5,6 +5,11 @@ public class Grouping {
 
     private final ArrayList<Article> articles;
 
+    /**
+     * Groups of similar articles
+     * @param articles
+     * @author Seth
+     */
     public Grouping(ArrayList<Article> articles) {
         this.articles = articles;
     }
