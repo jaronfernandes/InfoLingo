@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TransferArticleInteractor implements TransferArticleInputBoundary {
-
     private final TransferArticleOutputBoundary presenter;
-
 
     public TransferArticleInteractor(TransferArticleOutputBoundary presenter) {
         this.presenter = presenter;

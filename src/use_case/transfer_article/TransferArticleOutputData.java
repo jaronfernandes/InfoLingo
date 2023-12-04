@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransferArticleOutputData {
-
     Article article;
     public TransferArticleOutputData(Article article) {
         this.article = article;

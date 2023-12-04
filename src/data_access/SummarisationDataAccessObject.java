@@ -16,12 +16,6 @@ public class SummarisationDataAccessObject implements SummarizationDataAccessInt
     private static final String BASE_URL = "https://portal.ayfie.com/api/summarize";
     private final int variation = 20;
 
-    /**
-     * Method that returns a summary close to length in word count given content to summarise.
-     * @param content Content of an article to be summarised.
-     * @param length Word count to which summarisation occurs.
-     * @return A String representing summarised content.
-     * */
     @Override
     public String summarizeArticle(String content, Integer length) {
         String summarisedContent = "";

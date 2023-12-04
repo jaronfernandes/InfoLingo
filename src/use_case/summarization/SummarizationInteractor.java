@@ -1,7 +1,6 @@
 package use_case.summarization;
 
 public class SummarizationInteractor implements SummarizationInputBoundary {
-    private SummarizationOutputBoundary presenter;
     private SummarizationDataAccessInterface summarizationDataAccessObject;
     private SummarizationOutputBoundary summarizationPresenter;
     private String FAIL_TEXT = "";
