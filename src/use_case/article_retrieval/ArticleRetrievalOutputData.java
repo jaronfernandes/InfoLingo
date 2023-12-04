@@ -11,6 +11,10 @@ public class ArticleRetrievalOutputData {
         this.articles = articles;
     }
 
+    /**
+     * @return articles The list of articles returned from the DAO.
+     * @author Jaron Fernandes
+     */
     public List<Article> getArticles() {
         return articles;
     }
