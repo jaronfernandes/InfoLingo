@@ -13,8 +13,16 @@ public class TranslationInputData {
         this.headline = headline;
     }
 
+    /**
+     * @return headline The news headline
+     * @author Jaron Fernandes
+     */
     public String getHeadline() { return headline; }
 
+    /**
+     * @return langauge The language
+     * @author Jaron Fernandes
+     */
     public String getLanguage() {
         return language;
     }
