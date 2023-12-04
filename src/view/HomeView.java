@@ -188,7 +188,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
 
         final JMenuItem CountryMenu, DateMenu;
-        final JCheckBox CanButton, FraButton, ChiButton;
+        final JCheckBox noneButton, CanButton, FraButton, ChiButton;
 
         grouping.addActionListener(new ActionListener() {
             @Override
@@ -214,6 +214,21 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
         ButtonGroup countries = new ButtonGroup();
 
+        noneButton = new JCheckBox("None");
+        countries.add(noneButton);
+        CountryMenu.add(noneButton);
+        noneButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    System.out.println("None selected");
+                }
+                else if (e.getStateChange() == ItemEvent.DESELECTED){
+                    System.out.println("None selected");
+                }
+            }
+        });
+
 
         CanButton = new JCheckBox("Canada");
         countries.add(CanButton);
@@ -222,11 +237,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("Canada");
+                    prefCountry.add("ca");
                     System.out.println("Canada");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED){
-                    prefCountry.remove("Canada");
+                    prefCountry.remove("ca");
                     System.out.println("no Canada");
                 }
             }
@@ -239,11 +254,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("France");
+                    prefCountry.add("fr");
                     System.out.println("France");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    prefCountry.remove("France");
+                    prefCountry.remove("fr");
                     System.out.println("No France");
                 }
             }
@@ -256,11 +271,11 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    prefCountry.add("China");
+                    prefCountry.add("cn");
                     System.out.println("China");
                 }
                 else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    prefCountry.remove("China");
+                    prefCountry.remove("cn");
                     System.out.println("No China");
                 }
             }
@@ -357,6 +372,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
         if (evt.getPropertyName().equals("articleRetrieval")) {
             HomeState state = (HomeState) evt.getNewValue();
             if (state.getArticleRetrievalError() != null) {
@@ -364,7 +380,10 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             }
         } else if (evt.getPropertyName().equals("transferArticleError")){
             JOptionPane.showMessageDialog(this, evt.getNewValue());
+        } else if(evt.getPropertyName().equals("rankingUpdate")){
+            JOptionPane.showMessageDialog(this, homeViewModel.getHomeState().getArticleRetrievalError());
         }
+
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
