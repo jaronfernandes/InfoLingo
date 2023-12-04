@@ -17,6 +17,11 @@ public class RankingInputData {
         this.articles = articles;
     }
 
+    /**
+     * @return countries The countries filter, date The date preferred, articles  from ArticleRetrieval.
+     * @author Dominic Le
+     */
+
     public List<String> getCountries(){
         return this.countries;
     }
