@@ -14,6 +14,11 @@ public class GroupingInteractor implements GroupingInputBoundary{
         this.presenter = presenter;
     }
 
+    /**
+     * Sorts articles into groups based on similar headlines
+     * @param inputData contains a list of articles which are to be sorted into groups
+     * @author Seth
+     */
     @Override
     public void execute(GroupingInputData inputData) {
         GroupingFactory groupingFactory = new GroupingFactory();

@@ -18,6 +18,12 @@ public class GroupingPresenter implements GroupingOutputBoundary {
     public GroupingPresenter(GroupingViewModel groupingViewModel) {
         this.groupingViewModel = groupingViewModel;
     }
+
+    /**
+     * Organises outputData so that it can be handled by GroupingViewModel
+     * @param outputData contains all the groupings created by the grouping use case
+     * @author Seth
+     */
     @Override
     public void prepareSuccessView(GroupingOutputData outputData) {
         System.out.println("success");
@@ -42,6 +48,11 @@ public class GroupingPresenter implements GroupingOutputBoundary {
 
     }
 
+    /**
+     * Organises an error to be handled by GroupingViewModel
+     * @param error a description of the error that occured
+     * @author Seth
+     */
     @Override
     public void prepareFailView(String error) {
         System.out.println("failed");
