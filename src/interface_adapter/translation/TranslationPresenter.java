@@ -28,29 +28,12 @@ public class TranslationPresenter implements TranslationOutputBoundary {
 
     @Override
     public void prepareSuccessView(TranslationOutputData outputData) {
-        // TODO: - TRANSLATION - Hook up success view!
-        // System.out.println("HIII YAYYY");
-
         ArticleState currentArticleState = articleViewModel.getArticleState();
         currentArticleState.setTranslatedHeadline(outputData.getTranslatedHeadline());
         currentArticleState.setTranslatedContent(outputData.getTranslatedContent());
         currentArticleState.setTranslatedLanguage(outputData.getLanguage());
 
         articleViewModel.firePropertyChanged("translationArticleUpdate");
-//        System.out.println("success");
-//        HomeState currentHomeState = homeViewModel.getHomeState();
-//        currentHomeState.setArticles(outputData.getArticles());
-//
-//        // Extract headlines.
-//        List<String> headlines = new ArrayList<>();
-//        for (Article article:
-//             currentHomeState.getArticles()) {
-//            headlines.add(article.getHeadline());
-//        }
-//
-//        // Set headlines.
-//        currentHomeState.setHeadlines(headlines);
-//        homeViewModel.firePropertyChanged();
     }
 
     @Override
