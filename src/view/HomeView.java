@@ -181,7 +181,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(filter)) {
                     if (!homeViewModel.getHomeState().getArticles().isEmpty()){
-                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getArticles());
+                    rankingController.execute(prefCountry, DateSearch.getText(), homeViewModel.getHomeState().getGotarticles());
                     }
                 }
             }
@@ -192,6 +192,7 @@ public class HomeView extends JPanel implements PropertyChangeListener{
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(search)) {
                     articleRetrievalController.execute(searchField.getText());
+                    homeViewModel.getHomeState().setGotArticles(homeViewModel.getHomeState().getArticles());
                 }
             }
         });
