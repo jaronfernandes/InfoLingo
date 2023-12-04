@@ -15,6 +15,35 @@ Our team will build a centralised news app. By this, we mean to build an app tha
 - Capacity to group articles with similar content.
 - Article ranking based on user-specific preferences.
 
+## Setup
+The project uses Maven dependencies which needs a Java (corretto) 20 SDK.
+You can set this up by going to Project Structure --> Project Settings --> Project --> SDK
+
+If you do not have this SDK, you can download it through IntelliJ. If you do not have IntelliJ, your
+IDE may or may not have it, so you may have to download it manually.
+
+After you have set up the project, see the **Instructions for Usage** section.
+
+__**Note:**__ when you run `Main.java` for the first time, you may get a compilation error stating
+that a bunch of classes were not found. You can fix this by going into the top-layer files, finding the `target` folder,
+and deleting it.
+
+## API Usage
+Please be aware that our News Article Retrieval and Translation API tokens have limited requests,
+notably article retrieval with 50 max requests a day and DeepL translate with approximately 122,368/500,000 characters at
+the moment.
+
+It is unlikely you will go over the translation API usage, but do not carelessly translate articles, even with translated
+articles being stored using memoization.
+
+Please be aware of this usage when you run the program!
+
+## Test Cases
+Our test cases can be located under the `tests` folder. Note that unlike the main program,
+the test cases call our *Testing News Retrieval API*, which retrieves different (and shortened article texts)
+news article, so it will not be the exact same as the default news API. This is because running all the tests
+will immediately use up the daily maximum requests.
+
 ## Tentative APIs
 - NewsAPI - https://newsapi.org 
 - LibreTranslate - https://libretranslate.com/
